@@ -6,15 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:35:05 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/03 06:35:53 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/16 01:46:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ANTS_H
 # define ANTS_H
 
-#include <stddef.h>
 
-int		get_ants(size_t *ants);
 
 #endif

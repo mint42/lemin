@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   farm.c                                             :+:      :+:    :+:   */
+/*   get_links.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 06:48:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/03 07:01:26 by rreedy           ###   ########.fr       */
+/*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
+/*   Updated: 2019/06/16 19:33:01 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "farm.h"
-#include "ft_printf.h"
+#include <stddef.h>
 
-int		create_ant_farm(t_room **farm)
+int		get_links(t_binarytree *rooms, size_t nrooms, char **line)
 {
-	(void)farm;
-	ft_printf("create and farm\n");
-	return (0);
-}
-
-int		delete_ant_farm(t_room **farm)
-{
-	(void)farm;
-	ft_printf("delete and farm\n");
-	return (0);
+	while (get_next_line(line))
+	{
+		
+	}
 }

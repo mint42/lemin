@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:12:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/03 07:00:51 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/06 19:50:16 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int		get_ants(size_t *ants)
 	char	*line;
 	size_t	prev_ants;
 
-	line = 0;
+	line = NULL;
 	if (!get_next_line(STDIN_FD, &line))
-		return (GET_NEXT_LINE_ERROR);
+		return (ANT_ERROR);
 	while (line && *line && ft_isdigit(*line))
 	{
 		prev_ants = *ants;

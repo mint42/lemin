@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solve.h                                            :+:      :+:    :+:   */
+/*   farm.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 06:53:48 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/16 00:24:54 by rreedy           ###   ########.fr       */
+/*   Created: 2019/06/03 06:48:21 by rreedy            #+#    #+#             */
+/*   Updated: 2019/06/08 14:47:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stddef.h"
+#include "farm.h"
+#include "ft_printf.h"
 
-int		errno;
-
-typedef struct s_room	t_room;
-
-int		solve(size_t ants, t_room *farm);
+int		delete_ant_farm(t_room **farm)
+{
+	(void)farm;
+	ft_printf("delete ant farm\n");
+	return (0);
+}
