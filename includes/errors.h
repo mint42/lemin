@@ -6,19 +6,21 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:15:51 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/16 01:15:47 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/19 22:27:52 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORS_H
 # define ERRORS_H
 
-#define ANT_ERROR 1
+#define ALLOC_ERROR 0
+#define ANTS_ERROR 1
 #define ROOM_ERROR 2
-#define SOLVE_ERROR 3
+#define LINK_ERROR 3
+#define SOLVE_ERROR 4
 
-static int	error
+static int	ft_error;
 
-void		print_error(int error);
+void		print_error();
 
 #endif 

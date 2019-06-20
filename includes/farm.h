@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/15 20:27:58 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/19 22:24:59 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ typedef struct	s_room
 	char		*room_name;
 	int			x_coordinate;
 	int			y_coordinate;
-	int			start;
-	int			end;
-	size_t		room_index;
-	size_t		num_links;
-	size_t		max_links;
+	int			start_or_end;
+	size_t		nlinks;
+	size_t		mlinks;
 	size_t		*links;
-	size_t		num_paths;
-	size_t		max_paths;
+	size_t		npaths;
+	size_t		mpaths;
 	size_t		*paths;
 }				t_room;
 

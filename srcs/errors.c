@@ -6,19 +6,19 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:21:51 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/04 04:28:13 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/19 23:15:43 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lemin.h"
 #include "errors.h"
+#include "ft_fd.h"
 #include "ft_printf.h"
 
 void	print_error(int error)
 {
 	if (error == SOLVE_ERROR)
 		ft_printfd(STDERR_FD, "solve error\n");
-	else if (error == ANT_ERROR)
+	else if (error == ANTS_ERROR)
 	{
 		ft_printfd(STDERR_FD, "ant error\n");
 		ft_printfd(STDERR_FD, "usage_error\n");

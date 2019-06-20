@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/16 23:37:58 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/19 16:45:23 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,20 +73,21 @@ static int		parse_line(char *line, t_room **room, int *start_or_end)
 	room->start_or_end = start_or_end;
 	return (0);
 }
-static int		fill_farm(t_room **farm, t_binarytree **rooms, size_t room)
+static void		fill_farm(t_room **farm, t_binarytree **rooms, size_t room)
 {
 	if (*rooms)
 	{
 		if ((*rooms)->right)
-			fill_farm();
-		*room->
+			fill_farm(farm, rooms, room);
+		*farm[room] = (*rooms)->content;
+		++room;
 		if ((*rooms)->left)
-			fill_farm();
-		delete_room((*room)->content);
+			fill_farm(farm, rooms, room);
+		ft_memdel(rooms);
 	}
 }
 
-int				get_rooms(char **line, t_room **farm, size_t *nrooms)
+int				get_rooms(t_input *input, t_room **farm, size_t *nrooms)
 {
 	t_binarytree	*rooms;
 	t_room			*room;
@@ -95,17 +96,20 @@ int				get_rooms(char **line, t_room **farm, size_t *nrooms)
 	room = 0;
 	rooms = 0;
 	start_or_end = 0;
-	while (get_next_line(STDIN_FD, line))
+	while (get_next_line(STDIN_FD, &(input->line)))
 	{
-		if (parse_line(line, &room, &start_or_end) == ERROR)
+		if (parse_line(input->line, &room, &start_or_end) == ERROR)
 		{
-			if (!start_or_end || !ft_strchr(*line, '-'))
+			if (!start_or_end || !ft_strchr(input->line, '-'))
 				break ;
 			*farm = (t_room *)ft_memalloc(sizeof(t_room) * *nrooms);
-			make_farm(farm, &rooms);
+			if (!(*farm))
+				break ;
+			fill_farm(farm, &rooms);
 			return (0);
 		}
 		insert_room(room, rooms);
+		update_input(input);
 		++(*nrooms);
 	}
 	ft_treedel(&rooms);
