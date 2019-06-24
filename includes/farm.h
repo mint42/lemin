@@ -6,33 +6,31 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/19 22:24:59 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/24 16:19:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FARM_H
 # define FARM_H
 
-#include <stddef.h>
+# include "room.h"
+# include <stddef.h>
 
-/*
-the farm is stored as an array of this s_room struct. if the "adjacency list" was
-a list of indexes that represent rooms, then finding a room, and the rooms that
-connected to it would be instant.
-*/
+# define NAME(room) (farm[room].name)
+# define X(room) (farm[room].x)
+# define Y(room) (farm[room].y)
+# define S_OR_E(room) (farm[room].start_or_end)
+# define NLINKS(room) (farm[room].nlinks)
+# define MLINKS(room) (farm[room].mlinks)
+# define LINKS(room) (farm[room].links)
+# define NPATHS(room) (farm[room].npaths)
+# define MPATHS(room) (farm[room].mpaths)
+# define PATHS(room) (farm[room].paths)
 
-typedef struct	s_room
-{
-	char		*room_name;
-	int			x_coordinate;
-	int			y_coordinate;
-	int			start_or_end;
-	size_t		nlinks;
-	size_t		mlinks;
-	size_t		*links;
-	size_t		npaths;
-	size_t		mpaths;
-	size_t		*paths;
-}				t_room;
+typedef struct s_binarytree		t_binarytree;
+
+t_room		*init_farm(size_t nrooms);
+void		fill_farm(t_room *farm, t_binarytree **rooms, size_t room);
+int			delete_farm(t_room **farm);
 
 #endif

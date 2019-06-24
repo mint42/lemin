@@ -6,14 +6,42 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:48:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/08 14:47:07 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/24 16:12:54 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "room.h"
 #include "farm.h"
+#include "ft_mem.h"
+#include "ft_binarytree.h"
 #include "ft_printf.h"
+#include <stddef.h>
 
-int		delete_ant_farm(t_room **farm)
+t_room		*init_farm(size_t nrooms)
+{
+	t_room	*farm;
+
+	farm = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
+	if (!farm)
+		return (0);
+	return (farm);
+}
+
+void		fill_farm(t_room *farm, t_binarytree **rooms, size_t room)
+{
+	if (*rooms)
+	{
+		if ((*rooms)->right)
+			fill_farm(farm, rooms, room);
+		farm[room] = *(t_room *)((*rooms)->content);
+		--room;
+		if ((*rooms)->left)
+			fill_farm(farm, rooms, room);
+		ft_memdel((void **)rooms);
+	}
+}
+
+int			delete_farm(t_room **farm)
 {
 	(void)farm;
 	ft_printf("delete ant farm\n");

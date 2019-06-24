@@ -6,11 +6,12 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/03 06:51:42 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/21 21:06:44 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "farm.h"
+#include "room.h"
 #include "paths.h"
 #include "ft_printf.h"
 #include <stddef.h>

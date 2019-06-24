@@ -6,10 +6,17 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/19 22:25:56 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/24 16:16:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
+#include "farm.h"
+#include "input.h"
+#include "ft_fd.h"
+#include "ft_str.h"
+#include "ft_mem.h"
+#include "get_next_line.h"
 #include <stddef.h>
 
 static int		copy_links(size_t **links, size_t max_links)
@@ -24,54 +31,57 @@ static int		copy_links(size_t **links, size_t max_links)
 	i = 0;
 	while (i < max_links)
 	{
-		new_links[i] = links[i];
+		new_links[i] = *links[i];
 		++i;
 	}
-	ft_memdel(links);
+	ft_memdel((void **)links);
 	*links = new_links;
 	return (0);
 }
 
-static int		add_links(size_t roomi1, size_t roomi2, t_room *farm)
+static int		add_link(size_t room, size_t link, t_room *farm)
 {
-	if (farm[roomi1]->mlinks == 0)
-		farm[roomi1]mlinks == 4;
-	++(farm[roomi1]->nlinks);
-	if (farm[roomi1]->nlinks == farm[roomi1]->mlinks)
+	if (MLINKS(room) == 0)
+		MLINKS(room) = 4;
+	++(NLINKS(room));
+	if (NLINKS(room) == MLINKS(room))
 	{
-		farm[roomi1]->mlinks = farm[roomi1]->mlinks * 2;
-		if (copy_links(&(farm[roomi1]->links), farm[roomi1]->mlinks) == ERROR)
+		MLINKS(room) = MLINKS(room) * 2;
+		if (copy_links(&(LINKS(room)), MLINKS(room)) == ERROR)
 			return (1);
 	}
-	farm[room1]->links[nlinks - 1] = roomi2;
+	LINKS(room)[NLINKS(room) - 1] = link;
 	return (0);
 }
 
-static int		find_room(char *room, size_t *roomi, t_room *farm, size_t nrooms)
+static int		find_room(char *name, size_t *room, t_room *farm, size_t nrooms)
 {
-	if (!farm || !room)
+	int		cmp;
+
+	cmp = ft_strcmp(name, NAME(*room));
+	if (!name)
 		return (1);
-	if (ft_strcmp(room, farm->room_name) > 0)
+	if (cmp > 0)
 	{
-		*roomi = (nrooms + *roomi) / 2;
-		find_room(room, roomi, farm, nrooms);
+		*room = (nrooms + *room) / 2;
+		find_room(name, room, farm, nrooms);
 	}
-	if (ft_strcmp(room, farm->room_name) < 0)
+	if (cmp < 0)
 	{
-		*roomi = *roomi / 2;
-		find_room(room, roomi, farm, nrooms / 2);
+		*room = *room / 2;
+		find_room(name, room, farm, nrooms / 2);
 	}
 	return (0);
 }
 
 static int		parse_line(char *line, t_room *farm, size_t nrooms)
 {
-	size_t		roomi1;
-	size_t		roomi2;
+	size_t		room1;
+	size_t		room2;
 	size_t		lend;
 
-	roomi1 = nrooms / 2;
-	roomi2 = nrooms / 2;
+	room1 = nrooms / 2;
+	room2 = nrooms / 2;
 	lend = ft_strlend(line, ' ');
 	if (lend > ft_strlen(line) - 3)
 		return (1);
@@ -83,17 +93,20 @@ static int		parse_line(char *line, t_room *farm, size_t nrooms)
 		return (1);
 	if (find_room(line + (lend + 3), &room2, farm, nrooms) == ERROR)
 		return (1);
-	if (add_links(room1, room2, farm) == ERROR)
+	if (add_link(room1, room2, farm) == ERROR)
 		return (1);
-	if (add_links(room2, room1, farm) == ERROR)
+	if (add_link(room2, room1, farm) == ERROR)
 		return (1);
+	return (0);
 }
 		
 int				get_links(t_input *input, t_room *farm, size_t nrooms)
 {
-	while (get_next_line(&(input->line)))
+	if (!input || !farm)
+		return (1);
+	while (get_next_line(STDIN_FD, &(input->line)))
 	{
-		if (parse_line() == ERROR)
+		if (parse_line(input->line, farm, nrooms) == ERROR)
 		{
 			return (1);
 		}
