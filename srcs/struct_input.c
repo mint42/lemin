@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 23:16:50 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/22 20:49:04 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/26 23:14:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,37 @@ static int	copy_input(char **input, size_t size)
 	return (0);
 }
 
-int			update_input(t_input *input)
+void		update_input(t_input *input)
 {
 	size_t	len;
 	size_t	i;
 
-	if (!input)
-		return (1);
 	i = 0;
-	len = ft_strlen(input->line);
-	input->input_size = input->input_size + len;
-	if (input->input_size > input->max_size)
+	if (!input->line)
+		return ;
+	len = ft_strlen(input->line) + 1;
+	input->line[len] = '\n';
+	if (!input->input)
+	{
+		input->max_size = len * 2;
+		input->input = ft_strnew(input->max_size);
+	}
+	else if (input->input_size + len > input->max_size)
 	{
 		input->max_size = input->max_size * 2;
 		copy_input(&(input->input), input->max_size);
 	}
 	while (i < len)
 	{
-		input->input[len + i] = input->line[i];
+		input->input[input->input_size + i] = input->line[i];
 		++i;
 	}
-	return (0);
+	input->input_size = input->input_size + len;
+	ft_strdel(&input->line);
 }
 
 void		delete_input(t_input *input)
 {
-	ft_strdel(&(*input).input);
-	ft_strdel(&(*input).line);
+	ft_strdel(&(input->input));
+	ft_strdel(&(input->line));
 }

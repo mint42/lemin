@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 01:42:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/21 21:03:21 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/26 21:06:30 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct		s_input
 
 
 t_input				init_input();
-int					update_input(t_input *input);
+void				update_input(t_input *input);
 void				delete_input(t_input *input);
 
 #endif

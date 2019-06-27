@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/24 16:19:50 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/26 20:09:32 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ static int		parse_room_line(char *line, t_room *room)
 	if (!len)
 		return (1);
 	room->name = ft_strndup(line, len);
-	line = line + len;
+	line = line + len + 1;
 	len = ft_strlend(line, ' ');
 	if (!len || !ft_isdigit(*line))
 		return (1);
 	room->x = ft_atoi(line);
-	line = line + len;
+	line = line + len + 1;
 	if (!len || !ft_isdigit(*line))
 		return (1);
 	room->y = ft_atoi(line);

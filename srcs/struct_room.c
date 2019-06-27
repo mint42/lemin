@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/24 11:37:16 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/06/26 17:08:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	delete_room(void *content, size_t content_size)
 	if (content)
 	{
 		ft_strdel(&((t_room *)(content))->name);
-		ft_memdel((void **)&((t_room *)(content))->paths);
+	//	ft_memdel((void **)&((t_room *)(content))->paths);
 		ft_memdel((void **)&((t_room *)(content))->links);
 		ft_memdel((void **)&content);
 	}
