@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 23:16:50 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/26 23:14:07 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/07/01 01:27:20 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,51 @@
 #include "ft_mem.h"
 #include "ft_str.h"
 
-t_input		init_input()
+t_input			init_input(void)
 {
 	t_input		input;
 
+	input.buff_size = 0;
 	input.input_size = 0;
-	input.max_size = 0;
+	input.line_size = 0;
 	input.input = 0;
 	input.line = 0;
 	return (input);
 }
 
-static int	copy_input(char **input, size_t size)
+static void		update_input_buff(t_input *input)
 {
 	char	*new_input;
 
-	new_input = ft_strnew(size);
+	while (input->input_size + input->line_size > input->buff_size)
+		input->buff_size = input->buff_size * 2;
+	new_input = ft_strnew(input->buff_size);
 	if (!new_input)
-		return (1);
-	new_input = ft_strncpy(new_input, *input, size);
-	ft_strdel(input);
-	*input = new_input;
-	return (0);
+		return ;
+	new_input = ft_strncpy(new_input, input->input, input->input_size);
+	ft_strdel(&(input->input));
+	input->input = new_input;
 }
 
-void		update_input(t_input *input)
+void			update_input(t_input *input)
 {
-	size_t	len;
-	size_t	i;
-
-	i = 0;
 	if (!input->line)
 		return ;
-	len = ft_strlen(input->line) + 1;
-	input->line[len] = '\n';
+	input->line_size = ft_strlen(input->line) + 1;
 	if (!input->input)
 	{
-		input->max_size = len * 2;
-		input->input = ft_strnew(input->max_size);
+		input->buff_size = input->line_size * 2;
+		input->input = ft_strnew(input->buff_size);
 	}
-	else if (input->input_size + len > input->max_size)
-	{
-		input->max_size = input->max_size * 2;
-		copy_input(&(input->input), input->max_size);
-	}
-	while (i < len)
-	{
-		input->input[input->input_size + i] = input->line[i];
-		++i;
-	}
-	input->input_size = input->input_size + len;
+	else if (input->input_size + input->line_size > input->buff_size)
+		update_input_buff(input);
+	ft_strncpy(input->input + input->input_size, input->line, input->line_size);
+	input->input_size = input->input_size + input->line_size;
+	input->input[input->input_size - 1] = '\n';
 	ft_strdel(&input->line);
 }
 
-void		delete_input(t_input *input)
+void			delete_input(t_input *input)
 {
 	ft_strdel(&(input->input));
 	ft_strdel(&(input->line));

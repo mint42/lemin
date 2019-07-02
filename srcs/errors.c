@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:21:51 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/19 23:15:43 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/07/01 20:50:32 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_fd.h"
 #include "ft_printf.h"
 
-void	print_error(int error)
+int		print_error(int error)
 {
 	if (error == SOLVE_ERROR)
 		ft_printfd(STDERR_FD, "solve error\n");
@@ -28,4 +28,5 @@ void	print_error(int error)
 		ft_printfd(STDERR_FD, "room error\n");
 		ft_printfd(STDERR_FD, "usage_error\n");
 	}
+	return (ERROR);
 }

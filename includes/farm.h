@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/24 16:19:07 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/07/01 20:52:15 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 typedef struct s_binarytree		t_binarytree;
 
 t_room		*init_farm(size_t nrooms);
-void		fill_farm(t_room *farm, t_binarytree **rooms, size_t room);
+int			make_farm(t_binarytree *rooms, t_room **farm, size_t room);
 int			delete_farm(t_room **farm);
 
 #endif
