@@ -6,18 +6,18 @@
 #    By: rreedy <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/03 06:37:10 by rreedy            #+#    #+#              #
-#    Updated: 2019/06/24 15:59:01 by rreedy           ###   ########.fr        #
+#    Updated: 2019/06/26 17:00:40 by rreedy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LEMIN := lemin
+LEMIN := lem-in
 LIB := lib/libft.a
 
 LEMIN_OBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/*.c))
 
 CC := gcc
 INCLUDES := -I./includes -I./lib/includes -I./lib/includes/ft_printf
-CFLAGS += -Wall -Wextra -Werror $(INCLUDES)
+CFLAGS += -g -Wall -Wextra -Werror $(INCLUDES)
 LFLAGS += -L./lib -lft
 
 .PHONY: all clean fclean re name
