@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 15:38:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/01 20:53:00 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/07/28 05:42:21 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,21 @@
 # define END_ROOM 0x2
 
 # define ROOM(binarytree)	((t_room *)((binarytree)->content))
-/*
-the farm is stored as an array of this s_room struct. if the "adjacency list" was
-a list of indexes that represent rooms, then finding a room, and the rooms that
-connected to it would be instant.
-*/
 
 typedef struct s_binarytree		t_binarytree;
 
 typedef struct	s_room
 {
 	char		*name;
+	size_t		len;
 	int			x;
 	int			y;
-	int			start_or_end;
+	size_t		*links;
 	size_t		nlinks;
 	size_t		mlinks;
-	size_t		*links;
-	size_t		npaths;
-	size_t		mpaths;
-	size_t		*paths;
+	size_t		*paths_crossed;
+	size_t		npaths_crossed;
+	size_t		mpaths_crossed;
 }				t_room;
 
 t_room			*init_room(void);

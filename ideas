@@ -37,3 +37,39 @@ while (i < #ofrooms)
 	++i;
 }
 
+
+equations for adding a new path
+
+ants - total ants going through path
+moves - lines on the stdout
+paths - there can be multiple sets of working paths, so paths is only
+		considering the set that is being looked at
+pathlen - longest path length (in links) of the current path set
+canlook - can you check the routes for another ending (one itteration)
+
+equation for how many moves it would take in the current configuration:
+
+moves = ants/paths
+
+
+moves = ((ants + pathlen) - 1) + 
+
+equation for how many ants should go on the new path:
+is it always better to send an ant down a shorter path?
+
+
+//canlook = if ((#ants / #paths) > pathlen)
+
+if (pathlen of new longest < #moves)
+	add it
+
+should pathlen be in links and not rooms? probably because that is also the amount of moves
+
+4 / 2 + 4 % 2 + 5 = 7 (6)
+4 / 1 + 4 % 1 + 4 = 8 (7)
+
+5 / 2 + 5 % 2 + 5 = 8 (6)
+5 / 1 + 5 % 1 + 4 = 9 (8)
+
+6 / 2 + 6 % 2 + 5 = 8 (6)
+6 / 1 + 6 % 1 + 4 = 9 (8)

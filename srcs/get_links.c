@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/24 16:16:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/07/28 02:33:57 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,20 +78,20 @@ static int		parse_line(char *line, t_room *farm, size_t nrooms)
 {
 	size_t		room1;
 	size_t		room2;
-	size_t		lend;
+	size_t		len;
 
 	room1 = nrooms / 2;
 	room2 = nrooms / 2;
-	lend = ft_strlend(line, ' ');
-	if (lend > ft_strlen(line) - 3)
+	len = ft_strlen(line, ' ');
+	if (len > ft_strlen(line) - 3)
 		return (1);
-	line[lend] = '\0';
+	line[len] = '\0';
 	if (find_room(line, &room1, farm, nrooms) == ERROR)
 		return (1);
-	line[lend] = ' ';
-	if (line[lend + 1] != '-' || line[lend + 2] != ' ')
+	line[len] = ' ';
+	if (line[len + 1] != '-' || line[len + 2] != ' ')
 		return (1);
-	if (find_room(line + (lend + 3), &room2, farm, nrooms) == ERROR)
+	if (find_room(line + (len + 3), &room2, farm, nrooms) == ERROR)
 		return (1);
 	if (add_link(room1, room2, farm) == ERROR)
 		return (1);
@@ -107,9 +107,7 @@ int				get_links(t_input *input, t_room *farm, size_t nrooms)
 	while (get_next_line(STDIN_FD, &(input->line)))
 	{
 		if (parse_line(input->line, farm, nrooms) == ERROR)
-		{
 			return (1);
-		}
 		update_input(input);
 	}
 	return (0);

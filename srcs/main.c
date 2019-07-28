@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/01 21:12:24 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/07/28 05:51:03 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,51 @@
 #include <unistd.h>
 #include <stddef.h>
 
-static int		lemin(t_input *input, t_binarytree **rooms, t_room **farm)
+static void		print_solution(t_input *input, char *solution, size_t len)
 {
-	size_t			ants;
-	size_t			nrooms;
+	write();
+	write();
+	write();
+}
 
-	ants = 0;
-	nrooms = 0;
-	if (get_ants(input, &ants) == ERROR)
+static int		lemin(t_input *input, t_farm *farm, t_binarytree *rooms)
+{
+	char	*solution;
+	size_t	len;
+
+	solution = 0;
+	len = 0;
+	if (get_ants(input, &farm->ants) == ERROR)
 		return (1);
-	if (get_rooms(input, rooms, &nrooms) == ERROR)
+	if (get_rooms(input, rooms, farm) == ERROR)
 		return (1);
-	if (make_farm(*rooms, farm, nrooms) == ERROR)
+	if (make_farm(rooms, farm) == ERROR)
 		return (1);
-	if (get_links(input, *farm, nrooms) == ERROR)
+	if (get_links(input, farm) == ERROR)
 		return (1);
-	if (solve(ants, *farm) == ERROR)
+	if (solve(farm, &solution, len) == ERROR)
 		return (1);
+	print_solution(input solution);
+	ft_strdel(&solution);
 	return (0);
 }
 
 int				main(void)
 {
 	t_binarytree	*rooms;
-	t_room			*farm;
+	t_farm			farm;
 	t_input			input;
+	char			*solution;
 	unsigned int	error;
 
 	rooms = 0;
-	farm = 0;
 	error = 0;
 	input = init_input();
-	if (lemin(&input, &rooms, &farm) == ERROR)
+	farm = init_farm();
+	if (lemin(&input, &farm, &rooms) == ERROR)
 		error = 1;
-	delete_input(&input);
 	ft_treedel(&rooms, delete_room);
 	delete_farm(&farm);
+	delete_input(&input);
 	return (error);
 }

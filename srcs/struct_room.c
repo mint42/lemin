@@ -6,10 +6,11 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/01 01:42:07 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/07/03 16:04:57 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include "farm.h"
 #include "room.h"
 #include "ft_mem.h"
@@ -40,13 +41,15 @@ int		insert_room(t_binarytree **rooms, t_room *room)
 {
 	int		compare;
 
+	if (!room)
+		return (0);
 	if (!*rooms)
 		*rooms = ft_treeinit(room, 0);
 	else
 	{
 		compare = ft_strcmp(ROOM(*rooms)->name, room->name);
 		if (compare == 0)
-			return (1);
+			return (print_error(ROOM_DUPLICATE));
 		else if (compare > 0)
 			insert_room(&(*rooms)->right, room);
 		else
