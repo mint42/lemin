@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   farm.c                                             :+:      :+:    :+:   */
+/*   graph.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 06:48:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/01 20:52:43 by rreedy           ###   ########.fr       */
+/*   Created: 2019/08/02 02:50:49 by rreedy            #+#    #+#             */
+/*   Updated: 2019/08/02 02:50:54 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,41 @@
 #include "ft_printf.h"
 #include <stddef.h>
 
-t_room			*init_farm(size_t nrooms)
+t_room			*init_graph(size_t nrooms)
 {
-	t_room	*farm;
+	t_room	*graph;
 
-	farm = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
-	if (!farm)
+	graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
+	if (!graph)
 		return (0);
-	return (farm);
+	return (graph);
 }
 
-static void		fill_farm(t_room *farm, t_binarytree *rooms, size_t room)
+static void		fill_graph(t_room *graph, t_binarytree *rooms, size_t room)
 {
 	if (rooms)
 	{
 		if (rooms->right)
-			fill_farm(farm, rooms, room);
-		farm[room] = *(t_room *)(rooms->content);
+			fill_graph(graph, rooms, room);
+		graph[room] = *(t_room *)(rooms->content);
 		--room;
 		if (rooms->left)
-			fill_farm(farm, rooms, room);
+			fill_graph(graph, rooms, room);
 	}
 }
 
-int				make_farm(t_binarytree *rooms, t_room **farm, size_t nrooms)
+int				make_graph(t_binarytree *rooms, t_room **graph, size_t nrooms)
 {
-	*farm = init_farm(nrooms);
-	if (!(*farm))
+	*graph = init_graph(nrooms);
+	if (!(*graph))
 		return (print_error(ALLOC_ERROR));
-	fill_farm(*farm, rooms, nrooms);
+	fill_graph(*graph, rooms, nrooms);
 	return (0);
 }
 
-int				delete_farm(t_room **farm)
+int				delete_graph(t_room **graph)
 {
-	(void)farm;
-	ft_printf("delete ant farm\n");
+	(void)graph;
+	ft_printf("delete ant graph\n");
 	return (0);
 }

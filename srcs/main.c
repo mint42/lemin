@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/28 05:51:03 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/02 02:51:54 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int		lemin(t_input *input, t_farm *farm, t_binarytree *rooms)
 		return (1);
 	if (get_rooms(input, rooms, farm) == ERROR)
 		return (1);
-	if (make_farm(rooms, farm) == ERROR)
+	if (make_graph(rooms, farm) == ERROR)
 		return (1);
 	if (get_links(input, farm) == ERROR)
 		return (1);

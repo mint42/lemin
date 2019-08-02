@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/01 20:52:15 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/02 02:52:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@
 # include "room.h"
 # include <stddef.h>
 
-# define NAME(room) (farm[room].name)
-# define X(room) (farm[room].x)
-# define Y(room) (farm[room].y)
-# define S_OR_E(room) (farm[room].start_or_end)
-# define NLINKS(room) (farm[room].nlinks)
-# define MLINKS(room) (farm[room].mlinks)
-# define LINKS(room) (farm[room].links)
-# define NPATHS(room) (farm[room].npaths)
-# define MPATHS(room) (farm[room].mpaths)
-# define PATHS(room) (farm[room].paths)
+typedef struct	s_farm
+{
+	size_t		ants;
+	size_t		start_room_id;
+	size_t		end_room_id;
+	size_t		nrooms;
+	t_room		*graph;
+}				t_farm;
 
 typedef struct s_binarytree		t_binarytree;
 

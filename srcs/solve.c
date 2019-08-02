@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/28 05:30:35 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/02 04:30:19 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,46 @@
 **		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
 */
 
-	if (add_to_path_set(cur, path_sets, &best_solution) == ERROR)
+static int		find_next_path(t_bfs *cur, t_bfs *tail)
+{
+
+}
+
+static int		add_path_to_sets(t_bfs *cur, t_pathset *sets, t_pathset *solution)
+{
+
+}
+
+static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
+{
+	t_bfs		*cur;
+	t_bfs		*tail;
+	t_pathset	*sets;
+
+	cur = bfs;
+	tail = bfs;
+	if (find_next_path(cur, tail) == ERROR)
+		return (print_error(NO_SOLUTION));
+	if (add_path_to_sets(cur, sets, &solution) == ERROR)
 		return (1);
-	while (path_sets)
+	while (sets)
 	{
 		if (find_next_path(cur, tail) == ERROR)
 			return (1);
-		if (add_to_path_set(cur, path_sets, &best_solution) == ERROR)
+		if (add_path_to_sets(cur, sets, &solution) == ERROR)
 			return (1);
 	}
+	return (0);
+}
 
-int		solve(t_farm *farm, t_path_set *best_solution)
+int				solve(t_farm *farm, t_pathset *solution)
 {
 	t_bfs		*bfs;
+	int			error;
 
-	bfs = init_bfs(farm, start);
-	if (find_best_solution(bfs, farm, ants, best_solution))
+	error = 0;
+	bfs = init_bfs(farm);
+	if (find_solution(bfs, farm, solution) == ERROR)
 		error = 1;
 	delete_bfs(&bfs);
 	return (error);

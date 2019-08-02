@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 15:38:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/28 05:42:21 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/02 01:41:36 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,19 @@
 
 # include <stddef.h>
 
-# define START_ROOM 0x1
-# define END_ROOM 0x2
+# define ROOM(binarytree) ((t_room *)((binarytree)->content))
 
-# define ROOM(binarytree)	((t_room *)((binarytree)->content))
+# define NAME(room) (farm[room].name)
+# define X(room) (farm[room].x)
+# define Y(room) (farm[room].y)
+# define S_OR_E(room) (farm[room].start_or_end)
+# define NLINKS(room) (farm[room].nlinks)
+# define MLINKS(room) (farm[room].mlinks)
+# define LINKS(room) (farm[room].links)
+# define NPATHS(room) (farm[room].npaths)
+# define MPATHS(room) (farm[room].mpaths)
+# define PATHS(room) (farm[room].paths)
+
 
 typedef struct s_binarytree		t_binarytree;
 
