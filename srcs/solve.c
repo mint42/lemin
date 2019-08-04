@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/03 04:54:13 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/04 01:29:21 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,26 @@
 **		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
 */
 
-static int		find_next_path(t_bfs *cur, t_bfs *tail, size_t delimiter)
+static int		find_next_path(t_bfs *cur, t_bfs *tail, size_t *delimiter)
 {
-	
+	while (delimiter or d''' == -1?)
+	{
+		- do next breadth first search round 
+			how do you know when a round is over? i know that
+			but how do i know when ive gotten to a level
+				new variable? yes
+		- if make it to the, break
+		- ++cur
+	}
 }
 
-//	should delimiter be at the shortest or longest check?
+//	should delimiter be at the shortest or longest check? - longest
 
 static int		add_path_to_sets(t_bfs *bfs, t_pathset *sets, t_pathset *solution, size_t *delimeter)
 {
+	t_bfs	*cur;
+
+	cur = 0;
 	while (sets)
 	{
 		if (
@@ -60,9 +71,16 @@ static int		add_path_to_sets(t_bfs *bfs, t_pathset *sets, t_pathset *solution, s
 			- continue
 		}
 		set new delimiter
+		cur = sets;
 		++sets;
 	}
-	sets->next = init_pathset();
+	if (cur)
+		cur->next = init_pathset();
+	else
+	{
+		sets = init_pathset();
+		solution = sets;
+	}
 }
 
 static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
@@ -81,7 +99,7 @@ static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 		return (1);
 	while (sets)
 	{
-		if (find_next_path(cur, tail, delimiter) == ERROR)
+		if (find_next_path(cur, tail, &delimiter) == ERROR)
 			return (1);
 		if (add_path_to_sets(cur, sets, &solution, &delimiter) == ERROR)
 			return (1);
