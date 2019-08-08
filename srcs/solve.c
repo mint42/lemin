@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/04 01:29:21 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/07 18:06:30 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "paths.h"
 #include "ft_printf.h"
 #include <stddef.h>
-
 
 /*
 **	rules for solving:
@@ -34,54 +33,6 @@
 **				because what if the shorter path is needed by another identifier
 **		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
 */
-
-static int		find_next_path(t_bfs *cur, t_bfs *tail, size_t *delimiter)
-{
-	while (delimiter or d''' == -1?)
-	{
-		- do next breadth first search round 
-			how do you know when a round is over? i know that
-			but how do i know when ive gotten to a level
-				new variable? yes
-		- if make it to the, break
-		- ++cur
-	}
-}
-
-//	should delimiter be at the shortest or longest check? - longest
-
-static int		add_path_to_sets(t_bfs *bfs, t_pathset *sets, t_pathset *solution, size_t *delimeter)
-{
-	t_bfs	*cur;
-
-	cur = 0;
-	while (sets)
-	{
-		if (
-			compare pathset with new path
-			- not from same base path
-			- no collision from the paths DNI list and the existing paths)
-		{
-			add to set
-		}
-		if (pathset is now complete)
-		{
-			- compare against solution
-			- ++sets
-			- continue
-		}
-		set new delimiter
-		cur = sets;
-		++sets;
-	}
-	if (cur)
-		cur->next = init_pathset();
-	else
-	{
-		sets = init_pathset();
-		solution = sets;
-	}
-}
 
 static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 {
@@ -107,15 +58,17 @@ static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 	return (0);
 }
 
-int				solve(t_farm *farm, t_pathset *solution)
+int				solve(t_farm *farm, char **solution)
 {
 	t_bfs		*bfs;
+	t_pathset	*best_pathset;
 	int			error;
 
 	error = 0;
 	bfs = init_bfs(farm);
 	if (find_solution(bfs, farm, solution) == ERROR)
 		error = 1;
+	make_solution_printable(solution);
 	delete_bfs(&bfs);
 	return (error);
 }

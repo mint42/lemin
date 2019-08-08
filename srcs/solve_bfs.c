@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bfs.h                                              :+:      :+:    :+:   */
+/*   solve_bfs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/01 19:12:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/05 16:00:17 by rreedy           ###   ########.fr       */
+/*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
+/*   Updated: 2019/08/07 17:06:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BFS
-# define BFS_H
-
-
-typedef struct	s_bfs
+static int		find_next_path(t_bfs *cur, t_bfs *tail, size_t *delimiter)
 {
-	t_bfs		*prev;
-	t_bfs		*next;
-	uint8_t		start_or_end;
-	size_t		base_path;
-	size_t		id_array_index;
-	size_t		id_bit_index;
-	size_t		*paths_to_avoid;
-	size_t		npaths_to_avoid;
-	size_t		mpaths_to_avoid;
-	size_t		node_viewing;
-}				t_bfs;
-
-#endif
+	while (delimiter or d == -1 )
+	{
+		- do next breadth first search round 
+			how do you know when a round is over? i know that
+			but how do i know when ive gotten to a level
+				new variable? yes
+		- if make it to the, break
+		- ++cur
+	}
+}
