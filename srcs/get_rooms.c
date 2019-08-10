@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/01 21:16:34 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/07/28 02:53:03 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@
 #include "ft_binarytree.h"
 #include "get_next_line.h"
 
-static int		parse_comment_line(char *line, int *start_and_end)
+static int		parse_comment_line(char *line, int *start_end)
 {
 	if (ft_strequ("##start", line))
 	{
-		if ((*start_and_end) & START_ROOM)
+		if ((*start_end) & START_ROOM)
 			return (print_error(MULTIPLE_START_ROOMS));
-		(*start_and_end) = (*start_and_end) | START_ROOM;
+		(*start_end) = (*start_end) | START_ROOM;
 	}
 	else if (ft_strequ("##end", line))
 	{
-		if ((*start_and_end) & END_ROOM)
+		if ((*start_end) & END_ROOM)
 			return (print_error(MULTIPLE_END_ROOMS));
-		(*start_and_end) = (*start_and_end) | END_ROOM;
+		(*start_end) = (*start_end) | END_ROOM;
 	}
 	return (0);
 }
@@ -59,11 +59,11 @@ static int		parse_room_line(char *line, t_room *room)
 	return (0);
 }
 
-static int		parse_line(char *line, t_room **room, int *start_and_end)
+static int		parse_line(char *line, t_room **room, int *start_end)
 {
 	if (*line == '#')
 	{
-		if (parse_comment_line(line, start_and_end) == ERROR)
+		if (parse_comment_line(line, start_end) == ERROR)
 			return (1);
 		return (0);
 	}
@@ -75,30 +75,32 @@ static int		parse_line(char *line, t_room **room, int *start_and_end)
 		delete_room(*room, 0);
 		return (print_error(INVALID_ROOM_INPUT));
 	}
-	(*room)->start_or_end = *start_and_end;
-	*start_and_end = *start_and_end ^ (*start_and_end << 2);
+	(*room)->start_end = *start_end;
+	*start_end = *start_end ^ (*start_end << 2);
 	return (0);
 }
 
 int				get_rooms(t_input *input, t_binarytree **rooms, size_t *nrooms)
 {
-	t_room			*new_room;
-	int				start_and_end;
+	t_room			*room;
+	int				start_end;
 
-	new_room = 0;
-	start_and_end = 0;
+	start_end = 0;
 	while (get_next_line(STDIN_FD, &(input->line)))
 	{
+		room = 0;
 		if (ft_strchr(input->line, '-'))
 		{
-			if (!(start_and_end & START_ROOM) || !(start_and_end & END_ROOM))
+			if (!(start_end & START_ROOM) || !(start_end & END_ROOM))
 				return (print_error(NO_START_OR_END_ROOM));
 			return (0);
 		}
-		if (parse_line(input->line, &new_room, &start_and_end) == ERROR)
+		if (parse_line(input->line, &room, &start_end) == ERROR)
 			return (1);
-		insert_room(rooms, new_room);
-		update_input(input);
+		if (insert_room(rooms, room) == ERROR)
+			return (1);
+		if (update_input(input) == ERROR)
+			return (1);
 		++(*nrooms);
 	}
 	return (1);

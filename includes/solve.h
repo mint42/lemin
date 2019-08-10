@@ -6,14 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:53:48 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/16 00:24:54 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/02 01:34:15 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "stddef.h"
 
-int		errno;
+typedef struct s_farm	t_farm;
+typedef struct s_paths	t_paths;
 
-typedef struct s_room	t_room;
-
-int		solve(size_t ants, t_room *farm);
+int		solve(t_farm *farm, t_paths *solution)
