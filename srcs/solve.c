@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/07 18:06:30 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/10 15:38:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 		if (add_path_to_sets(cur, sets, &solution, &delimiter) == ERROR)
 			return (1);
 	}
-	return (0);
 }
 
 int				solve(t_farm *farm, char **solution)

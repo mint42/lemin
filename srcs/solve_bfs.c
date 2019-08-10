@@ -6,19 +6,27 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/07 17:06:12 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/10 16:28:17 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int		find_next_path(t_bfs *cur, t_bfs *tail, size_t *delimiter)
+static int		find_next_path(t_bfs *cur, t_bfs *tail, t_farm *farm, size_t *delimiter)
 {
-	while (delimiter or d == -1 )
+	size_t		nlinks;
+	size_t		level;
+	
+	level = 0;
+	while (level < delimiter)
 	{
-		- do next breadth first search round 
-			how do you know when a round is over? i know that
-			but how do i know when ive gotten to a level
-				new variable? yes
-		- if make it to the, break
-		- ++cur
+		nlinks = 0;
+		while (nlinks < (farm->graph[cur->room_id])->nlinks))
+		{
+			if (*((farm->graph[cur->room_id])->paths_crossed) != cur->room_id)
+				new_bfs_node();
+			++nlinks;
+		}
+		if (cur->next->depth_level > cur->depth_level)
+			++level;
+		cur = cur->next;
 	}
 }
