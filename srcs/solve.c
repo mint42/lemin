@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/10 15:38:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/12 13:12:43 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 	cur = bfs;
 	tail = bfs;
 	delimiter = 0;
-	if (find_next_path(cur, tail, delimiter) == ERROR)
+	if (bfs(cur, tail, delimiter) == ERROR)
 		return (print_error(NO_SOLUTION));
 	if (add_path_to_sets(cur, sets, &solution, &delimiter) == ERROR):
 		return (1);
 	while (sets)
 	{
-		if (find_next_path(cur, tail, &delimiter) == ERROR)
+		if (bfs(cur, tail, &delimiter) == ERROR)
 			return (1);
 		if (add_path_to_sets(cur, sets, &solution, &delimiter) == ERROR)
 			return (1);
