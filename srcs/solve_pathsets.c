@@ -6,21 +6,43 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/07 17:05:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/17 00:45:59 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //	should delimiter be at the shortest or longest check? - longest
 
-		if (sets->base_path != bfs->base_path)
-			- no collision from the paths DNI list and the existing paths)
-		paths_cur = sets->content->paths;
-		while (bfs->paths_to_avoid & paths_cur)
-		{
-			add to set
-		}
 
-static int		add_path_to_sets(t_bfs *bfs, t_list *sets, t_pathset *solution, size_t *delimeter)
+static int	compare_against_pathset(t_bfs *bfs, t_list *sets, )
+{
+	t_list		*sets_cur;
+	t_list		*paths_cur;
+	size_t		i;
+
+	if (sets->base_path != bfs->base_path)
+		return (0);
+	sets_cur = sets;
+	paths_cur = sets->content->paths;
+	while (sets_cur)
+	{
+		while (paths_cur)
+		{
+			i = 0;
+			while (i < bfs->n_paths_to_avoid)
+			{
+				if (bfs->paths_to_avoid[i] & paths_cur set thing)
+					break ;
+				++i;
+			}
+			add_to_set;
+			paths_cur = paths_cur->next;
+		}
+		sets_cur = sets_cur->next;
+	}
+	add_to_own_set;
+}
+
+int			add_path_to_sets(t_bfs *bfs, t_list *sets, t_pathset *solution, size_t *delimeter)
 {
 	t_bfs	*bfs_cur;
 
@@ -33,8 +55,11 @@ static int		add_path_to_sets(t_bfs *bfs, t_list *sets, t_pathset *solution, size
 	bfs_cur = 0;
 	while (sets)
 	{
-		compare against pathset, add path if passes 
-		set new delimiter
+		if (compare_against_pathset)
+		{
+			add path to set
+			set new delimiter
+		}
 		if (pathset is now complete (when the == complete variable))
 		{
 			- compare against solution
