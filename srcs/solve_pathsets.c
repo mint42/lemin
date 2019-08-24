@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/22 15:07:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/23 20:35:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,19 @@ static void		update_solution(t_bfs *bfs, t_pathset *pathset)
 	}
 }
 
-static int		look_for_path_conflicts(t_bfs *bfs, t_list *sets)
+static void		get_new_delimiter()
+{
+	run equation on pathset;
+}
+
+static void		look_for_path_conflicts(t_bfs *bfs, t_list *sets)
 {
 	t_list		*paths_cur;
+	t_list		*prev_path;
 	size_t		i;
 
 	if (PATHSET(sets)->base_path != bfs->base_path)
-		return (1);
+		return ;
 	paths_cur = PATHSET(sets)->paths;
 	while (paths_cur)
 	{
@@ -41,15 +47,19 @@ static int		look_for_path_conflicts(t_bfs *bfs, t_list *sets)
 		while (i < bfs->n_paths_to_avoid)
 		{
 			if (bfs->paths_to_avoid[i] & paths_cur)
-				return (CONFLICT);
+				return ;
 			++i;
 		}
+		prev_path = paths_cur;
 		paths_cur = paths_cur->next;
 	}
-	return (NO_CONFLICT);
+	prev_path->next = init_new_path();
+	get_new_delimiter();
+	return ;
 }
 
-int				update_pathsets(t_bfs *bfs, t_list *pathsets, t_pathset *solution, size_t *delimiter)
+int				update_pathsets(t_bfs *bfs, t_list *pathsets,
+					t_pathset *solution, size_t *delimiter)
 {
 	t_list	*prev_pathset;
 
@@ -62,15 +72,11 @@ int				update_pathsets(t_bfs *bfs, t_list *pathsets, t_pathset *solution, size_t
 	prev_pathset = pathsets;
 	while (pathsets)
 	{
-		if (look_for_path_conflicts(bfs, PATHSET(pathsets)) == NO_CONFLICT)
-		{
-			add_path_to_set;
-			set_new_delimiter;
-			if (PATHSET(pathsets).delimiter > *delimiter)
-				*delimeter = PATHSET(pathsets).delimiter;
-		}
+		update_pathset(bfs, PATHSET(pathsets));
+		if (PATHSET(pathsets).delimiter > *delimiter)
+			*delimeter = PATHSET(pathsets).delimiter;
 		if (PATHSET(pathsets).complete)
-			update_solution();
+			update_solution(bfs, pathsets, prev_pathset);
 		prev_pathset = pathsets;
 		pathsets = pathsets->next;
 	}

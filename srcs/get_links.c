@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/28 02:33:57 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/24 15:23:21 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int		parse_line(char *line, t_room *farm, size_t nrooms)
 	size_t		len;
 
 	room1 = nrooms / 2;
-	room2 = nrooms / 2;
+	room2 = room1;
 	len = ft_strlen(line, ' ');
 	if (len > ft_strlen(line) - 3)
 		return (1);

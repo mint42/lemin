@@ -1,5 +1,13 @@
 Questions
 
+
+Things to consider when allocating memory:
+	- Try using other vairables aren't doubling everytime you need more memory
+		1.5 MIGHT be more effiecent. Try it
+	- Try using more write calls instead of more malloc calls?
+	- for input, try different initial allocations. Maybe the difference between using the size of a line
+		vs some larger number just for less allocations
+
 1 - should i create a binary tree of the rooms as i receive them
 		pros:
 			validation would be made quicker and easier
