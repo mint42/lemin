@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/12 13:12:43 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/23 20:15:55 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 {
 	t_bfs		*cur;
 	t_bfs		*tail;
-	t_pathset	*sets;
+	t_list		*pathsets;
 	size_t		delimiter;
 
 	cur = bfs;
@@ -46,13 +46,13 @@ static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 	delimiter = 0;
 	if (bfs(cur, tail, delimiter) == ERROR)
 		return (print_error(NO_SOLUTION));
-	if (add_path_to_sets(cur, sets, &solution, &delimiter) == ERROR):
+	if (add_path_to_sets(cur, pathsets, &solution, &delimiter) == ERROR):
 		return (1);
 	while (sets)
 	{
 		if (bfs(cur, tail, &delimiter) == ERROR)
 			return (1);
-		if (add_path_to_sets(cur, sets, &solution, &delimiter) == ERROR)
+		if (update_pathsets(cur, pathsets, &solution, &delimiter) == ERROR)
 			return (1);
 	}
 }
@@ -67,7 +67,7 @@ int				solve(t_farm *farm, char **solution)
 	bfs = init_bfs(farm);
 	if (find_solution(bfs, farm, solution) == ERROR)
 		error = 1;
-	make_solution_printable(solution);
+	make_solution_printable(best_pathset, solution);
 	delete_bfs(&bfs);
 	return (error);
 }

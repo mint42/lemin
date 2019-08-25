@@ -6,68 +6,79 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/17 00:45:59 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/23 20:35:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //	should delimiter be at the shortest or longest check? - longest
 
-
-static int	compare_against_pathset(t_bfs *bfs, t_list *sets, )
+static void		update_solution(t_bfs *bfs, t_pathset *pathset)
 {
-	t_list		*sets_cur;
-	t_list		*paths_cur;
-	size_t		i;
-
-	if (sets->base_path != bfs->base_path)
-		return (0);
-	sets_cur = sets;
-	paths_cur = sets->content->paths;
-	while (sets_cur)
+	if (PATHSET(pathsets).n_lines < solution.n_lines)
 	{
-		while (paths_cur)
-		{
-			i = 0;
-			while (i < bfs->n_paths_to_avoid)
-			{
-				if (bfs->paths_to_avoid[i] & paths_cur set thing)
-					break ;
-				++i;
-			}
-			add_to_set;
-			paths_cur = paths_cur->next;
-		}
-		sets_cur = sets_cur->next;
+		cur->next = pathsets->next;
+		delete_pathset(&solution);
+		solution = PATHSET(pathsets);
 	}
-	add_to_own_set;
+	else
+	{
+		cur->next = pathsets->next;
+		delete_pathset(&PATHSET(pathsets));
+	}
 }
 
-int			add_path_to_sets(t_bfs *bfs, t_list *sets, t_pathset *solution, size_t *delimeter)
+static void		get_new_delimiter()
 {
-	t_bfs	*bfs_cur;
+	run equation on pathset;
+}
 
-	if (!sets)
+static void		look_for_path_conflicts(t_bfs *bfs, t_list *sets)
+{
+	t_list		*paths_cur;
+	t_list		*prev_path;
+	size_t		i;
+
+	if (PATHSET(sets)->base_path != bfs->base_path)
+		return ;
+	paths_cur = PATHSET(sets)->paths;
+	while (paths_cur)
 	{
-		sets = init_pathset();
-		solution = sets;
+		i = 0;
+		while (i < bfs->n_paths_to_avoid)
+		{
+			if (bfs->paths_to_avoid[i] & paths_cur)
+				return ;
+			++i;
+		}
+		prev_path = paths_cur;
+		paths_cur = paths_cur->next;
+	}
+	prev_path->next = init_new_path();
+	get_new_delimiter();
+	return ;
+}
+
+int				update_pathsets(t_bfs *bfs, t_list *pathsets,
+					t_pathset *solution, size_t *delimiter)
+{
+	t_list	*prev_pathset;
+
+	if (!pathsets)
+	{
+		pathsets = init_pathset();
+		solution = PATHSET(pathsets);
 		return (0);
 	}
-	bfs_cur = 0;
-	while (sets)
+	prev_pathset = pathsets;
+	while (pathsets)
 	{
-		if (compare_against_pathset)
-		{
-			add path to set
-			set new delimiter
-		}
-		if (pathset is now complete (when the == complete variable))
-		{
-			- compare against solution
-			- ++sets
-			- continue
-		}
-		cur = sets;
-		++sets;
+		update_pathset(bfs, PATHSET(pathsets));
+		if (PATHSET(pathsets).delimiter > *delimiter)
+			*delimeter = PATHSET(pathsets).delimiter;
+		if (PATHSET(pathsets).complete)
+			update_solution(bfs, pathsets, prev_pathset);
+		prev_pathset = pathsets;
+		pathsets = pathsets->next;
 	}
-	cur->next = init_pathset();
+	prev_pathset->next = init_pathset();
 }
