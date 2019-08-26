@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/23 20:35:31 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/26 15:00:46 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ static void		update_solution(t_bfs *bfs, t_pathset *pathset)
 
 static void		get_new_delimiter()
 {
-	run equation on pathset;
+	int		tovoid;
+
+	(void)tovoid;
+	//run equation on pathset;
 }
 
-static void		look_for_path_conflicts(t_bfs *bfs, t_list *sets)
+static void		update_pathset(t_bfs *bfs, t_list *sets)
 {
 	t_list		*paths_cur;
 	t_list		*prev_path;
@@ -53,19 +56,18 @@ static void		look_for_path_conflicts(t_bfs *bfs, t_list *sets)
 		prev_path = paths_cur;
 		paths_cur = paths_cur->next;
 	}
-	prev_path->next = init_new_path();
+	prev_path->next = ft_lstinit(init_pathset(bfs), 0);
 	get_new_delimiter();
 	return ;
 }
 
-int				update_pathsets(t_bfs *bfs, t_list *pathsets,
-					t_pathset *solution, size_t *delimiter)
+int				update_pathsets(t_bfs *bfs, t_list *pathsets, t_pathset *solution, size_t *delimiter)
 {
 	t_list	*prev_pathset;
 
 	if (!pathsets)
 	{
-		pathsets = init_pathset();
+		pathsets = ft_lstinit(init_pathset(bfs), 0);
 		solution = PATHSET(pathsets);
 		return (0);
 	}
@@ -80,5 +82,5 @@ int				update_pathsets(t_bfs *bfs, t_list *pathsets,
 		prev_pathset = pathsets;
 		pathsets = pathsets->next;
 	}
-	prev_pathset->next = init_pathset();
+	prev_pathset->next = ft_lstinit(init_pathset(bfs), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 15:38:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/02 01:41:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/26 15:02:57 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define MPATHS(room) (farm[room].mpaths)
 # define PATHS(room) (farm[room].paths)
 
+#define START_ROOM 1
+#define END_ROOM 2
 
 typedef struct s_binarytree		t_binarytree;
 
