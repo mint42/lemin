@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/26 15:14:05 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/28 12:48:44 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,52 @@ static int		parse_comment_line(char *line, int *start_end)
 	return (0);
 }
 
+static int		validate_coordinates(char *line)
+{
+	size_t	len;
+
+	len = 0;
+	if (*line == '-' || *line == '+')
+		++line;
+	while (ft_isdigit(line))
+	{
+		++line;
+		++len;
+	}
+	if (!len || *line != ' ')
+		return (1);
+	len = 0;
+	if (*line == '-' || *line == '+')
+		++line;
+	while (ft_isdigit(line))
+	{
+		++line;
+		++len;
+	}
+	if (!len || *line != ' ')
+		return (1);
+	return (0);
+}
+
 static int		parse_room_line(char *line, t_room *room)
 {
 	size_t		len;
 
 	len = ft_strlend(line, ' ');
-	if (!len)
-		return (1);
+	if (!len || len == ft_strlen(line))
+		return (print_error(INVALID_NAME));
 	room->name = ft_strndup(line, len);
 	line = line + len + 1;
-	len = ft_strlend(line, ' ');
-	if (!len || (!ft_isdigit(*line) && *line != '-'))
-		return (1);
-	room->x = ft_atoi(line);
-	line = line + len + 1;
-	if (!len || (!ft_isdigit(*line) && *line != '-'))
-		return (1);
-	room->y = ft_atoi(line);
+	if (validate_coordinates(line) == ERROR)
+		return (print_error(INVALID_COORDINATES));
 	return (0);
 }
 
-static int		parse_line(char *line, t_room **room, int *start_end)
+static int		parse_line(char *line, t_room **room, t_farm *farm)
 {
 	if (*line == '#')
 	{
-		if (parse_comment_line(line, start_end) == ERROR)
+		if (parse_comment_line(line, farm) == ERROR)
 			return (1);
 		return (0);
 	}
@@ -75,15 +96,15 @@ static int		parse_line(char *line, t_room **room, int *start_end)
 		delete_room(*room, 0);
 		return (print_error(INVALID_ROOM_INPUT));
 	}
-	(*room)->start_end = *start_end;
-	*start_end = *start_end ^ (*start_end << 2);
+    (*room)->start_end = *start_end;
+    *start_end = *start_end ^ (*start_end << 2);
 	return (0);
 }
 
 int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 {
 	t_room			*room;
-	int				start_end;
+	uint8_t			start_end;
 
 	start_end = 0;
 	while (get_next_line(STDIN_FD, &(input->line)))
@@ -91,16 +112,15 @@ int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 		room = 0;
 		if (ft_strchr(input->line, '-'))
 		{
-			if (!(start_end & START_ROOM) || !(start_end & END_ROOM))
+			if (!farm->start_room || !farm->end_room)
 				return (print_error(NO_START_OR_END_ROOM));
 			return (0);
 		}
-		if (parse_line(input->line, &room, &start_end) == ERROR)
+		if (parse_line(input->line, &room, &farm) == ERROR)
 			return (1);
 		if (insert_room(rooms, room) == ERROR)
 			return (1);
-		if (update_input(input) == ERROR)
-			return (1);
+		update_input(input);
 		++(farm->nrooms);
 	}
 	return (1);
