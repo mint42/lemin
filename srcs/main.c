@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/02 02:51:54 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/28 22:43:16 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,11 @@
 
 static void		print_solution(t_input *input, char *solution, size_t len)
 {
-	write();
-	write();
-	write();
+	(void)input;
+	(void)solution;
+	(void)len;
+	write(1, "input\n", 6);
+	write(1, "solution\n", 9);
 }
 
 static int		lemin(t_input *input, t_farm *farm, t_binarytree *rooms)

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/28 12:48:44 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/28 23:04:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include "input.h"
 #include "ft_fd.h"
 #include "ft_str.h"
-#include "ft_mem.h"
 #include "ft_utils.h"
 #include "ft_conv.h"
 #include "ft_binarytree.h"
 #include "get_next_line.h"
+#include <stdint.h>
 
-static int		parse_comment_line(char *line, int *start_end)
+static int		parse_comment_line(char *line, uint8_t *start_end)
 {
 	if (ft_strequ("##start", line))
 	{
@@ -46,7 +46,7 @@ static int		validate_coordinates(char *line)
 	len = 0;
 	if (*line == '-' || *line == '+')
 		++line;
-	while (ft_isdigit(line))
+	while (ft_isdigit(*line))
 	{
 		++line;
 		++len;
@@ -56,7 +56,7 @@ static int		validate_coordinates(char *line)
 	len = 0;
 	if (*line == '-' || *line == '+')
 		++line;
-	while (ft_isdigit(line))
+	while (ft_isdigit(*line))
 	{
 		++line;
 		++len;
@@ -80,11 +80,11 @@ static int		parse_room_line(char *line, t_room *room)
 	return (0);
 }
 
-static int		parse_line(char *line, t_room **room, t_farm *farm)
+static int		parse_line(char *line, t_room **room, uint8_t *start_end)
 {
 	if (*line == '#')
 	{
-		if (parse_comment_line(line, farm) == ERROR)
+		if (parse_comment_line(line, start_end) == ERROR)
 			return (1);
 		return (0);
 	}
@@ -101,7 +101,7 @@ static int		parse_line(char *line, t_room **room, t_farm *farm)
 	return (0);
 }
 
-int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
+int				get_rooms(t_input *input, t_binarytree *rooms, t_farm *farm)
 {
 	t_room			*room;
 	uint8_t			start_end;
@@ -112,11 +112,11 @@ int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 		room = 0;
 		if (ft_strchr(input->line, '-'))
 		{
-			if (!farm->start_room || !farm->end_room)
+			if (!(start_end & START_ROOM) || !(start_end & END_ROOM))
 				return (print_error(NO_START_OR_END_ROOM));
 			return (0);
 		}
-		if (parse_line(input->line, &room, &farm) == ERROR)
+		if (parse_line(input->line, &room, &start_end) == ERROR)
 			return (1);
 		if (insert_room(rooms, room) == ERROR)
 			return (1);

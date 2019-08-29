@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:15:51 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/03 17:30:54 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/28 22:26:15 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
 # define ROOM_DUPLICATE 6
 # define COORDINATE_DUPLICATE 7
 # define LINK_ERROR 8
-# define SOLVE_ERROR 9
+# define SOLVE_ERROR 9 
+# define INVALID_COORDINATES 10
+# define INVALID_NAME 11
 
 //enum	e_errors
 //{

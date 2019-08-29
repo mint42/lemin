@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 15:38:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/28 12:08:47 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/28 20:44:27 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define ROOM_H
 
 # include <stddef.h>
+# include <stdint.h>
 
 # define ROOM(binarytree) ((t_room *)((binarytree)->content))
 

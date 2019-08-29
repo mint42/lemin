@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/02 02:50:49 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/24 14:43:00 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/28 22:40:46 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,6 @@
 #include "ft_binarytree.h"
 #include "ft_printf.h"
 #include <stddef.h>
-
-/*
-**	t_room			*init_graph(size_t nrooms)
-**	{
-**		t_room	*graph;
-**	
-**		graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
-**		if (!graph)
-**			return (0);
-**		return (graph);
-**	}
-*/
-
-int				make_graph(t_binarytree *rooms, t_room **graph, size_t nrooms)
-{
-	t_room	*graph;
-
-	graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
-	if (!(*graph))
-		return (print_error(ALLOC_ERROR));
-	fill_graph(*graph, rooms, nrooms);
-	return (0);
-}
 
 static void		fill_graph(t_room *graph, t_binarytree *rooms, size_t room)
 {
@@ -53,6 +30,16 @@ static void		fill_graph(t_room *graph, t_binarytree *rooms, size_t room)
 			fill_graph(graph, rooms, room);
 	}
 }
+
+int				make_graph(t_binarytree *rooms, t_farm *farm)
+{
+	farm->graph = (t_room *)ft_memalloc(sizeof(t_room) * farm->nrooms);
+	if (!(farm->graph))
+		return (print_error(ALLOC_ERROR));
+	fill_graph(farm->graph, rooms, farm->nrooms - 1);
+	return (0);
+}
+
 
 int				delete_graph(t_room **graph)
 {
