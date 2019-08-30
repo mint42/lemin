@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/03 16:04:57 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/30 13:19:50 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,13 @@ t_room	*init_room(void)
 	if (!room)
 		return (0);
 	room->name = 0;
-	room->x = 0;
-	room->y = 0;
-	room->start_or_end = 0;
+	room->start_end = 0;
 	room->nlinks = 0;
 	room->mlinks = 0;
 	room->links = 0;
-	room->npaths = 0;
-	room->mpaths = 0;
-	room->paths = 0;
+	room->npaths_encountered = 0;
+	room->mpaths_encountered = 0;
+	room->paths_encountered = 0;
 	return (room);
 }
 

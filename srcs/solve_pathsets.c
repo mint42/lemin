@@ -6,26 +6,34 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/26 15:00:46 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/30 14:25:20 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "bfs.h"
+#include "pathsets.h"
+#include "ft_list.h"
+
 //	should delimiter be at the shortest or longest check? - longest
 
-static void		update_solution(t_bfs *bfs, t_pathset *pathset)
-{
-	if (PATHSET(pathsets).n_lines < solution.n_lines)
-	{
-		cur->next = pathsets->next;
-		delete_pathset(&solution);
-		solution = PATHSET(pathsets);
-	}
-	else
-	{
-		cur->next = pathsets->next;
-		delete_pathset(&PATHSET(pathsets));
-	}
-}
+/*
+**	static void		update_solution(t_bfs *bfs, t_list *sets, t_pathset *solution)
+**	{
+**		t_pathset	*cur;
+**	
+**		if (PATHSET(sets)->nmoves < solution->nmoves)
+**		{
+**			solution = PATHSET(sets);
+**			cur->next = sets->next;
+**			delete_pathset(&solution);
+**		}
+**		else
+**		{
+**			cur->next = sets->next;
+**			delete_pathset(&PATHSET(sets));
+**		}
+**	}
+*/
 
 static void		get_new_delimiter()
 {
@@ -41,7 +49,7 @@ static void		update_pathset(t_bfs *bfs, t_list *sets)
 	t_list		*prev_path;
 	size_t		i;
 
-	if (PATHSET(sets)->base_path != bfs->base_path)
+	if (PATH(sets, sets->paths)->base_path != bfs->base_path)
 		return ;
 	paths_cur = PATHSET(sets)->paths;
 	while (paths_cur)
@@ -61,26 +69,26 @@ static void		update_pathset(t_bfs *bfs, t_list *sets)
 	return ;
 }
 
-int				update_pathsets(t_bfs *bfs, t_list *pathsets, t_pathset *solution, size_t *delimiter)
+int				update_pathsets(t_bfs *bfs, t_list *sets, t_pathset *solution, size_t *delimiter)
 {
 	t_list	*prev_pathset;
 
-	if (!pathsets)
+	if (!sets)
 	{
-		pathsets = ft_lstinit(init_pathset(bfs), 0);
-		solution = PATHSET(pathsets);
+		sets = ft_lstinit(init_pathset(bfs), 0);
+		solution = PATHSET(sets);
 		return (0);
 	}
-	prev_pathset = pathsets;
-	while (pathsets)
+	prev_pathset = sets;
+	while (sets)
 	{
-		update_pathset(bfs, PATHSET(pathsets));
-		if (PATHSET(pathsets).delimiter > *delimiter)
-			*delimeter = PATHSET(pathsets).delimiter;
-		if (PATHSET(pathsets).complete)
-			update_solution(bfs, pathsets, prev_pathset);
-		prev_pathset = pathsets;
-		pathsets = pathsets->next;
+		update_pathset(bfs, PATHSET(sets));
+		if (PATHSET(sets)->delimiter > *delimiter)
+			*delimiter = PATHSET(sets)->delimiter;
+		if (PATHSET(sets)->completed)
+			solution = PATHSET(sets);
+		prev_pathset = sets;
+		sets = sets->next;
 	}
 	prev_pathset->next = ft_lstinit(init_pathset(bfs), 0);
 }

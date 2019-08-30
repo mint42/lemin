@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 14:44:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/29 11:26:31 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/30 10:43:59 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,16 @@ static void		fill_graph(t_room *graph, t_binarytree *rooms, size_t room)
 	}
 }
 
-int				make_graph(t_binarytree *rooms, t_room **graph, size_t nrooms)
+int				make_graph(t_binarytree *rooms, t_farm *farm)
 {
-	*graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
-	if (!(*graph))
+	farm->graph = (t_room *)ft_memalloc(sizeof(t_room) * farm->nrooms);
+	if (!(farm->graph))
 		return (print_error(ALLOC_ERROR));
-	fill_graph(*graph, rooms, nrooms);
+	fill_graph(farm->graph, rooms, farm->nrooms);
 	return (0);
 }
 
-void			delete_graph(t_room *graph)
+void			delete_graph(t_room **graph)
 {
 	(void)graph;
 	ft_printf("delete graph\n");

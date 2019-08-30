@@ -6,11 +6,12 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 13:18:01 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/30 00:16:26 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/30 11:20:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bfs.h"
+#include "ft_mem.h"
 
 t_bfs		*init_bfs()
 {
@@ -32,26 +33,26 @@ t_bfs		*init_bfs()
 	return (bfs);
 }
 
-int			new_bfs_node(t_bfs *cur, t_bfs *tail)
+int			new_bfs_node(t_bfs *cur, t_bfs *tail, t_farm *farm)
 {
 	(void)cur;
 	(void)tail;
+	(void)farm;
 	return (0);
 }
 
 void		delete_bfs(t_bfs **bfs)
 {
-	t_bfs	*cur;
+	t_bfs	**cur;
 
-	cur = *bfs;
 	while (bfs)
 	{
 		cur = bfs;
-		bfs = bfs->next;
-		ft_memdel(&(cur->prev));
-		ft_memdel(&(cur->next));
-		ft_memdel(&(cur->paths_to_avoid));
-		ft_memdel(&(cur->paths_to_avoid));
-		ft_memdel(&(cur));
+		bfs = &(*bfs)->next;
+		ft_memdel((void **)&((*cur)->prev));
+		ft_memdel((void **)&((*cur)->next));
+		ft_memdel((void **)&((*cur)->paths_to_avoid));
+		ft_memdel((void **)&((*cur)->paths_to_avoid));
+		ft_memdel((void **)cur);
 	}
 }

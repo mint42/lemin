@@ -6,11 +6,16 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 14:09:56 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/26 14:45:11 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/30 13:18:41 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-t_pathset	*init_pathset(t_bfs *path)
+#include "bfs.h"
+#include "pathsets.h"
+#include "ft_mem.h"
+#include "ft_list.h"
+
+t_pathset	*init_pathset(t_bfs *bfs)
 {
 	t_pathset	*pathset;
 
@@ -29,7 +34,7 @@ void		delete_pathset(void *content, size_t content_size)
 	(void)content_size;
 	if (content)
 	{
-		ft_lstdel((*content)->paths);
+		//ft_lstdel(&(content->paths), 0);
 		ft_memdel((void **)&content);
 	}
 }

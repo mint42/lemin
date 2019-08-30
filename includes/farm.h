@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/29 23:00:00 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/30 10:44:43 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ typedef struct s_binarytree		t_binarytree;
 t_farm		init_farm();
 t_room		*init_graph(size_t nrooms);
 int			make_graph(t_binarytree *rooms, t_farm *farm);
-int			delete_graph(t_room **farm);
+void		delete_graph(t_room **graph);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/29 23:52:10 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/30 13:10:03 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,40 +43,44 @@ static void		make_solution_printable(t_pathset *best, char **solution)
 	(void)solution;
 }
 
-static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
+static int		find_solution(t_bfs *bfs, t_list *sets, t_farm *farm, t_pathset *solution)
 {
 	t_bfs		*cur;
 	t_bfs		*tail;
-	t_list		*pathsets;
 	size_t		delimiter;
 
 	cur = bfs;
 	tail = bfs;
-	pathsets = 0;
 	delimiter = 0;
 	if (search(cur, tail, farm, &delimiter) == ERROR)
 		return (print_error(NO_SOLUTION));
-	if (update_pathsets(cur, pathsets, solution, &delimiter) == ERROR)
+	if (update_pathsets(cur, sets, solution, &delimiter) == ERROR)
 		return (1);
-	while (pathsets)
+	while (sets)
 	{
 		if (search(cur, tail, farm, &delimiter) == ERROR)
 			return (1);
-		if (update_pathsets(cur, pathsets, solution, &delimiter) == ERROR)
+		if (update_pathsets(cur, sets, solution, &delimiter) == ERROR)
 			return (1);
 	}
 	return (0);
 }
 
-int				solve(t_farm *farm, t_bfs *bfs, char **solution)
+int				solve(t_farm *farm, char **solution)
 {
+	t_bfs		*bfs;
+	t_list		*sets;
 	t_pathset	*best;
 	int			error;
 
+	bfs = init_bfs();
+	sets = 0;
 	error = 0;
 	best = 0;
-	if (find_solution(bfs, farm, best) == ERROR)
+	if (find_solution(bfs, sets, farm, best) == ERROR)
 		error = 1;
 	make_solution_printable(best, solution);
+	delete_bfs(&bfs);
+	ft_lstdel(&sets, delete_pathset);
 	return (error);
 }
