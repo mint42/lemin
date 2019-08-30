@@ -6,13 +6,18 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 19:12:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/10 16:27:55 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/30 00:16:03 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BFS
+#ifndef BFS_H
 # define BFS_H
 
+#include <stddef.h>
+#include <stdint.h>
+
+typedef struct s_bfs	t_bfs;
+typedef struct s_farm	t_farm;
 
 typedef struct	s_bfs
 {
@@ -28,5 +33,9 @@ typedef struct	s_bfs
 	size_t		room_id;
 	size_t		depth_level;
 }				t_bfs;
+
+t_bfs		*init_bfs(void);
+int			new_bfs_node(t_bfs *cur, t_bfs *tail, t_farm *farm);
+void		delete_bfs(t_bfs **bfs);
 
 #endif

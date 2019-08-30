@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:15:51 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/28 22:26:15 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/29 23:10:16 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define SOLVE_ERROR 9 
 # define INVALID_COORDINATES 10
 # define INVALID_NAME 11
+# define NO_SOLUTION 12
 
 //enum	e_errors
 //{

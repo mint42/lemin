@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   graph.c                                            :+:      :+:    :+:   */
+/*   struct_farm.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/02 02:50:49 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/28 22:40:46 by rreedy           ###   ########.fr       */
+/*   Created: 2019/08/24 14:44:26 by rreedy            #+#    #+#             */
+/*   Updated: 2019/08/29 11:26:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@
 #include "ft_binarytree.h"
 #include "ft_printf.h"
 #include <stddef.h>
+
+/*
+**	t_room			*init_graph(size_t nrooms)
+**	{
+**		t_room	*graph;
+**	
+**		graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
+**		if (!graph)
+**			return (0);
+**		return (graph);
+**	}
+*/
 
 static void		fill_graph(t_room *graph, t_binarytree *rooms, size_t room)
 {
@@ -31,19 +43,17 @@ static void		fill_graph(t_room *graph, t_binarytree *rooms, size_t room)
 	}
 }
 
-int				make_graph(t_binarytree *rooms, t_farm *farm)
+int				make_graph(t_binarytree *rooms, t_room **graph, size_t nrooms)
 {
-	farm->graph = (t_room *)ft_memalloc(sizeof(t_room) * farm->nrooms);
-	if (!(farm->graph))
+	*graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
+	if (!(*graph))
 		return (print_error(ALLOC_ERROR));
-	fill_graph(farm->graph, rooms, farm->nrooms - 1);
+	fill_graph(*graph, rooms, nrooms);
 	return (0);
 }
 
-
-int				delete_graph(t_room **graph)
+void			delete_graph(t_room *graph)
 {
 	(void)graph;
-	ft_printf("delete ant graph\n");
-	return (0);
+	ft_printf("delete graph\n");
 }

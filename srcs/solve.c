@@ -6,14 +6,17 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/23 20:15:55 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/29 23:52:10 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "farm.h"
 #include "room.h"
-#include "paths.h"
-#include "ft_printf.h"
+#include "pathsets.h"
+#include "bfs.h"
+#include "solve.h"
+#include "errors.h"
+#include "ft_list.h"
 #include <stddef.h>
 
 /*
@@ -34,6 +37,12 @@
 **		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
 */
 
+static void		make_solution_printable(t_pathset *best, char **solution)
+{
+	(void)best;
+	(void)solution;
+}
+
 static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 {
 	t_bfs		*cur;
@@ -43,31 +52,31 @@ static int		find_solution(t_bfs *bfs, t_farm *farm, t_pathset *solution)
 
 	cur = bfs;
 	tail = bfs;
+	pathsets = 0;
 	delimiter = 0;
-	if (bfs(cur, tail, delimiter) == ERROR)
+	if (search(cur, tail, farm, &delimiter) == ERROR)
 		return (print_error(NO_SOLUTION));
-	if (add_path_to_sets(cur, pathsets, &solution, &delimiter) == ERROR):
+	if (update_pathsets(cur, pathsets, solution, &delimiter) == ERROR)
 		return (1);
-	while (sets)
+	while (pathsets)
 	{
-		if (bfs(cur, tail, &delimiter) == ERROR)
+		if (search(cur, tail, farm, &delimiter) == ERROR)
 			return (1);
-		if (update_pathsets(cur, pathsets, &solution, &delimiter) == ERROR)
+		if (update_pathsets(cur, pathsets, solution, &delimiter) == ERROR)
 			return (1);
 	}
+	return (0);
 }
 
-int				solve(t_farm *farm, char **solution)
+int				solve(t_farm *farm, t_bfs *bfs, char **solution)
 {
-	t_bfs		*bfs;
-	t_pathset	*best_pathset;
+	t_pathset	*best;
 	int			error;
 
 	error = 0;
-	bfs = init_bfs(farm);
-	if (find_solution(bfs, farm, solution) == ERROR)
+	best = 0;
+	if (find_solution(bfs, farm, best) == ERROR)
 		error = 1;
-	make_solution_printable(best_pathset, solution);
-	delete_bfs(&bfs);
+	make_solution_printable(best, solution);
 	return (error);
 }

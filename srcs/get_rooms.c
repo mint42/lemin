@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/28 23:04:07 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/29 10:55:49 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static int		parse_line(char *line, t_room **room, uint8_t *start_end)
 	return (0);
 }
 
-int				get_rooms(t_input *input, t_binarytree *rooms, t_farm *farm)
+int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 {
 	t_room			*room;
 	uint8_t			start_end;

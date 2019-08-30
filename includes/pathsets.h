@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 02:27:36 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/26 14:45:18 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/08/29 23:09:22 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define PATHSETS_H
 
 #include <stddef.h>
+#include <stdbool.h>
+
+typedef struct s_list	t_list;
 
 typedef struct	s_pathset
 {
