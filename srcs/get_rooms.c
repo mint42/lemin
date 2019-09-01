@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/29 10:55:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 01:51:41 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ static int		parse_line(char *line, t_room **room, uint8_t *start_end)
 		delete_room(*room, 0);
 		return (print_error(INVALID_ROOM_INPUT));
 	}
-    (*room)->start_end = *start_end;
-    *start_end = *start_end ^ (*start_end << 2);
+	(*room)->start_end = *start_end;
+	*start_end = *start_end ^ (*start_end << 2);
 	return (0);
 }
 

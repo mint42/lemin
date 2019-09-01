@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/30 00:16:47 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 01:55:50 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		search(t_bfs *cur, t_bfs *tail, t_farm *farm, size_t *delimiter)
 {
 	size_t		nlinks;
 	size_t		level;
-	
+
 	level = 0;
 	while (level < *delimiter)
 	{

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/26 15:01:22 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 01:52:42 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int		parse_line(char *line, t_room *farm, size_t nrooms)
 		return (1);
 	return (0);
 }
-		
+
 int				get_links(t_input *input, t_room *farm, size_t nrooms)
 {
 	if (!input || !farm)

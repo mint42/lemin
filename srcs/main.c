@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/30 12:59:44 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 01:39:42 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int				main(void)
 		error = 1;
 	ft_treedel(&rooms, delete_room);
 	delete_graph(&(farm.graph));
-	delete_input(&input);
+	ft_strdel(&(input.input));
+	ft_strdel(&(input.line));
 	return (error);
 }

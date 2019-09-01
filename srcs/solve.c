@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/30 13:10:03 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 02:00:39 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static void		make_solution_printable(t_pathset *best, char **solution)
 	(void)solution;
 }
 
-static int		find_solution(t_bfs *bfs, t_list *sets, t_farm *farm, t_pathset *solution)
+static int		find_solution(t_bfs *bfs, t_list *sets, t_farm *farm,
+					t_pathset *solution)
 {
 	t_bfs		*cur;
 	t_bfs		*tail;

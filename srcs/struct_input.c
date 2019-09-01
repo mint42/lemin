@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 23:16:50 by rreedy            #+#    #+#             */
-/*   Updated: 2019/07/01 01:27:20 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 01:35:37 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,4 @@ void			update_input(t_input *input)
 	input->input_size = input->input_size + input->line_size;
 	input->input[input->input_size - 1] = '\n';
 	ft_strdel(&input->line);
-}
-
-void			delete_input(t_input *input)
-{
-	ft_strdel(&(input->input));
-	ft_strdel(&(input->line));
 }

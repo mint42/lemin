@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 01:42:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/06/27 18:56:44 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 01:47:56 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stddef.h>
 
-typedef struct 		s_room	t_room;
+typedef struct s_room	t_room;
 
 typedef struct		s_input
 {
@@ -25,7 +25,6 @@ typedef struct		s_input
 	char			*input;
 	char			*line;
 }					t_input;
-
 
 t_input				init_input(void);
 void				update_input(t_input *input);

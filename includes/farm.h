@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/30 10:44:43 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 01:48:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "room.h"
 # include <stddef.h>
+
+typedef struct s_binarytree		t_binarytree;
 
 typedef struct	s_farm
 {
@@ -25,11 +27,9 @@ typedef struct	s_farm
 	t_room		*graph;
 }				t_farm;
 
-typedef struct s_binarytree		t_binarytree;
-
-t_farm		init_farm();
-t_room		*init_graph(size_t nrooms);
-int			make_graph(t_binarytree *rooms, t_farm *farm);
-void		delete_graph(t_room **graph);
+t_farm			init_farm();
+t_room			*init_graph(size_t nrooms);
+int				make_graph(t_binarytree *rooms, t_farm *farm);
+void			delete_graph(t_room **graph);
 
 #endif

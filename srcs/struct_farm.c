@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 14:44:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/08/30 10:43:59 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/01 01:59:47 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,27 @@
 #include "ft_printf.h"
 #include <stddef.h>
 
-/*
-**	t_room			*init_graph(size_t nrooms)
-**	{
-**		t_room	*graph;
-**	
-**		graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
-**		if (!graph)
-**			return (0);
-**		return (graph);
-**	}
-*/
+t_farm			init_farm(void)
+{
+	t_farm	farm;
+
+	farm.ants = 0;
+	farm.start_room_id = 0;
+	farm.end_room_id = 0;
+	farm.nrooms = 0;
+	farm.graph = 0;
+	return (farm);
+}
+
+t_room			*init_graph(size_t nrooms)
+{
+	t_room	*graph;
+
+	graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
+	if (!graph)
+		return (0);
+	return (graph);
+}
 
 static void		fill_graph(t_room *graph, t_binarytree *rooms, size_t room)
 {
