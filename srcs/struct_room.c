@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/01 02:07:31 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/03 19:36:03 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "ft_str.h"
 #include "ft_binarytree.h"
 
-t_room	*init_room(void)
+t_room			*init_room(void)
 {
 	t_room	*room;
 
@@ -35,19 +35,17 @@ t_room	*init_room(void)
 	return (room);
 }
 
-int		insert_room(t_binarytree **rooms, t_room *room)
+static void		insert_by_name(t_binarytree **rooms, t_binarytree *room)
 {
 	int		compare;
 
-	if (!room)
-		return (0);
 	if (!*rooms)
-		*rooms = ft_treeinit(room, 0);
+		*rooms = new_room;
 	else
 	{
 		compare = ft_strcmp(ROOM(*rooms)->name, room->name);
 		if (compare == 0)
-			return (print_error(ROOM_DUPLICATE));
+			return (print_error(E_ROOM_DUPLICATE));
 		else if (compare > 0)
 			insert_room(&(*rooms)->right, room);
 		else
@@ -56,7 +54,37 @@ int		insert_room(t_binarytree **rooms, t_room *room)
 	return (0);
 }
 
-void	delete_room(void *content, size_t content_size)
+int 			sort_rooms_by_name(t_binarytree **rooms)
+{
+	if (!rooms)
+		return ;
+	if (rooms->left)
+		sort_rooms_by_name(rooms->left);
+	if (rooms->right)
+		sort_rooms_by_name(rooms->right);
+	re_place(rooms);
+}
+
+int				insert_by_coordinate(t_binarytree **rooms, t_room *room)
+{
+	if (!room)
+		return (0);
+	if (!*rooms)
+		*rooms = ft_treeinit(room, 0);
+	else
+	{
+		if (ROOM(*rooms)->x == room->x && ROOM(*rooms)->y == room->y)
+			return (print_error(E_COORDINATE_DUPLICATE));
+		if (ROOM(*rooms)->x > room->x ||
+				(ROOM(*rooms)->x == room->x && ROOM(*rooms)->y > room->y))
+			insert_room(&(*rooms)->right, room);
+		else
+			insert_room(&(*rooms)->left, room);
+	}
+	return (0);
+}
+
+void			delete_room(void *content, size_t content_size)
 {
 	(void)content_size;
 	if (content)

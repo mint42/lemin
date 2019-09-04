@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 14:44:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/01 01:59:47 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/03 16:21:33 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int				make_graph(t_binarytree *rooms, t_farm *farm)
 {
 	farm->graph = (t_room *)ft_memalloc(sizeof(t_room) * farm->nrooms);
 	if (!(farm->graph))
-		return (print_error(ALLOC_ERROR));
+		return (print_error(E_ALLOC_ERROR));
 	fill_graph(farm->graph, rooms, farm->nrooms);
 	return (0);
 }

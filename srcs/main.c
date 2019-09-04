@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/01 01:39:42 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/03 17:13:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,19 @@ static int		lemin(t_input *input, t_farm *farm, t_binarytree **rooms)
 
 	solution = 0;
 	if (get_ants(input, &farm->ants) == ERROR)
-		return (1);
+		return (ERROR);
 	if (get_rooms(input, rooms, farm) == ERROR)
-		return (1);
+		return (ERROR);
 	if (make_graph(*rooms, farm) == ERROR)
-		return (1);
+		return (ERROR);
 	if (get_links(input, farm) == ERROR)
-		return (1);
-	if (solve(farm, &solution) == ERROR)
-		return (1);
+		return (ERROR);
+//	if (solve(farm, &solution) == ERROR)
+		return (ERROR);
+	ft_putendl("asdf");
 	ft_putendl(input->input);
-	ft_putendl(solution);
-	ft_strdel(&solution);
+//	ft_putendl(solution);
+//	ft_strdel(&solution);
 	return (0);
 }
 
@@ -57,7 +58,7 @@ int				main(void)
 	if (lemin(&input, &farm, &rooms) == ERROR)
 		error = 1;
 	ft_treedel(&rooms, delete_room);
-	delete_graph(&(farm.graph));
+//	delete_graph(&(farm.graph));
 	ft_strdel(&(input.input));
 	ft_strdel(&(input.line));
 	return (error);

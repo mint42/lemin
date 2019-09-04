@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/01 01:55:50 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/03 17:03:38 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		search(t_bfs *cur, t_bfs *tail, t_farm *farm, size_t *delimiter)
 		{
 			if ((farm->graph[cur->room_id]).links[nlinks] != cur->room_id)
 				if (new_bfs_node(cur, tail, farm) == ERROR)
-					return (1);
+					return (ERROR);
 			++nlinks;
 		}
 		if (cur->next->depth_level > cur->depth_level)
