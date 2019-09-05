@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/04 19:28:28 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/05 11:40:09 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			insert_room_by_name(t_binarytree **rooms, t_binarytree *room)
 {
 	int		compare;
 
-	if (!*rooms)
+	if (!rooms || !*rooms)
 		*rooms = room;
 	else
 	{
@@ -58,7 +58,7 @@ int			insert_room_by_coordinates(t_binarytree **rooms, t_room *room)
 {
 	if (!room)
 		return (0);
-	if (!*rooms)
+	if (!rooms || !*rooms)
 		*rooms = ft_treeinit(room, 0);
 	else
 	{

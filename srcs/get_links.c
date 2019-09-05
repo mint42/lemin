@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/03 17:03:38 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/05 14:42:39 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "ft_str.h"
 #include "ft_mem.h"
 #include "get_next_line.h"
-#include <stddef.h>
+#include <sys/types.h>
 
 static int		copy_links(size_t **links, size_t max_links)
 {
@@ -26,7 +26,7 @@ static int		copy_links(size_t **links, size_t max_links)
 
 	new_links = (size_t *)ft_memalloc(sizeof(size_t) * max_links);
 	if (!new_links)
-		return (ERROR);
+		return (print_error(E_ALLOC_ERROR));
 	max_links = max_links / 2;
 	i = 0;
 	while (i < max_links)
@@ -54,48 +54,55 @@ static int		add_link(size_t room, size_t link, t_room *graph)
 	return (0);
 }
 
-static int		find_room(char *name, size_t *room, t_room *graph, size_t nrooms)
+static int		find_room(char *name, size_t *room_id, t_farm *farm, ssize_t jump)
 {
 	int		cmp;
 
-	cmp = ft_strcmp(name, graph[*room].name);
 	if (!name)
 		return (ERROR);
+	cmp = ft_strcmp(name, (farm->graph)[*room_id].name);
+	if (jump == -1 || (jump == 0 && farm->nrooms % 2 == 0))
+		return ((cmp) ? ERROR : 0);
+	if (jump == 0)
+	{
+		*room_id = *room_id + ((cmp) ? 1 : -1);
+		find_room(name, room_id, farm, -1);
+	}
 	if (cmp > 0)
 	{
-		*room = (nrooms + *room) / 2;
-		find_room(name, room, graph, nrooms);
+		*room_id = *room_id + jump;
+		find_room(name, room_id, farm, jump / 2);
 	}
 	if (cmp < 0)
 	{
-		*room = *room / 2;
-		find_room(name, room, graph, nrooms / 2);
+		*room_id = *room_id - jump;
+		find_room(name, room_id, farm, jump / 2);
 	}
 	return (0);
 }
 
-static int		parse_line(char *line, t_room *graph, size_t nrooms)
+static int		parse_line(char *line, t_farm *farm)
 {
-	size_t		room1;
-	size_t		room2;
+	size_t		room1_id;
+	size_t		room2_id;
 	size_t		len;
 
-	room1 = nrooms / 2;
-	room2 = room1;
+	room1_id = farm->nrooms / 2;
+	room2_id = room1_id;
 	len = ft_strlend(line, ' ');
-	if (len > ft_strlen(line) - 3)
-		return (ERROR);
+	if (len > ft_strlen(line) - 4)
+		return (print_error(E_INVALID_LINK_FORMAT));
 	line[len] = '\0';
-	if (find_room(line, &room1, graph, nrooms) == ERROR)
-		return (ERROR);
+	if (find_room(line, &room1_id, farm, farm->nrooms / 2) == ERROR)
+		return (E_LINK_GIVEN_DNE);
 	line[len] = ' ';
 	if (line[len + 1] != '-' || line[len + 2] != ' ')
+		return (print_error(E_INVALID_LINK_FORMAT));
+	if (find_room(line + len + 3, &room2_id, farm, farm->nrooms / 2) == ERROR)
+		return (E_LINK_GIVEN_DNE);
+	if (add_link(room1_id, room2_id, farm->graph) == ERROR)
 		return (ERROR);
-	if (find_room(line + (len + 3), &room2, graph, nrooms) == ERROR)
-		return (ERROR);
-	if (add_link(room1, room2, graph) == ERROR)
-		return (ERROR);
-	if (add_link(room2, room1, graph) == ERROR)
+	if (add_link(room2_id, room1_id, farm->graph) == ERROR)
 		return (ERROR);
 	return (0);
 }
@@ -106,7 +113,7 @@ int				get_links(t_input *input, t_farm *farm)
 		return (ERROR);
 	while (get_next_line(STDIN_FD, &(input->line)))
 	{
-		if (parse_line(input->line, farm->graph, farm->nrooms) == ERROR)
+		if (parse_line(input->line, farm) == ERROR)
 			return (ERROR);
 		update_input(input);
 	}

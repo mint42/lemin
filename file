@@ -1,2 +1,6 @@
 43
+##start
 room 1 2
+##end
+room2 3 5
+room - room2

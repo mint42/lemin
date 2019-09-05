@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 16:28:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/03 17:23:31 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/05 14:30:50 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int		print_error(enum e_errors error_code)
 		"Multiple rooms have been defined with the same coordinates.",
 		"No coordinates given for one or more rooms.",
 		"Invalid coordinate given for one or more rooms.",
-		"Link error, otherwise not specified.",
+		"Invalid link format",
+		"Room given for link does not exist",
 		"Solve error, otherwise not specified.",
 		"No solution.",
 	};
