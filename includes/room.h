@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/21 15:38:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/01 01:49:32 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/04 19:19:24 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ typedef struct s_binarytree		t_binarytree;
 
 typedef struct	s_room
 {
-	char		*name;
 	uint8_t		start_end;
+	int			x;
+	int			y;
+	char		*name;
 	size_t		len;
 	size_t		*links;
 	size_t		nlinks;
@@ -48,7 +50,9 @@ typedef struct	s_room
 }				t_room;
 
 t_room			*init_room(void);
-int				insert_room(t_binarytree **rooms, t_room *room);
+int				rearrange_rooms_by_name(t_binarytree **rooms_by_coordinte);
+int				insert_room_by_coordinates(t_binarytree **rooms, t_room *room);
+int				insert_room_by_name(t_binarytree **rooms, t_binarytree *room);
 void			delete_room(void *content, size_t content_size);
 
 #endif

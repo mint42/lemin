@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/03 19:36:04 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/04 19:18:05 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,38 +39,29 @@ static int		parse_comment_line(char *line, uint8_t *start_end)
 	return (0);
 }
 
-static int		get_coordinates(char *line, t_room *room)
+static int		parse_room_line(char *line, t_room *room)
 {
-	room->x = ft_atoi(*line);
+	room->len = ft_strlend(line, ' ');
+	if (!room->len)
+		return (print_error(E_EMPTY_LINE));
+	if (room->len == ft_strlen(line))
+		return (print_error(E_NO_COORDINATES));
+	room->name = ft_strndup(line, room->len);
+	line = line + room->len + 1;
+	room->x = ft_atoi(line);
 	if (*line == '-' || *line == '+')
 		++line;
 	while (ft_isdigit(*line))
 		++line;
 	if (room->x == 0 && *line != ' ')
-		return (ERROR);
+		return (print_error(E_INVALID_COORDINATE));
 	++line;
-	len = 0;
-	room->y = ft_atoi(*line);
+	room->y = ft_atoi(line);
 	if (*line == '-' || *line == '+')
 		++line;
 	while (ft_isdigit(*line))
 		++line;
 	if (room->y == 0 && !ft_isdigit(*(line - 1)))
-		return (ERROR);
-	return (0);
-}
-
-static int		parse_room_line(char *line, t_room *room)
-{
-	size_t		len;
-
-	len = ft_strlend(line, ' ');
-	if (!len)
-		return (print_error(E_EMPTY_LINE));
-	if (len == ft_strlen(line))
-		return (print_error(E_NO_COORDINATES));
-	room->name = ft_strndup(line, len);
-	if (validate_coordinates(line + len + 1) == ERROR)
 		return (print_error(E_INVALID_COORDINATE));
 	return (0);
 }
@@ -111,11 +102,13 @@ int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 				return (print_error(E_NO_START_ROOM));
 			if (!(start_end & END_ROOM))
 				return (print_error(E_NO_END_ROOM));
-			return (sort_rooms_by_name(rooms) == ERROR);
+			if (rearrange_rooms_by_name(rooms) == ERROR)
+				return (ERROR);
+			return (0);
 		}
 		if (parse_line(input->line, &room, &start_end) == ERROR)
 			return (ERROR);
-		if (insert_coordinates(rooms, room) == ERROR)
+		if (insert_room_by_coordinates(rooms, room) == ERROR)
 			return (ERROR);
 		update_input(input);
 		++(farm->nrooms);
