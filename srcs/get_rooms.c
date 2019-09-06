@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/04 19:18:05 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/06 11:32:43 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,20 @@ static int		parse_line(char *line, t_room **room, uint8_t *start_end)
 	*start_end = *start_end ^ (*start_end << 2);
 	return (0);
 }
+
+/*
+**	#include "ft_printf.h"
+**	static void		print_rooms(t_binarytree *rooms)
+**	{
+**		if (!rooms)
+**			return ;
+**		if (rooms->left)
+**			print_rooms(rooms->left);
+**		ft_printf("name: %s\nlen: %zd\nx: %d\ny: %d\n\n", ROOM(rooms)->name, ROOM(rooms)->len, ROOM(rooms)->x, ROOM(rooms)->y);
+**		if (rooms->right)
+**			print_rooms(rooms->right);
+**	}
+*/
 
 int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 {

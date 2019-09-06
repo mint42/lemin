@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 19:19:38 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/04 19:28:47 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/06 12:58:13 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,20 @@ static int 		rearrange(t_binarytree **rooms_by_coordinate,
 		rearrange(&(*rooms_by_coordinate)->left, rooms_by_name);
 	if ((*rooms_by_coordinate)->right)
 		rearrange(&(*rooms_by_coordinate)->right, rooms_by_name);
-	if (insert_room_by_name(rooms_by_name, *rooms_by_coordinate) == ERROR)
+	if (!rooms_by_name || !*rooms_by_name)
+		*rooms_by_name = *rooms_by_coordinate;
+	else if (insert_room_by_name(rooms_by_name, *rooms_by_coordinate) == ERROR)
 		return (ERROR);
 	return (0);
 }
 
 int 			rearrange_rooms_by_name(t_binarytree **rooms_by_coordinate)
 {
-	t_binarytree	**rooms_by_name;
+	t_binarytree	*rooms_by_name;
 
 	rooms_by_name = 0;
-	if (rearrange(rooms_by_coordinate, rooms_by_name) == ERROR)
+	if (rearrange(rooms_by_coordinate, &rooms_by_name) == ERROR)
 		return (ERROR);
-	rooms_by_coordinate = rooms_by_name;
+	rooms_by_coordinate = &rooms_by_name;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/05 11:37:50 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/06 12:58:46 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static int		lemin(t_input *input, t_farm *farm, t_binarytree **rooms)
 		return (ERROR);
 	if (get_links(input, farm) == ERROR)
 		return (ERROR);
-//	if (solve(farm, &solution) == ERROR)
-//		return (ERROR);
+	if (solve(farm, &solution) == ERROR)
+		return (ERROR);
 	ft_putendl(input->input);
-//	ft_putendl(solution);
-//	ft_strdel(&solution);
+	ft_putstr(solution);
+	ft_strdel(&solution);
 	return (0);
 }
 
@@ -57,7 +57,7 @@ int				main(void)
 	if (lemin(&input, &farm, &rooms) == ERROR)
 		error = 1;
 	ft_treedel(&rooms, delete_room);
-//	delete_graph(&(farm.graph));
+	delete_graph(&(farm.graph));
 	ft_strdel(&(input.input));
 	ft_strdel(&(input.line));
 	return (error);

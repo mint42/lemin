@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/05 11:40:09 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/06 11:31:34 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,20 @@ t_room		*init_room(void)
 
 int			insert_room_by_name(t_binarytree **rooms, t_binarytree *room)
 {
-	int		compare;
+	int		cmp;
 
 	if (!rooms || !*rooms)
+	{
+		room->left = 0;
+		room->right = 0;
 		*rooms = room;
+	}
 	else
 	{
-		compare = ft_strcmp(ROOM(*rooms)->name, ROOM(room)->name);
-		if (compare == 0)
+		cmp = ft_strcmp(ROOM(*rooms)->name, ROOM(room)->name);
+		if (cmp == 0)
 			return (print_error(E_ROOM_DUPLICATE));
-		else if (compare > 0)
+		else if (cmp > 0)
 			insert_room_by_name(&(*rooms)->right, room);
 		else
 			insert_room_by_name(&(*rooms)->left, room);
@@ -64,8 +68,8 @@ int			insert_room_by_coordinates(t_binarytree **rooms, t_room *room)
 	{
 		if (ROOM(*rooms)->x == room->x && ROOM(*rooms)->y == room->y)
 			return (print_error(E_COORDINATE_DUPLICATE));
-		if (ROOM(*rooms)->x > room->x ||
-				(ROOM(*rooms)->x == room->x && ROOM(*rooms)->y > room->y))
+		if (ROOM(*rooms)->x < room->x ||
+				(ROOM(*rooms)->x == room->x && ROOM(*rooms)->y < room->y))
 			insert_room_by_coordinates(&(*rooms)->right, room);
 		else
 			insert_room_by_coordinates(&(*rooms)->left, room);
