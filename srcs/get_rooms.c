@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/08 16:56:38 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/08 18:11:46 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int		parse_room_line(char *line, t_room *room)
 		++line;
 	while (ft_isdigit(*line))
 		++line;
-	if (room->y == 0 && !ft_isdigit(*(line - 1)))
+	if (*line)
 		return (print_error(E_INVALID_COORDINATE));
 	return (0);
 }

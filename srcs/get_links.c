@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/08 17:46:09 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/08 18:33:04 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int		find_room(char *name, size_t *room_id, t_farm *farm, ssize_t jump)
 
 	if (!name)
 		return (ERROR);
-	cmp = ft_strcmp(name, (farm->graph)[*room_id].name);
+	cmp = ft_strncmp(name, (farm->graph)[*room_id].name, (farm->graph)[*room_id].len);
 	if (jump == -1 || (jump == 0 && farm->nrooms % 2 == 0))
 		return ((cmp) ? ERROR : 0);
 	if (jump == 0)
@@ -99,7 +99,7 @@ static int		parse_line(char *line, t_farm *farm)
 	if (find_room(line, &room1_id, farm, farm->nrooms / 2) == ERROR)
 		return (E_LINK_GIVEN_DNE);
 	line[len] = ' ';
-	if (line[len + 1] != '-' || line[len + 2] != ' ')
+	if (line[len + 1] != '-' || line[len + 2] != ' ' || ft_strlen(line + len + 3) != ft_strlend(line + len + 3, ' '))
 		return (print_error(E_INVALID_LINK_FORMAT));
 	if (find_room(line + len + 3, &room2_id, farm, farm->nrooms / 2) == ERROR)
 		return (E_LINK_GIVEN_DNE);
@@ -114,6 +114,9 @@ int				get_links(t_input *input, t_farm *farm)
 {
 	if (!input || !farm || !farm->graph)
 		return (ERROR);
+	if (parse_line(input->line, farm) == ERROR)
+		return (ERROR);
+	update_input(input);
 	while (get_next_line(STDIN_FD, &(input->line)))
 	{
 		if (parse_line(input->line, farm) == ERROR)
