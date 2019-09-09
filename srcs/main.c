@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/06 12:58:46 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/08 18:05:42 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,29 @@
 #include <unistd.h>
 #include <stddef.h>
 
+
+/*
+**	#include "ft_printf.h"
+**	
+**	static void		print_rooms(t_farm *farm)
+**	{
+**		size_t	i;
+**	
+**		i = 0;
+**		ft_printf("ants: %zd\nstart_room_id: %zd\nend_room_id: %zd\nnrooms: %zd\nrooms:\n\n",
+**			farm->ants, farm->start_room_id, farm->end_room_id, farm->nrooms);
+**		while (i < farm->nrooms)
+**		{
+**			ft_printf("%s\n\n", (farm->graph)[i].name);
+**			++i;
+**		}
+**	}
+**	
+*/
+
 static int		lemin(t_input *input, t_farm *farm, t_binarytree **rooms)
 {
-	char	*solution;
+	char			*solution;
 
 	solution = 0;
 	if (get_ants(input, &farm->ants) == ERROR)
@@ -35,6 +55,7 @@ static int		lemin(t_input *input, t_farm *farm, t_binarytree **rooms)
 		return (ERROR);
 	if (get_links(input, farm) == ERROR)
 		return (ERROR);
+	print_rooms(farm);
 	if (solve(farm, &solution) == ERROR)
 		return (ERROR);
 	ft_putendl(input->input);

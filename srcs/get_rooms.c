@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/06 11:32:43 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/08 16:56:38 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static int		parse_room_line(char *line, t_room *room)
 	return (0);
 }
 
-static int		parse_line(char *line, t_room **room, uint8_t *start_end)
+static int		parse_line(char *line, t_room **room, uint8_t *start_end,
+					size_t *nrooms)
 {
 	if (*line == '#')
 	{
@@ -82,24 +83,11 @@ static int		parse_line(char *line, t_room **room, uint8_t *start_end)
 		delete_room(*room, 0);
 		return (ERROR);
 	}
+	++(*nrooms);
 	(*room)->start_end = *start_end;
 	*start_end = *start_end ^ (*start_end << 2);
 	return (0);
 }
-
-/*
-**	#include "ft_printf.h"
-**	static void		print_rooms(t_binarytree *rooms)
-**	{
-**		if (!rooms)
-**			return ;
-**		if (rooms->left)
-**			print_rooms(rooms->left);
-**		ft_printf("name: %s\nlen: %zd\nx: %d\ny: %d\n\n", ROOM(rooms)->name, ROOM(rooms)->len, ROOM(rooms)->x, ROOM(rooms)->y);
-**		if (rooms->right)
-**			print_rooms(rooms->right);
-**	}
-*/
 
 int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 {
@@ -120,12 +108,11 @@ int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 				return (ERROR);
 			return (0);
 		}
-		if (parse_line(input->line, &room, &start_end) == ERROR)
+		if (parse_line(input->line, &room, &start_end, &farm->nrooms) == ERROR)
 			return (ERROR);
 		if (insert_room_by_coordinates(rooms, room) == ERROR)
 			return (ERROR);
 		update_input(input);
-		++(farm->nrooms);
 	}
 	return (ERROR);
 }

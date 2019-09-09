@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/05 14:42:39 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/08 17:46:09 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int		copy_links(size_t **links, size_t max_links)
 	i = 0;
 	while (i < max_links)
 	{
-		new_links[i] = *links[i];
+		new_links[i] = (*links)[i];
 		++i;
 	}
 	ft_memdel((void **)links);
@@ -39,18 +39,21 @@ static int		copy_links(size_t **links, size_t max_links)
 	return (0);
 }
 
-static int		add_link(size_t room, size_t link, t_room *graph)
+static int		add_link(size_t room_id, size_t link_id, t_room *graph)
 {
-	if (graph[room].mlinks == 0)
-		graph[room].mlinks = 4;
-	++(graph[room].nlinks);
-	if (graph[room].nlinks == graph[room].mlinks)
+	if (graph[room_id].mlinks == 0)
 	{
-		graph[room].mlinks = graph[room].mlinks * 2;
-		if (copy_links(&(graph[room].links), graph[room].mlinks) == ERROR)
+		graph[room_id].mlinks = 4;
+		graph[room_id].links = (size_t *)ft_memalloc(sizeof(size_t) * graph[room_id].mlinks);
+	}
+	++(graph[room_id].nlinks);
+	if (graph[room_id].nlinks == graph[room_id].mlinks)
+	{
+		graph[room_id].mlinks = graph[room_id].mlinks * 2;
+		if (copy_links(&(graph[room_id].links), graph[room_id].mlinks) == ERROR)
 			return (ERROR);
 	}
-	graph[room].links[graph[room].nlinks - 1] = link;
+	graph[room_id].links[graph[room_id].nlinks - 1] = link_id;
 	return (0);
 }
 

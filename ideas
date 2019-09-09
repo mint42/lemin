@@ -1,7 +1,11 @@
 Questions
 
+TO SAVE SPACE
+- delete larger binary tree wrapper
+- use singe bits instead of whole data type in structs
 
-Things to consider when allocating memory:
+
+TO SAVE TIME
 	- Try using other vairables aren't doubling everytime you need more memory
 		1.5 MIGHT be more effiecent. Try it
 	- Try using more write calls instead of more malloc calls?

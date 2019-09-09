@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/06 11:31:34 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/08 14:34:17 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ int			insert_room_by_name(t_binarytree **rooms, t_binarytree *room)
 		if (cmp == 0)
 			return (print_error(E_ROOM_DUPLICATE));
 		else if (cmp > 0)
-			insert_room_by_name(&(*rooms)->right, room);
-		else
 			insert_room_by_name(&(*rooms)->left, room);
+		else
+			insert_room_by_name(&(*rooms)->right, room);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 19:19:38 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/06 12:58:13 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/08 14:46:19 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static int 		rearrange(t_binarytree **rooms_by_coordinate,
 	return (0);
 }
 
+#include "ft_printf.h"
+
 int 			rearrange_rooms_by_name(t_binarytree **rooms_by_coordinate)
 {
 	t_binarytree	*rooms_by_name;
@@ -37,6 +39,6 @@ int 			rearrange_rooms_by_name(t_binarytree **rooms_by_coordinate)
 	rooms_by_name = 0;
 	if (rearrange(rooms_by_coordinate, &rooms_by_name) == ERROR)
 		return (ERROR);
-	rooms_by_coordinate = &rooms_by_name;
+	*rooms_by_coordinate = rooms_by_name;
 	return (0);
 }

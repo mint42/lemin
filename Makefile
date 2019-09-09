@@ -6,7 +6,7 @@
 #    By: rreedy <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/03 06:37:10 by rreedy            #+#    #+#              #
-#    Updated: 2019/09/06 12:59:50 by rreedy           ###   ########.fr        #
+#    Updated: 2019/09/08 13:40:57 by rreedy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LEMIN_OBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/*.c))
 
 CC := gcc
 INCLUDES := -I./includes -I./libft/includes -I./libft/includes/ft_printf
-CFLAGS += -Wall -Wextra -Werror $(INCLUDES)
+CFLAGS += -g -Wall -Wextra -Werror $(INCLUDES)
 LFLAGS += -L./libft -lft
 
 .PHONY: all clean fclean re name

@@ -1,6 +1,10 @@
-43
+2345
+room1 3 55
+room2 11 20
 ##start
-room 1 2
+start 0 0
 ##end
-room2 1 3
-room - room2
+end 50 50
+# comment
+start - room1
+room1 - end
