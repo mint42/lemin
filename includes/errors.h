@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:15:51 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/05 14:30:51 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/10 17:43:17 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ enum	e_errors
 	E_INVALID_COORDINATE,
 	E_INVALID_LINK_FORMAT,
 	E_LINK_GIVEN_DNE,
+	E_NO_LINKS,
 	E_SOLVE_ERROR,
 	E_NO_SOLUTION,
 	TOTAL_ERROR_COUNT,

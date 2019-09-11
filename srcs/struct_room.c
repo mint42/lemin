@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/08 18:27:04 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/10 17:39:44 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_room		*init_room(void)
 	return (room);
 }
 
+#include "ft_printf.h"
 int			insert_room_by_name(t_binarytree **rooms, t_binarytree *room)
 {
 	int		cmp;
@@ -48,9 +49,12 @@ int			insert_room_by_name(t_binarytree **rooms, t_binarytree *room)
 	}
 	else
 	{
-		cmp = ft_strncmp(ROOM(*rooms)->name, ROOM(room)->name, ROOM(room)->len);
+		cmp = ft_strncmp(ROOM(*rooms)->name, ROOM(room)->name, ROOM(room)->len + 1);
 		if (cmp == 0)
+		{
+			ft_printf("room1: %s\nroom2: %s\n", ROOM(room)->name, ROOM(*rooms)->name);
 			return (print_error(E_ROOM_DUPLICATE));
+		}
 		else if (cmp > 0)
 			insert_room_by_name(&(*rooms)->left, room);
 		else

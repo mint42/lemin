@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/08 18:33:04 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/10 17:50:49 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int		find_room(char *name, size_t *room_id, t_farm *farm, ssize_t jump)
 
 	if (!name)
 		return (ERROR);
-	cmp = ft_strncmp(name, (farm->graph)[*room_id].name, (farm->graph)[*room_id].len);
+	cmp = ft_strncmp(name, (farm->graph)[*room_id].name, (farm->graph)[*room_id].len + 1);
 	if (jump == -1 || (jump == 0 && farm->nrooms % 2 == 0))
 		return ((cmp) ? ERROR : 0);
 	if (jump == 0)
@@ -96,12 +96,12 @@ static int		parse_line(char *line, t_farm *farm)
 	if (len > ft_strlen(line) - 4)
 		return (print_error(E_INVALID_LINK_FORMAT));
 	line[len] = '\0';
-	if (find_room(line, &room1_id, farm, farm->nrooms / 2) == ERROR)
+	if (find_room(line, &room1_id, farm, (farm->nrooms - 1) / 2) == ERROR)
 		return (E_LINK_GIVEN_DNE);
 	line[len] = ' ';
 	if (line[len + 1] != '-' || line[len + 2] != ' ' || ft_strlen(line + len + 3) != ft_strlend(line + len + 3, ' '))
 		return (print_error(E_INVALID_LINK_FORMAT));
-	if (find_room(line + len + 3, &room2_id, farm, farm->nrooms / 2) == ERROR)
+	if (find_room(line + len + 3, &room2_id, farm, (farm->nrooms - 1) / 2) == ERROR)
 		return (E_LINK_GIVEN_DNE);
 	if (add_link(room1_id, room2_id, farm->graph) == ERROR)
 		return (ERROR);

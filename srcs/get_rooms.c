@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/08 18:11:46 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/10 17:43:45 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
 			return (ERROR);
 		update_input(input);
 	}
-	return (ERROR);
+	return (print_error(E_NO_LINKS));
 }
