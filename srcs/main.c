@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/08 18:09:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/10 21:39:45 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int				main(void)
 	farm = init_farm();
 	if (lemin(&input, &farm, &rooms) == ERROR)
 		error = 1;
-	ft_treedel(&rooms, delete_room);
-	delete_graph(&(farm.graph));
+//	ft_treedel(&rooms, delete_room);
+//	delete_graph(&(farm.graph));
 	ft_strdel(&(input.input));
 	ft_strdel(&(input.line));
 	return (error);

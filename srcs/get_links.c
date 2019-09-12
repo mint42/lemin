@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 17:50:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/11 21:36:16 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,30 +57,23 @@ static int		add_link(size_t room_id, size_t link_id, t_room *graph)
 	return (0);
 }
 
-static int		find_room(char *name, size_t *room_id, t_farm *farm, ssize_t jump)
+static int		find_room(char *name, t_farm *farm, size_t *room_id, size_t max)
 {
 	int		cmp;
+	size_t	mid;
 
-	if (!name)
-		return (ERROR);
-	cmp = ft_strncmp(name, (farm->graph)[*room_id].name, (farm->graph)[*room_id].len + 1);
-	if (jump == -1 || (jump == 0 && farm->nrooms % 2 == 0))
-		return ((cmp) ? ERROR : 0);
-	if (jump == 0)
-	{
-		*room_id = *room_id + ((cmp) ? 1 : -1);
-		find_room(name, room_id, farm, -1);
-	}
+	if (max < 1)
+		return (print_error(E_LINK_GIVEN_DNE));
+	mid = *room_id + (max - *room_id) / 2;
+	cmp = ft_strncmp(name, (farm->graph)[mid].name, (farm->graph)[mid].len + 1);
 	if (cmp > 0)
 	{
-		*room_id = *room_id + jump;
-		find_room(name, room_id, farm, jump / 2);
+		*room_id = mid + 1;
+		find_room(name, farm, room_id, max);
 	}
 	if (cmp < 0)
-	{
-		*room_id = *room_id - jump;
-		find_room(name, room_id, farm, jump / 2);
-	}
+		find_room(name, farm, room_id, mid - 1);
+	*room_id = mid;
 	return (0);
 }
 
@@ -90,19 +83,19 @@ static int		parse_line(char *line, t_farm *farm)
 	size_t		room2_id;
 	size_t		len;
 
-	room1_id = farm->nrooms / 2;
-	room2_id = room1_id;
-	len = ft_strlend(line, ' ');
-	if (len > ft_strlen(line) - 4)
+	if (ft_strchr(line, ' '))
+		return (print_error(E_INVALID_LINK_FORMAT));
+	len = ft_strlend(line, '-');
+	if (len == ft_strlen(line))
 		return (print_error(E_INVALID_LINK_FORMAT));
 	line[len] = '\0';
-	if (find_room(line, &room1_id, farm, (farm->nrooms - 1) / 2) == ERROR)
-		return (E_LINK_GIVEN_DNE);
-	line[len] = ' ';
-	if (line[len + 1] != '-' || line[len + 2] != ' ' || ft_strlen(line + len + 3) != ft_strlend(line + len + 3, ' '))
-		return (print_error(E_INVALID_LINK_FORMAT));
-	if (find_room(line + len + 3, &room2_id, farm, (farm->nrooms - 1) / 2) == ERROR)
-		return (E_LINK_GIVEN_DNE);
+	room1_id = 0;
+	if (find_room(line, farm, &room1_id, farm->nrooms - 1) == ERROR)
+		return (ERROR);
+	line[len] = '-';
+	room2_id = 0;
+	if (find_room(line + len + 1, farm, &room2_id, farm->nrooms - 1) == ERROR)
+		return (ERROR);
 	if (add_link(room1_id, room2_id, farm->graph) == ERROR)
 		return (ERROR);
 	if (add_link(room2_id, room1_id, farm->graph) == ERROR)

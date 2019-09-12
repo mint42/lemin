@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/03 17:03:38 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/10 21:37:50 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,18 @@
 **		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
 */
 
+#include "ft_printf.h"
 static void		make_solution_printable(t_pathset *best, char **solution)
 {
-	(void)best;
+	t_list	*paths;
+	
 	(void)solution;
+	paths = best->paths;
+	while (paths)
+	{
+		ft_printf("%5d %5b\n", PATH_ID_INDEX(paths), PATH_ID_BIT(paths));
+		paths = paths->next;
+	}
 }
 
 static int		find_solution(t_bfs *bfs, t_list *sets, t_farm *farm,
