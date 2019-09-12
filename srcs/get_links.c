@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/11 21:36:16 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/11 22:27:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ static int		parse_line(char *line, t_farm *farm)
 	size_t		room2_id;
 	size_t		len;
 
+	if (*line == '#')
+		return (0);
 	if (ft_strchr(line, ' '))
 		return (print_error(E_INVALID_LINK_FORMAT));
 	len = ft_strlend(line, '-');
