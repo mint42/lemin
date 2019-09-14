@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/14 15:38:24 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/14 16:21:27 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static void		update_nmoves(t_pathset *pathset, t_farm *farm)
 		pathset->nmoves = ants_on_min_path + 1;
 	}
 	pathset->delimiter = pathset->nmoves - pathset->maxpathlen;
-	if (pathset->delimiter <= 0)
-		pathset->completed = true;
 }
 
 static void		update_pathset(t_bfs *new_path, t_pathset *pathset, t_farm *farm)
@@ -77,15 +75,15 @@ static void		update_pathset(t_bfs *new_path, t_pathset *pathset, t_farm *farm)
 		paths_cur = paths_cur->next;
 	}
 	prev_path->next = ft_lstinit(init_pathset(new_path), 0);
-	++(pathset->npaths);
 	if (!pathset->minpathlen)
 		pathset->minpathlen = new_path->depth_level;
+	++(pathset->npaths);
 	pathset->maxpathlen = new_path->depth_level;
 	update_nmoves(pathset, farm);
 	return ;
 }
 
-int				update_pathsets(t_farm *farm, t_bfs *paths, t_list *sets, t_pathset *solution, size_t *delimiter)
+int				update_pathsets(t_farm *farm, t_bfs *paths, t_list *sets, t_pathset *solution, size_t *depth_delimiter, size_t *npaths_delimiter)
 {
 	t_list	*prev_pathset;
 
@@ -99,7 +97,10 @@ int				update_pathsets(t_farm *farm, t_bfs *paths, t_list *sets, t_pathset *solu
 	while (sets)
 	{
 		update_pathset(paths, PATHSET(sets), farm);
-		if (PATHSET(sets)->delimiter > *delimiter)
+		if (PATHSET(sets)->nmoves - PATHSET(sets)->maxpathlen <= 0 ||
+			PATHSET(sets)->npaths == npaths_delimiter)
+			update_solution(solution, sets);
+		if (PATHSET(sets)->moves - PATHSET(sets)->maxpathlen > *depth_delimiter)
 			*delimiter = PATHSET(sets)->delimiter;
 		if (PATHSET(sets)->completed)
 			update_solution(solution, sets);

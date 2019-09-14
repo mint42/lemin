@@ -1,15 +1,15 @@
 THINGS LEFT TO DO
+- update delimiter to reflect npaths_delimiter
 - set up the bfs
-- combine the two sides of path
+- combine the two sides of path and update variables
 - make sure im updating the farm to reflect paths that have touched that node
 - make solution printable
-
+- test
 
 
 TO SAVE SPACE
 - delete larger binary tree wrapper
 - use singe bits instead of whole data type in structs
-
 
 TO SAVE TIME
 	- Try using other vairables aren't doubling everytime you need more memory
