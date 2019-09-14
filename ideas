@@ -1,4 +1,10 @@
-Questions
+THINGS LEFT TO DO
+- set up the bfs
+- combine the two sides of path
+- make sure im updating the farm to reflect paths that have touched that node
+- make solution printable
+
+
 
 TO SAVE SPACE
 - delete larger binary tree wrapper
@@ -72,6 +78,7 @@ is it always better to send an ant down a shorter path?
 
 //canlook = if ((#ants / #paths) > pathlen)
 
+TRUE
 if (pathlen of new longest < #moves)
 	add it
 

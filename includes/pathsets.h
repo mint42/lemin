@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 02:27:36 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 19:10:16 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/14 15:55:55 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef struct	s_pathset
 	bool		completed;
 	size_t		delimiter;
 	size_t		nmoves;
-	size_t		mpathlen;
+	size_t		maxpathlen;
+	size_t		minpathlen;
 	size_t		npaths;
 	t_list		*paths;
 }				t_pathset;

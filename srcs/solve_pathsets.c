@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/01 02:03:51 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/14 15:38:24 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,50 @@
 
 /*
 ** 	should delimiter be at the shortest or longest check? - longest
-**	static void		update_solution(t_bfs *bfs, t_list *sets, t_pathset
-**							*solution)
-**	{
-**		t_pathset	*cur;
-**	
-**		if (PATHSET(sets)->nmoves < solution->nmoves)
-**		{
-**			solution = PATHSET(sets);
-**			cur->next = sets->next;
-**			delete_pathset(&solution);
-**		}
-**		else
-**		{
-**			cur->next = sets->next;
-**			delete_pathset(&PATHSET(sets));
-**		}
-**	}
 */
 
-static void		get_new_delimiter(void)
+static void		update_solution(t_bfs *bfs, t_list *sets, t_pathset *solution)
 {
-	return ;
-	/*
-	**	run equation on pathset;
-	*/
+	t_pathset	*cur;
+
+	if (PATHSET(sets)->nmoves < solution->nmoves)
+	{
+		solution = PATHSET(sets);
+		cur->next = sets->next;
+		delete_pathset(&solution);
+	}
+	else
+	{
+		cur->next = sets->next;
+		delete_pathset(&PATHSET(sets));
+	}
 }
 
-static void		update_pathset(t_bfs *new_path, t_pathset *pathset)
+static void		update_nmoves(t_pathset *pathset, t_farm *farm)
+{
+	size_t	ants_on_min_path;
+	size_t	ants_on_max_path;
+
+	if (!pathset->nmoves)
+		pathset->nmoves = pathset->minpathlen + farm->ants - 1;
+	else
+	{
+		ants_on_min_path = pathset->nmoves - 1;
+		ants_on_max_path = 1;
+		while (ants_on_min_path > ants_on_max_path &&
+				pathset->minpathlen + ants_on_min_path >= pathset->maxpathlen + ants_on_max_path)
+		{
+			--ants_on_min_path;
+			++ants_on_max_path;
+		}
+		pathset->nmoves = ants_on_min_path + 1;
+	}
+	pathset->delimiter = pathset->nmoves - pathset->maxpathlen;
+	if (pathset->delimiter <= 0)
+		pathset->completed = true;
+}
+
+static void		update_pathset(t_bfs *new_path, t_pathset *pathset, t_farm *farm)
 {
 	t_list		*paths_cur;
 	t_list		*prev_path;
@@ -61,12 +77,15 @@ static void		update_pathset(t_bfs *new_path, t_pathset *pathset)
 		paths_cur = paths_cur->next;
 	}
 	prev_path->next = ft_lstinit(init_pathset(new_path), 0);
-	get_new_delimiter();
+	++(pathset->npaths);
+	if (!pathset->minpathlen)
+		pathset->minpathlen = new_path->depth_level;
+	pathset->maxpathlen = new_path->depth_level;
+	update_nmoves(pathset, farm);
 	return ;
 }
 
-int				update_pathsets(t_bfs *paths, t_list *sets,
-						t_pathset *solution, size_t *delimiter)
+int				update_pathsets(t_farm *farm, t_bfs *paths, t_list *sets, t_pathset *solution, size_t *delimiter)
 {
 	t_list	*prev_pathset;
 
@@ -79,11 +98,11 @@ int				update_pathsets(t_bfs *paths, t_list *sets,
 	prev_pathset = sets;
 	while (sets)
 	{
-		update_pathset(paths, PATHSET(sets));
+		update_pathset(paths, PATHSET(sets), farm);
 		if (PATHSET(sets)->delimiter > *delimiter)
 			*delimiter = PATHSET(sets)->delimiter;
 		if (PATHSET(sets)->completed)
-			solution = PATHSET(sets);
+			update_solution(solution, sets);
 		prev_pathset = sets;
 		sets = sets->next;
 	}

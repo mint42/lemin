@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 21:37:50 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/14 15:55:53 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,33 @@ static void		make_solution_printable(t_pathset *best, char **solution)
 	}
 }
 
-static int		find_solution(t_bfs *bfs, t_list *sets, t_farm *farm,
-					t_pathset *solution)
+static int		setup_bfs(t_bfs *bfs, t_farm *farm)
+{
+	bfs = init_bfs();
+
+}
+
+static int		find_solution(t_bfs *bfs, t_list *sets, t_farm *farm, t_pathset *solution)
 {
 	t_bfs		*cur;
 	t_bfs		*tail;
-	size_t		delimiter;
+	size_t		depth_delimiter;
+	size_t		npaths_delimiter;
 
+	npaths_delimiter = 0;
+	setup_bfs(bfs, farm, &npaths_delimiter);
 	cur = bfs;
 	tail = bfs;
-	delimiter = 0;
-	if (search(cur, tail, farm, &delimiter) == ERROR)
+	depth_delimiter = 0;
+	if (search(cur, tail, farm, &depth_delimiter) == ERROR)
 		return (print_error(E_NO_SOLUTION));
-	if (update_pathsets(cur, sets, solution, &delimiter) == ERROR)
+	if (update_pathsets(cur, sets, solution, &depth_delimiter) == ERROR)
 		return (1);
 	while (sets)
 	{
-		if (search(cur, tail, farm, &delimiter) == ERROR)
+		if (search(cur, tail, farm, &depth_delimiter) == ERROR)
 			return (ERROR);
-		if (update_pathsets(cur, sets, solution, &delimiter) == ERROR)
+		if (update_pathsets(farm, cur, sets, solution, &depth_delimiter) == ERROR)
 			return (ERROR);
 	}
 	return (0);
@@ -82,7 +90,7 @@ int				solve(t_farm *farm, char **solution)
 	t_pathset	*best;
 	int			error;
 
-	bfs = init_bfs();
+	bfs = 0;
 	sets = 0;
 	error = 0;
 	best = 0;
