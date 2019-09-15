@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/14 15:55:53 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/15 02:50:49 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,53 +51,45 @@ static void		make_solution_printable(t_pathset *best, char **solution)
 	}
 }
 
-static int		setup_bfs(t_bfs *bfs, t_farm *farm)
+static int		setup_bfs(t_solve *solve, t_farm *farm)
 {
-	bfs = init_bfs();
-
-}
-
-static int		find_solution(t_bfs *bfs, t_list *sets, t_farm *farm, t_pathset *solution)
-{
-	t_bfs		*cur;
-	t_bfs		*tail;
-	size_t		depth_delimiter;
-	size_t		npaths_delimiter;
-
-	npaths_delimiter = 0;
-	setup_bfs(bfs, farm, &npaths_delimiter);
-	cur = bfs;
-	tail = bfs;
-	depth_delimiter = 0;
-	if (search(cur, tail, farm, &depth_delimiter) == ERROR)
-		return (print_error(E_NO_SOLUTION));
-	if (update_pathsets(cur, sets, solution, &depth_delimiter) == ERROR)
-		return (1);
-	while (sets)
-	{
-		if (search(cur, tail, farm, &depth_delimiter) == ERROR)
-			return (ERROR);
-		if (update_pathsets(farm, cur, sets, solution, &depth_delimiter) == ERROR)
-			return (ERROR);
-	}
-	return (0);
+	(solve->bfs) = init_bfs();
+	(solve->bfs)->start_or_end_path = 1;
+	(solve->bfs)->path_id_index = 0;
+	(solve->bfs)->path_id_bit = 1;
+	(solve->bfs)->room_id = farm->start_room_id;
+	(solve->bfs)->next = init_bfs();
+	(solve->bfs)->next->prev = bfs;
+	(solve->bfs)->next->next = 0;
+	(solve->bfs)->next->start_or_end_path = 1;
+	(solve->bfs)->next->path_id_bit = 2;
+	(solve->bfs)->next->room_id = farm->end_room_id;
+	if (GRAPH[farm->start_room_id]->nlinks < GRAPH[farm->end_room_id]->nlinks)
+		solve->npaths_delimiter = GRAPH[farm->start_room_id]->nlinks;
+	else
+		solve->npaths_delimiter = GRAPH[farm->end_room_id]->nlinks;
+	return (bfs);
 }
 
 int				solve(t_farm *farm, char **solution)
 {
-	t_bfs		*bfs;
-	t_list		*sets;
-	t_pathset	*best;
-	int			error;
+	t_solve		*solve;
+	t_bfs		*cur;
+	t_bfs		*tail;
 
-	bfs = 0;
-	sets = 0;
-	error = 0;
-	best = 0;
-	if (find_solution(bfs, sets, farm, best) == ERROR)
-		error = 1;
-	make_solution_printable(best, solution);
-	delete_bfs(&bfs);
-	ft_lstdel(&sets, delete_pathset);
+	init_solve(&solve);
+	setup_bfs(solve, farm);
+	cur = solve->bfs;
+	tail = (solve->bfs)->next;
+	while (solve->sets && solve->depth_delimiter)
+	{
+		if (run_bfs(cur, tail, farm, &solve->depth_delimiter) == ERROR)
+			return (ERROR);
+		if (update_pathsets(farm, cur, solve) == ERROR)
+			return (ERROR);
+	}
+	make_solution_printable(solve.solution, solution);
+	delete_bfs(&solve.bfs);
+	ft_lstdel(&solve.pathsets, delete_pathset);
 	return (error);
 }

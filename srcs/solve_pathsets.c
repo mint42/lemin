@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/14 16:21:27 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/15 01:47:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void		update_nmoves(t_pathset *pathset, t_farm *farm)
 		}
 		pathset->nmoves = ants_on_min_path + 1;
 	}
-	pathset->delimiter = pathset->nmoves - pathset->maxpathlen;
 }
 
 static void		update_pathset(t_bfs *new_path, t_pathset *pathset, t_farm *farm)
