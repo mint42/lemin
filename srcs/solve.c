@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/15 02:50:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/16 03:09:06 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,23 @@
 **		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
 */
 
-#include "ft_printf.h"
-static void		make_solution_printable(t_pathset *best, char **solution)
-{
-	t_list	*paths;
-	
-	(void)solution;
-	paths = best->paths;
-	while (paths)
-	{
-		ft_printf("%5d %5b\n", PATH_ID_INDEX(paths), PATH_ID_BIT(paths));
-		paths = paths->next;
-	}
-}
+/*
+**	#include "ft_printf.h"
+**	static void		make_solution_printable(t_pathset *best, char **solution)
+**	{
+**		t_list	*paths;
+**		
+**		(void)solution;
+**		paths = best->paths;
+**		while (paths)
+**		{
+**			ft_printf("%5d %5b\n", PATH_ID_INDEX(paths), PATH_ID_BIT(paths));
+**			paths = paths->next;
+**		}
+**	}
+*/
 
-static int		setup_bfs(t_solve *solve, t_farm *farm)
+static int		setup_bfs(t_solve **solve, t_farm *farm)
 {
 	(solve->bfs) = init_bfs();
 	(solve->bfs)->start_or_end_path = 1;
@@ -64,32 +66,68 @@ static int		setup_bfs(t_solve *solve, t_farm *farm)
 	(solve->bfs)->next->start_or_end_path = 1;
 	(solve->bfs)->next->path_id_bit = 2;
 	(solve->bfs)->next->room_id = farm->end_room_id;
-	if (GRAPH[farm->start_room_id]->nlinks < GRAPH[farm->end_room_id]->nlinks)
-		solve->npaths_delimiter = GRAPH[farm->start_room_id]->nlinks;
+}
+
+static int		setup_basepaths(t_solve *solve, t_farm *farm)
+{
+	size_t	i;
+
+	solve->basepaths = (size_t *)ft_memalloc(sizeof(size_t) * solve->nbasepaths);
+	if (!solve->basepaths)
+		return (print_error(E_ALLOC_ERROR));
+	i = 0;
+	while (i < solve->nbasepaths)
+	{
+		init_basepath(solve->basepaths[i]);
+		(solve->basepaths)->mpaths_in_base = SQUARE(solve->npaths_delimiter) / NBITS_SIZE_T;
+		if (i < (farm->rooms)[farm->start_rid]->nlinks)
+		{
+			(solve->basepaths)[i]->start_or_end 1;
+			(solve->basepaths)[i]->npaths_in_base = (farm->rooms)[farm->start_rid]->nlinks;
+		}
+		else
+		{
+			(solve->basepaths)[i]->start_or_end = 2;
+			(solve->basepaths)[i]->npaths_in_base = (farm->rooms)[farm->end_rid]->nlinks;
+		}
+		(solve_basepaths)[i]->basepath_id = i + 1;
+	}
+}
+
+static int		setup_solve(t_solve **solve, t_farm *farm)
+{
+	init_solve(solve);
+	solve->nbasepaths = (farm->rooms)[farm->start_rid]->nlinks + (farm->graph)[farm->end_rid]->nlinks;
+	if ((farm->rooms)[farm->start_rid]->nlinks < (farm->rooms)[farm->end_rid]->nlinks)
+		solve->npaths_delimiter = (farm->rooms)[farm->start_rid]->nlinks;
 	else
-		solve->npaths_delimiter = GRAPH[farm->end_room_id]->nlinks;
+		solve->npaths_delimiter = (farm->rooms)[farm->end_rid]->nlinks;
+	setup_basepaths(*solve);
+	setup_bfs(*solve);
 	return (bfs);
 }
 
 int				solve(t_farm *farm, char **solution)
 {
-	t_solve		*solve;
-	t_bfs		*cur;
-	t_bfs		*tail;
+	t_solve		solve;
+	t_bfs		*bfs_cur;
+	t_bfs		*bfs_tail;
 
-	init_solve(&solve);
-	setup_bfs(solve, farm);
-	cur = solve->bfs;
-	tail = (solve->bfs)->next;
-	while (solve->sets && solve->depth_delimiter)
+	solve = 0;
+	solve_setup(&solve, farm);
+	bfs_cur = solve.bfs;
+	bfs_tail = (solve.bfs)->next;
+	while (bfs_cur && solve->depth_delimiter >= 0)
 	{
-		if (run_bfs(cur, tail, farm, &solve->depth_delimiter) == ERROR)
+		if (find_paths(&bfs_cur, &bfs_tail, farm, &solve.depth_delimiter) == ERROR)
 			return (ERROR);
-		if (update_pathsets(farm, cur, solve) == ERROR)
+		if (update_pathsets(farm, &bfs_cur, solve) == ERROR)
 			return (ERROR);
 	}
+	if (solve->pathsets)
+		verify_solution();
 	make_solution_printable(solve.solution, solution);
 	delete_bfs(&solve.bfs);
-	ft_lstdel(&solve.pathsets, delete_pathset);
+	delete_pathset(&solve.solution);
 	return (error);
 }

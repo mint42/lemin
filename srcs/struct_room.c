@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 19:11:41 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/16 02:48:19 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,8 @@
 #include "ft_str.h"
 #include "ft_binarytree.h"
 
-t_room		*init_room(void)
+void	init_room(t_room *room)
 {
-	t_room	*room;
-
-	room = ft_memalloc(sizeof(t_room));
-	if (!room)
-		return (0);
 	room->name = 0;
 	room->len = 0;
 	room->start_end = 0;
@@ -33,7 +28,6 @@ t_room		*init_room(void)
 	room->npaths_encountered = 0;
 	room->mpaths_encountered = 0;
 	room->paths_encountered = 0;
-	return (room);
 }
 
 int			insert_room_by_name(t_binarytree **rooms, t_binarytree *room)
@@ -87,6 +81,5 @@ void		delete_room(void *content, size_t content_size)
 			ft_strdel(&((t_room *)(content))->name);
 		if (((t_room *)(content))->links)
 			ft_memdel((void **)&((t_room *)(content))->links);
-		ft_memdel((void **)&content);
 	}
 }

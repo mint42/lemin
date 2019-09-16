@@ -1,35 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   farm.h                                             :+:      :+:    :+:   */
+/*   pathset.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 01:59:57 by rreedy           ###   ########.fr       */
+/*   Created: 2019/09/16 02:57:14 by rreedy            #+#    #+#             */
+/*   Updated: 2019/09/16 02:57:21 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FARM_H
-# define FARM_H
+#ifndef PATHSET_H
+# define PATHSET_H
 
-# include "room.h"
 # include <stddef.h>
+# include <stdbool.h>
 
-typedef struct s_binarytree		t_binarytree;
+# define PATHSET(sets) ((t_pathset *)((sets)->content))
 
-typedef struct	s_farm
+typedef struct s_list	t_list;
+
+typedef struct	s_pathset
 {
-	t_room		*rooms;
-	size_t		nrooms;
-	size_t		start_rid;
-	size_t		end_rid;
-	size_t		nants;
-}				t_farm;
+	size_t		nmoves;
+	size_t		maxpathlen;
+	size_t		minpathlen;
+	size_t		npaths;
+	t_list		*paths;
+}				t_pathset;
 
-t_farm			init_farm();
-t_room			*init_graph(size_t nrooms);
-int				make_graph(t_binarytree *rooms, t_farm *farm);
-void			delete_graph(t_room **graph);
+t_pathset		*init_pathset();
+void			delete_pathset(void *content, size_t content_size);
 
 #endif

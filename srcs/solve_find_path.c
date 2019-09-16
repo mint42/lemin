@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/15 05:33:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/16 01:27:04 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static int	
 
-int			run_bfs(t_bfs *cur, t_bfs *tail, t_farm *farm, size_t *delimiter)
+int			find_path(t_bfs *cur, t_bfs *tail, t_farm *farm, size_t *delimiter)
 {
 	size_t		nlinks;
 	size_t		level;

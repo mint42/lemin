@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathsets.h                                         :+:      :+:    :+:   */
+/*   struct_basepath.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/03 02:27:36 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/14 16:18:00 by rreedy           ###   ########.fr       */
+/*   Created: 2019/09/16 01:20:24 by rreedy            #+#    #+#             */
+/*   Updated: 2019/09/16 02:48:22 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATHSETS_H
-# define PATHSETS_H
-
-# include <stddef.h>
-# include <stdbool.h>
-
-# define PATHSET(sets) ((t_pathset *)((sets)->content))
-
-typedef struct s_list	t_list;
-
-typedef struct	s_pathset
+void	init_basepath(t_basepath *basepath)
 {
-	size_t		nmoves;
-	size_t		maxpathlen;
-	size_t		minpathlen;
-	size_t		npaths;
-	t_list		*paths;
-}				t_pathset;
-
-t_pathset		*init_pathset();
-void			delete_pathset(void *content, size_t content_size);
-
-#endif
+	basepath->start_or_end = 0;
+	basepath->base_path_id = 0;
+	basepath->paths_in_base = 0;
+	basepath->npaths_in_base = 0;
+	basepath->mpaths_in_base = 0;
+}

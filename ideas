@@ -1,11 +1,13 @@
 THINGS LEFT TO DO
-- update delimiter to reflect npaths_delimiter
-- set up the bfs
-- combine the two sides of path and update variables
-- make sure im updating the farm to reflect paths that have touched that node
-- make solution printable
-- test
-- norm
+DONE - update delimiter to reflect npaths_delimiter
+DONE - set up the base paths
+DONE - set up the bfs
+done - combine the two sides of path and update variables
+done - make sure im updating the farm to reflect paths that have touched that node
+Done - check all pathsets for solution when no new paths acn be found
+done - make solution printable
+done - test
+Done - norm
 
 
 TO SAVE SPACE
