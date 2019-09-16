@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 00:32:58 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/16 16:20:45 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ static void		update_pathset(t_bfs *new_path, t_pathset *pathset, t_farm *farm)
 	update_nmoves(pathset, farm);
 	return ;
 }
+
+pathsets will now have a variable that is a pointer to all of the paths that it cannot interract with
+shoudl i add back in base paths? i guess that would be nice for if comparing
 
 int				update_pathsets(t_farm *farm, t_bfs *paths, t_solve *solve)
 {

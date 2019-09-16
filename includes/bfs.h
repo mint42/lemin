@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 19:12:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 01:10:52 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/16 16:23:17 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ typedef struct	s_bfs
 	size_t		path_id_bit;
 	size_t		room_id;
 	size_t		depth_level;
+	size_t		basepath_id;
+	size_t		*paths_dni;
+	size_t		npaths_dni;
+	size_t		mpaths_dni;
 }				t_bfs;
 
 t_bfs			*init_bfs(void);

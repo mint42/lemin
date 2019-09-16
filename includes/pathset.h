@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 02:57:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 02:57:21 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/16 16:28:12 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct	s_pathset
 	size_t		nmoves;
 	size_t		maxpathlen;
 	size_t		minpathlen;
+	size_t		*paths_ids;
 	size_t		npaths;
 	t_list		*paths;
 }				t_pathset;
