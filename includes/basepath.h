@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 02:56:36 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 16:21:01 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/16 21:05:45 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 
 typedef struct	s_basepath
 {
-	size_t		start_or_end;
-	size_t		*paths_in_base;
-	size_t		npaths_in_base;
-	size_t		mpaths_in_base;
+	uint8_t		start_or_end;
+	size_t		*all_path_in_base;
+	size_t		npaths;
+	size_t		mpaths;
 }				t_basepath;
 
 #endif

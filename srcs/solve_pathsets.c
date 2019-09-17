@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 16:20:45 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/16 17:01:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,45 +59,40 @@ static void		update_nmoves(t_pathset *pathset, t_farm *farm)
 static void		update_pathset(t_bfs *new_path, t_pathset *pathset, t_farm *farm)
 {
 	t_list		*paths_cur;
-	t_list		*prev_path;
 
-	paths_cur = pathset->paths;
 	while (paths_cur)
 	{
-		if (new_path->base_path != PATH(paths_cur)->base_path)
-			return ;
-		if ((new_path->npaths_to_avoid - 1 >= PATH_ID_INDEX(paths_cur)) &&
-				(new_path->paths_to_avoid[PATH_ID_INDEX(paths_cur)]
-			 	& PATH_ID_BIT(paths_cur)))
+		if (((solve->basepaths)[new_path->basepath_id]->npaths_in_base > PATH_ID_INDEX(paths_cur) &&
+			(solve->basepaths)[new_path->basepath_id]->paths_in_base[PATH_ID_INDEX(paths_cur)] & PATH_ID_BIT(paths_cur))
+				||
+			((new_path->npaths_to_avoid > PATH_ID_INDEX(paths_cur)) &&
+			(new_path->paths_to_avoid[PATH_ID_INDEX(paths_cur)] & PATH_ID_BIT(paths_cur))))
 			return ;
 		prev_path = paths_cur;
 		paths_cur = paths_cur->next;
 	}
+	paths_cur = pathset->paths;
 	prev_path->next = ft_lstinit(init_pathset(new_path), 0);
 	if (!pathset->minpathlen)
 		pathset->minpathlen = new_path->depth_level;
-	++(pathset->npaths);
 	pathset->maxpathlen = new_path->depth_level;
+	++(pathset->npaths);
 	update_nmoves(pathset, farm);
 	return ;
 }
-
-pathsets will now have a variable that is a pointer to all of the paths that it cannot interract with
-shoudl i add back in base paths? i guess that would be nice for if comparing
 
 int				update_pathsets(t_farm *farm, t_bfs *paths, t_solve *solve)
 {
 	t_list	*cur_pathset;
 	t_list	*prev_pathset;
 
-	cur_pathsets = solve->sets;
 	if (!solve->sets)
 	{
 		solve->sets = ft_lstinit(init_pathset(paths), 0);
 		solve->solution = PATHSET(solve->sets);
 		return (0);
 	}
-	prev_pathset = sets;
+	cur_pathsets = solve->sets;
 	while (cur_pathsets)
 	{
 		update_pathset(paths, PATHSET(cur_pathsets), farm);
@@ -108,8 +103,9 @@ int				update_pathsets(t_farm *farm, t_bfs *paths, t_solve *solve)
 			solve->depth_delimiter = PATHSET(cur_pathsets)->delimiter;
 		if (PATHSET(cur_pathsets)->completed)
 			update_solution(solve->solution, cur_pathsets);
-		prev_pathset = sets;
-		sets = sets->next;
+		if (!cur_pathsets->next)
+			prev_pathset = cur_pathsets;
+		cur_pathsets = cur_pathsets->next;
 	}
 	prev_pathset->next = ft_lstinit(init_pathset(paths), 0);
 	return (0);

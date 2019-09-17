@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bfs.h                                              :+:      :+:    :+:   */
+/*   path.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/01 19:12:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 21:20:41 by rreedy           ###   ########.fr       */
+/*   Created: 2019/09/16 21:13:09 by rreedy            #+#    #+#             */
+/*   Updated: 2019/09/16 21:13:36 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BFS_H
-# define BFS_H
+#ifndef PATH_H
+# define PATH_H
 
 #include <stddef.h>
 #include <stdint.h>
 
-typedef struct s_bfs	t_bfs;
-typedef struct s_path	t_path;
+# define PATH(paths) ((t_bfs *)((paths)->content))
+# define PATH_ID_INDEX(paths) (((t_bfs *)((paths)->content))->path_id_index)
+# define PATH_ID_BIT(paths) (1 << (((t_bfs *)((paths)->content))->path_id_bit))
 
-typedef struct	s_bfs
+typedef struct	s_path
 {
-	t_bfs		*prev;
-	t_bfs		*next;
-	size_t		rid;
-	t_path		*path_info;
-}				t_bfs;
-
-t_bfs			*init_bfs(void);
-void			delete_bfs(t_bfs **bfs);
+	size_t		path_id_index;
+	size_t		path_id_bit;
+	size_t		basepath_id;
+	size_t		depth_level;
+	size_t		*paths_dni;
+	size_t		npaths_dni;
+	size_t		mpaths_dni;
+}				t_path;
 
 #endif
+
