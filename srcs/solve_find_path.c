@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 22:18:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/17 23:19:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,46 @@
 **	the base path info struct will be shared across all paths from the same base
 */
 /*
-**	DOne - return when new path is found
+**	DONE - return when new path is found
 **	DONE - finish the loop though  ye
-**	done - confirm new path when start meets end, or vice versa
-**	done - will delimiter always work or will you run out of nodes first, added a check just in case
-**	done - allocate for a new node
+**	DONE - confirm new path when start meets end, or vice versa
+**	DONE - will delimiter always work or will you run out of nodes first, added a check just in case
+**	DONE - allocate for a new node
 **	done - combine sides
-**	done - give room new bit so that you have been there
+**	DONE - give room new bit so that you have been there
 **	done - check that the path you're on doesn't run into other base paths, or the same path twice. do i have to check the dni lis
 **			for both when updating pathset and also when running the search  no, i dont think so
 **	done - add the paths that you crossed from the room to the dni list
-**	
-**	done - inital allocate the mpaths_in_base variable based on how many paths are at the start or end node
 */
 
 
-static int	copy_and_update_basepath_info(t_path *path_info, t_solve *solve)
+static int	update_path_info(t_solve *solve, t_farm *farm, t_pathinfo **new_pathinfo, size_t new_path)
+{
+	if (!new_path)
+		new_pathinfo = solve->bfs_cur->pathinfo;
+	else
+	{
+		new_pathinfo = (t_path *)ft_memalloc(sizeof(t_path));
+		if (!new_pathinfo)
+			return (print_error(E_ALLOC_ERROR));
+		if (solve->bfs_cur->pathinfo->pid_bit & 100000000000000000)
+		{
+			new_pathinfo->pid_index = solve->bfs_cur->pathinfo->pid_index + 1;
+			new_pathinfo->pid_bit = 1;
+		}
+		else
+			new_pathinfo->pid_bit = solve->bfs_cur->path_info->pid_bit << 1;
+
+		new_pathinfo->base_pid = solve->bfs_cur->path_info->base_pid;
+		new_pathinfo->depth_level = solve->bfs_cur->path_info->depth_lvl;
+		new_pathinfo->npaths_dni = solve->bfs_cur->path_info->npaths_dni;
+		new_pathinfo->mpaths_dni = solve->bfs_cur->path_info->mpaths_dni;
+	}
+	new_pathinfo->*paths_dni;
+
+}
+
+static int	update_basepath_info(t_solve *solve)
 {
 	++solve->nbase_paths;
 	cur->start_or_end = (cur->room_id == farm->start_room_id) ? 1 : 2;
@@ -86,28 +110,6 @@ static int	copy_and_update_basepath_info(t_path *path_info, t_solve *solve)
 	}
 }
 
-static int	copy_and_update_path_info(t_path *path_info, t_solve *solve)
-{
-	path_info = (t_path *)ft_memalloc(sizeof(t_path));
-	if (!path_info)
-		return (print_error(E_ALLOC_ERROR));
-	if (solve->bfs_cur->path_info->path_id_bit & 100000000000000000)
-	{
-		path_info->path_id_index = solve->bfs_cur->path_info->path_id_index + 1;
-		path_info->path_id_bit = 1;
-	}
-	else
-		path_info->path_id_bit = solve->bfs_cur->path_info->path_id_bit << 1;
-
-	path_info->basepath_id;
-
-	path_info->depth_level = solve->bfs_cur->path_info->depth_level;
-	path_info->npaths_dni = solve->bfs_cur->path_info->npaths_dni;
-	path_info->mpaths_dni = solve->bfs_cur->path_info->mpaths_dni;
-
-	path_info->*paths_dni;
-}
-
 int			update_bfs(t_solve *solve, t_farm *farm, size_t i, bool *path_found)
 {
 	t_bfs	*new_node;
@@ -115,25 +117,16 @@ int			update_bfs(t_solve *solve, t_farm *farm, size_t i, bool *path_found)
 	if (init_bfs(new_node) == ERROR)
 		return (ERROR);
 	new_node->rid = (farm->rooms)[bfs_cur->rid].links[i];
-
-	update base paths's paths here;
-
-	if (i == 0)
-		new_node->path_info = solve->bfs_cur->path_info;
-	else
-	{
-		if (copy_and_update_path_info(new_node->path_info, solve) == ERROR)
-			return (ERROR);
-	}
-
-	update cur->path_info's dni list here
-	cur->dni[cur->ndni - 1]
-
-	look for path
-
+	update_basepath_info(solve);
+	update_path_info(solve);
 	new_node->prev = cur;
 	solve->tail->next = new_node;
 	solve->tail = tail->next;
+	if ((solve->basepaths)[solve->bfs_cur->path_info->basepath_id]->origin != (solve->basepaths)[new_node->path_info->basepath_id]->origin)
+	{
+		path_found = true;
+		combine_ends(solve, new_node);
+	}
 	return (0);
 }
 
@@ -149,9 +142,11 @@ int			find_path(t_solve *solve, t_farm *farm)
 		while (i < (farm->rooms[bfs_cur->rid]).nlinks)
 		{
 			++(solve->bfs_cur->path_info->depth_level);
-			if ((farm->rooms[solve->bfs_cur->rid]).links[i] != cur->rid)
+			if ((farm->rooms[solve->bfs_cur->rid]->links[i] != cur->rid)
 				if (update_bfs(solve, farm, i, &path_found) == ERROR)
 					return (ERROR);
+			if (farm->rooms[bfs_cur->rid]->mpaths_encountered >= solve->cur_bfs->path_info->path_index)
+				farm->rooms[bfs_cur->rid]->paths_encountered[solve->cur_bfs->path_info->path_id_index] = farm->rooms[bfs_cur->rid]->paths_encountered[solve->cur_bfs->path_info->path_id_index] & solve->cur_bfs->path_info->path_id_bit;
 			++i;
 		}
 		--(solve->depth_delimiter);
