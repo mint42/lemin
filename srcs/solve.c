@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/19 13:52:31 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/22 04:12:02 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,28 +76,41 @@ static int		setup_basepaths(t_solve *solve, t_farm *farm)
 	if (!solve->basepaths)
 		return (print_error(E_ALLOC_ERROR));
 	i = 0;
+	while (i < (farm->graph)[farm->start_rid]->nlinks)
+	{
+		init_basepath(solve->basepaths[i]);
+		(solve->basepaths)->mpaths_in_base = SQUARE(solve->npaths_delimiter) / NBITS_SIZE_T;
+		(solve->basepaths)[i]->origin = START;
+		(solve->basepaths)[i]->npaths = (farm->rooms)[farm->start_rid]->nlinks;
+		++i;
+		(solve_basepaths)[i]->basepath_id = i;
+	}
 	while (i < solve->nbasepaths)
 	{
 		init_basepath(solve->basepaths[i]);
 		(solve->basepaths)->mpaths_in_base = SQUARE(solve->npaths_delimiter) / NBITS_SIZE_T;
-		if (i < (farm->graph)[farm->start_rid]->nlinks)
-		{
-			(solve->basepaths)[i]->origin = START;
-			(solve->basepaths)[i]->npaths_in_base = (farm->rooms)[farm->start_rid]->nlinks;
-		}
-		else
-		{
-			(solve->basepaths)[i]->origin = END;
-			(solve->basepaths)[i]->npaths = (farm->graph)[farm->end_rid]->nlinks;
-		}
-		(solve_basepaths)[i]->basepath_id = i + 1;
+		(solve->basepaths)[i]->origin = END;
+		(solve->basepaths)[i]->npaths = (farm->graph)[farm->end_rid]->nlinks;
+		++i;
+		(solve_basepaths)[i]->basepath_id = i;
 	}
 }
 
 static int		setup_solve(t_solve **solve, t_farm *farm)
 {
-	init_solve(solve);
+	solve->bfs_head = 0;
+	solve->bfs_cur = 0;
+	solve->bfs_tail = 0;
+	solve->pathsets = 0;
+	solve->solution = 0;
+	solve->basepaths = 0;
+	solve->depth_delimiter = 0;
+	solve->max_index_id = 1;
+	solve->max_bit_id = 1;
 	solve->nbasepaths = (farm->graph)[farm->start_rid]->nlinks + (farm->graph)[farm->end_rid]->nlinks;
+	solve->start_pids = (size_t *)ft_memalloc(sizeof(size_t));
+	solve->nstart_pids = 1;
+	solve->start_pids = START;
 	if ((farm->graph)[farm->start_rid]->nlinks < (farm->rooms)[farm->end_rid]->nlinks)
 		solve->npaths_delimiter = (farm->graph)[farm->start_rid]->nlinks;
 	else
