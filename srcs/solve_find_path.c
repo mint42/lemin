@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/17 23:19:31 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/21 18:40:19 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,16 @@
 **	DONE - allocate for a new node
 **	done - combine sides
 **	DONE - give room new bit so that you have been there
-**	done - check that the path you're on doesn't run into other base paths, or the same path twice. do i have to check the dni lis
+**	DONE - check that the path you're on doesn't run into other base paths, or the same path twice. do i have to check the dni lis
 **			for both when updating pathset and also when running the search  no, i dont think so
-**	done - add the paths that you crossed from the room to the dni list
+**	DONE - add the paths that you crossed from the room to the dni list
 */
 
-
-static int	update_path_info(t_solve *solve, t_farm *farm, t_pathinfo **new_pathinfo, size_t new_path)
+static int		update_path_info(t_solve *solve, t_farm *farm, t_pathinfo **new_pathinfo, size_t make_new_path)
 {
-	if (!new_path)
+	int		i;
+
+	if (!make_new_path)
 		new_pathinfo = solve->bfs_cur->pathinfo;
 	else
 	{
@@ -77,65 +78,79 @@ static int	update_path_info(t_solve *solve, t_farm *farm, t_pathinfo **new_pathi
 		}
 		else
 			new_pathinfo->pid_bit = solve->bfs_cur->path_info->pid_bit << 1;
-
 		new_pathinfo->base_pid = solve->bfs_cur->path_info->base_pid;
 		new_pathinfo->depth_level = solve->bfs_cur->path_info->depth_lvl;
 		new_pathinfo->npaths_dni = solve->bfs_cur->path_info->npaths_dni;
 		new_pathinfo->mpaths_dni = solve->bfs_cur->path_info->mpaths_dni;
+		while (farm->rooms[bfs_cur->rid]->npaths_encountered > solve->cur_bfs->path_info->mpaths_dni)
+			realloc();
+		i = 0;
+		while (i < farm->rooms[bfs_cur->rid]->npaths_encountered)
+			solve->cur_bfs->path_info->mpaths_dni[i] = solve->cur_bfs->path_info->mpaths_dni[i] & farm->rooms[bfs_cur->rid]->paths_encountered[i];
 	}
 	new_pathinfo->*paths_dni;
-
+	return (0);
 }
 
 static int	update_basepath_info(t_solve *solve)
 {
-	++solve->nbase_paths;
-	cur->start_or_end = (cur->room_id == farm->start_room_id) ? 1 : 2;
-	cur->base_path_info->base_path_id = solve->nbase_paths;
-	if (cur->path_id_bit & 0x100000000000000)
+	t_pathinfo	path_info;
+	t_basepath	basepath_info;
+	
+	path_info = *(solve->bfs_cur->path_info);
+	basepath_info = solve->basepaths[path_info->base_pid];
+	if (path_info.pid_index > basepath_info->mpaths)
 	{
-		update the numbas;
-		new_node->path_id_bit = 1;
-		++(new_node->path_id_index);
+		basepath_info.mpaths = basepath_info.mpaths * 2;
+		if (realloc_array(&basepath_info.paths, basepath_info.mpaths) == ERROR)
+			return (ERROR);
 	}
-	else
-		new_node->path_id_index = cur->path_id_index << 1;
-	if (dont need to add more numbah)
-		cur->base_path_info->paths_in_base[new_node->path_id_index] = cur->base_path_info->paths_in_base | new_node->path_id_bit;
-	else
-	{
-		update the numbas;
-		++(cur->base_path_info->npaths_in_base);
-		cur->base_path_info->mpaths_in_base *= 2;
-	}
+	basepath.paths[path.pid_index] = basepath.paths[path.pid_index] | path.pid_bit;
+	ADD_PID(basepath_info.paths, path_info.pid_index, path_info.pid_bit);
+	return (0);
 }
 
-int			update_bfs(t_solve *solve, t_farm *farm, size_t i, bool *path_found)
+static int		combine_ends()
+{
+	
+}
+
+static int		update_bfs(t_solve *solve, t_farm *farm, size_t i, bool *path_status)
 {
 	t_bfs	*new_node;
 
 	if (init_bfs(new_node) == ERROR)
 		return (ERROR);
-	new_node->rid = (farm->rooms)[bfs_cur->rid].links[i];
+	new_node->rid = (farm->graph)[bfs_cur->rid].links[i];
+
+	i = 0;
+	while (path_status != IN_PROGRESS && i < (farm->graph)[new_node->rid]->npaths_encountered && i < (solve->basepaths)[solve->bfs_cur->path_info->base_pid]->paths_in_base)
+	{
+		if ((farm->graph)[new_node->rid]->paths_encountered[i] & (solve->basepaths)[solve->bfs_cur->path_info->base_pid]->paths_in_base[i])
+			*path_status = DROPPED;
+		if ((farm->graph)[new_node->rid]->paths_encountered[i] & (solve->basepaths)[solve->bfs_cur->path_info->base_pid]->paths_in_base[i])
+			*path_status = COMPLETE;
+		++i;
+	}
 	update_basepath_info(solve);
 	update_path_info(solve);
 	new_node->prev = cur;
 	solve->tail->next = new_node;
 	solve->tail = tail->next;
-	if ((solve->basepaths)[solve->bfs_cur->path_info->basepath_id]->origin != (solve->basepaths)[new_node->path_info->basepath_id]->origin)
+	if ((solve->basepaths)[solve->bfs_cur->path_info->basepid]->origin != (solve->basepaths)[new_node->path_info->basepid]->origin)
 	{
-		path_found = true;
+		*path_status = COMPLETED;
 		combine_ends(solve, new_node);
 	}
 	return (0);
 }
 
-int			find_path(t_solve *solve, t_farm *farm)
+int				find_path(t_solve *solve, t_farm *farm)
 {
 	size_t		i;
-	bool		path_found;
+	uint8_t		path_status;
 
-	path_found = false;
+	path_status = IN_PROGRESS;
 	while (cur && solve->depth_delimiter)
 	{
 		i = 0;
@@ -150,7 +165,7 @@ int			find_path(t_solve *solve, t_farm *farm)
 			++i;
 		}
 		--(solve->depth_delimiter);
-		if (path_found == true)
+		if (path_status == COMPLETED)
 			break ;
 		bfs_cur = bfs_cur->next;
 	}

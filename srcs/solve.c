@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 03:09:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/19 13:52:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,15 @@ static int		setup_basepaths(t_solve *solve, t_farm *farm)
 	{
 		init_basepath(solve->basepaths[i]);
 		(solve->basepaths)->mpaths_in_base = SQUARE(solve->npaths_delimiter) / NBITS_SIZE_T;
-		if (i < (farm->rooms)[farm->start_rid]->nlinks)
+		if (i < (farm->graph)[farm->start_rid]->nlinks)
 		{
-			(solve->basepaths)[i]->start_or_end 1;
+			(solve->basepaths)[i]->origin = START;
 			(solve->basepaths)[i]->npaths_in_base = (farm->rooms)[farm->start_rid]->nlinks;
 		}
 		else
 		{
-			(solve->basepaths)[i]->start_or_end = 2;
-			(solve->basepaths)[i]->npaths_in_base = (farm->rooms)[farm->end_rid]->nlinks;
+			(solve->basepaths)[i]->origin = END;
+			(solve->basepaths)[i]->npaths = (farm->graph)[farm->end_rid]->nlinks;
 		}
 		(solve_basepaths)[i]->basepath_id = i + 1;
 	}
@@ -97,11 +97,11 @@ static int		setup_basepaths(t_solve *solve, t_farm *farm)
 static int		setup_solve(t_solve **solve, t_farm *farm)
 {
 	init_solve(solve);
-	solve->nbasepaths = (farm->rooms)[farm->start_rid]->nlinks + (farm->graph)[farm->end_rid]->nlinks;
-	if ((farm->rooms)[farm->start_rid]->nlinks < (farm->rooms)[farm->end_rid]->nlinks)
-		solve->npaths_delimiter = (farm->rooms)[farm->start_rid]->nlinks;
+	solve->nbasepaths = (farm->graph)[farm->start_rid]->nlinks + (farm->graph)[farm->end_rid]->nlinks;
+	if ((farm->graph)[farm->start_rid]->nlinks < (farm->rooms)[farm->end_rid]->nlinks)
+		solve->npaths_delimiter = (farm->graph)[farm->start_rid]->nlinks;
 	else
-		solve->npaths_delimiter = (farm->rooms)[farm->end_rid]->nlinks;
+		solve->npaths_delimiter = (farm->graph)[farm->end_rid]->nlinks;
 	setup_basepaths(*solve);
 	setup_bfs(*solve);
 	return (bfs);

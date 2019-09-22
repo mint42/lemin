@@ -3,7 +3,7 @@ DONE - update delimiter to reflect npaths_delimiter
 DONE - set up the base paths
 DONE - set up the bfs
 done - combine the two sides of path and update variables
-done - update the farm to reflect paths that have touched that node
+DONE - update the farm to reflect paths that have touched that node
 Done - check all pathsets for solution when no new paths acn be found
 done - make solution printable
 done - test
@@ -20,6 +20,8 @@ TO SAVE TIME
 	- Try using more write calls instead of more malloc calls?
 	- for input, try different initial allocations. Maybe the difference between using the size of a line
 		vs some larger number just for less allocations
+	- make individual variables for things that are hard to access
+	- dfs?
 
 1 - should i create a binary tree of the rooms as i receive them
 		pros:
