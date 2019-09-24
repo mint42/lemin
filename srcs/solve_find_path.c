@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/21 18:40:19 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/24 05:43:23 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 **	DONE - check that the path you're on doesn't run into other base paths, or the same path twice. do i have to check the dni lis
 **			for both when updating pathset and also when running the search  no, i dont think so
 **	DONE - add the paths that you crossed from the room to the dni list
+**	done - how order files
 */
 
 static int		update_path_info(t_solve *solve, t_farm *farm, t_pathinfo **new_pathinfo, size_t make_new_path)
@@ -110,9 +111,36 @@ static int	update_basepath_info(t_solve *solve)
 	return (0);
 }
 
-static int		combine_ends()
+static int		combine_ends(t_solve *solve, t_bfs *new_node, t_farm *farm)
 {
 	
+}
+
+static void		check_status(t_solve *solve, t_bfs *new_node, t_farm *farm, uint8_t *path_status)
+{
+	t_room		room;
+	size_t		i;
+
+	room = (farm->graph)[new_node->rid];
+	i = 0;
+	if ((solve->basepaths)[solve->new_node->path_info->basepid] == START)
+	{
+		while (*path_status != COMPLETED && i < solve->nstart_paths)
+		{
+			if (solve->start_paths[i] & room->paths_encountered[i])
+				*path_status = COMPLETED;
+			++i;
+		}
+	}
+	else
+	{
+		while (*path_status != COMPLETED && i < solve->nstart_paths)
+		{
+			if (~solve->start_paths[i] & room->paths_encountered[i])
+				*path_status = COMPLETED;
+			++i;
+		}
+	}
 }
 
 static int		update_bfs(t_solve *solve, t_farm *farm, size_t i, bool *path_status)
@@ -122,7 +150,6 @@ static int		update_bfs(t_solve *solve, t_farm *farm, size_t i, bool *path_status
 	if (init_bfs(new_node) == ERROR)
 		return (ERROR);
 	new_node->rid = (farm->graph)[bfs_cur->rid].links[i];
-
 	i = 0;
 	while (path_status != IN_PROGRESS && i < (farm->graph)[new_node->rid]->npaths_encountered && i < (solve->basepaths)[solve->bfs_cur->path_info->base_pid]->paths_in_base)
 	{
@@ -137,11 +164,9 @@ static int		update_bfs(t_solve *solve, t_farm *farm, size_t i, bool *path_status
 	new_node->prev = cur;
 	solve->tail->next = new_node;
 	solve->tail = tail->next;
-	if ((solve->basepaths)[solve->bfs_cur->path_info->basepid]->origin != (solve->basepaths)[new_node->path_info->basepid]->origin)
-	{
-		*path_status = COMPLETED;
-		combine_ends(solve, new_node);
-	}
+	check_if_completed(solve, new_node, farm, path_status);
+	if (*path_status == COMPLETE)
+		combine_ends(solve, new_node, farm);
 	return (0);
 }
 
@@ -149,24 +174,30 @@ int				find_path(t_solve *solve, t_farm *farm)
 {
 	size_t		i;
 	uint8_t		path_status;
+	t_room		*room;
+	t_pathinfo	*path_info;
 
 	path_status = IN_PROGRESS;
+	path_info = solve->cur_bfs->path_info;
+	room = (farm->graph)[solve->bfs_cur->rid];
 	while (cur && solve->depth_delimiter)
 	{
 		i = 0;
-		while (i < (farm->rooms[bfs_cur->rid]).nlinks)
+		while (i < room->nlinks)
 		{
 			++(solve->bfs_cur->path_info->depth_level);
-			if ((farm->rooms[solve->bfs_cur->rid]->links[i] != cur->rid)
-				if (update_bfs(solve, farm, i, &path_found) == ERROR)
+			if (room->links[i] != cur->rid)
+				if (update_bfs(solve, farm, i, &path_status) == ERROR)
 					return (ERROR);
-			if (farm->rooms[bfs_cur->rid]->mpaths_encountered >= solve->cur_bfs->path_info->path_index)
-				farm->rooms[bfs_cur->rid]->paths_encountered[solve->cur_bfs->path_info->path_id_index] = farm->rooms[bfs_cur->rid]->paths_encountered[solve->cur_bfs->path_info->path_id_index] & solve->cur_bfs->path_info->path_id_bit;
+			if (room->mpaths_encountered >= path_info->path_index)
+				if (realloc() == ERROR)
+					return (ERROR);
+			room->path_encounters[path_info->index] = room->path_encounters[path_info->index] & path_info->bit;
 			++i;
 		}
 		--(solve->depth_delimiter);
-		if (path_status == COMPLETED)
-			break ;
+		if (path_status == COMPLETE)
+			return (0);
 		bfs_cur = bfs_cur->next;
 	}
 	return (0);

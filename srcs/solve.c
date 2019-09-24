@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/22 04:12:02 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/24 03:40:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,9 @@ int				solve(t_farm *farm, char **solution)
 	bfs_tail = (solve.bfs)->next;
 	while (bfs_cur && solve->depth_delimiter >= 0)
 	{
-		if (find_paths(&bfs_cur, &bfs_tail, farm, &solve.depth_delimiter) == ERROR)
+		if (find_path(solve, farm) == ERROR)
 			return (ERROR);
-		if (update_pathsets(farm, &bfs_cur, solve) == ERROR)
+		if (update_pathsets(solve, farm) == ERROR)
 			return (ERROR);
 	}
 	if (solve->pathsets)
