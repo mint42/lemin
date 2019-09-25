@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/24 03:40:18 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/24 23:55:36 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static int		setup_basepaths(t_solve *solve, t_farm *farm)
 		(solve->basepaths)[i]->npaths = (farm->rooms)[farm->start_rid]->nlinks;
 		++i;
 		(solve_basepaths)[i]->basepath_id = i;
+		(solve_startpaths)[i / 64] = (solve_startpaths)[i / 64] & (1 << i % 64);
 	}
 	while (i < solve->nbasepaths)
 	{

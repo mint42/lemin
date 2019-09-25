@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/24 05:43:23 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/25 07:23:13 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,144 +61,177 @@
 **	done - how order files
 */
 
-static int		update_path_info(t_solve *solve, t_farm *farm, t_pathinfo **new_pathinfo, size_t make_new_path)
+static int		update_path_info(t_solve *solve, t_farm *farm, t_bfs *new_node, size_t make_new_path)
 {
-	int		i;
-
 	if (!make_new_path)
-		new_pathinfo = solve->bfs_cur->pathinfo;
+		new_node->pathinfo = solve->bfs_cur->pathinfo;
 	else
 	{
-		new_pathinfo = (t_path *)ft_memalloc(sizeof(t_path));
+		new_node->pathinfo = (t_path *)ft_memalloc(sizeof(t_path));
 		if (!new_pathinfo)
 			return (print_error(E_ALLOC_ERROR));
 		if (solve->bfs_cur->pathinfo->pid_bit & 100000000000000000)
 		{
-			new_pathinfo->pid_index = solve->bfs_cur->pathinfo->pid_index + 1;
-			new_pathinfo->pid_bit = 1;
+			new_node->pathinfo->pid_index = solve->bfs_cur->pathinfo->pid_index + 1;
+			new_node->pathinfo->pid_bit = 1;
 		}
 		else
-			new_pathinfo->pid_bit = solve->bfs_cur->path_info->pid_bit << 1;
-		new_pathinfo->base_pid = solve->bfs_cur->path_info->base_pid;
-		new_pathinfo->depth_level = solve->bfs_cur->path_info->depth_lvl;
-		new_pathinfo->npaths_dni = solve->bfs_cur->path_info->npaths_dni;
-		new_pathinfo->mpaths_dni = solve->bfs_cur->path_info->mpaths_dni;
+			new_node->pathinfo->pid_bit = solve->bfs_cur->path_info->pid_bit << 1;
+		new_node->pathinfo->base_pid = solve->bfs_cur->path_info->base_pid;
+		new_node->pathinfo->depth_level = solve->bfs_cur->path_info->depth_lvl;
+		new_node->pathinfo->npaths_dni = solve->bfs_cur->path_info->npaths_dni;
+		new_node->pathinfo->mpaths_dni = solve->bfs_cur->path_info->mpaths_dni;
 		while (farm->rooms[bfs_cur->rid]->npaths_encountered > solve->cur_bfs->path_info->mpaths_dni)
-			realloc();
-		i = 0;
+			if (realloc_array() == ERROR)
+				return (ERROR);
 		while (i < farm->rooms[bfs_cur->rid]->npaths_encountered)
 			solve->cur_bfs->path_info->mpaths_dni[i] = solve->cur_bfs->path_info->mpaths_dni[i] & farm->rooms[bfs_cur->rid]->paths_encountered[i];
 	}
-	new_pathinfo->*paths_dni;
+	new_node->pathinfo->*paths_dni;
 	return (0);
 }
 
-static int	update_basepath_info(t_solve *solve)
+static int	update_basepath_info(t_solve *solve, t_bfs *new_node)
 {
-	t_pathinfo	path_info;
+	t_path_info	path_info;
 	t_basepath	basepath_info;
 	
-	path_info = *(solve->bfs_cur->path_info);
+	path_info = new_node->path_info;
 	basepath_info = solve->basepaths[path_info->base_pid];
-	if (path_info.pid_index > basepath_info->mpaths)
-	{
-		basepath_info.mpaths = basepath_info.mpaths * 2;
-		if (realloc_array(&basepath_info.paths, basepath_info.mpaths) == ERROR)
-			return (ERROR);
-	}
-	basepath.paths[path.pid_index] = basepath.paths[path.pid_index] | path.pid_bit;
-	ADD_PID(basepath_info.paths, path_info.pid_index, path_info.pid_bit);
+	add_pid(array, size_array, index, bit);
+/*
+**	while (path_info.pid_index > basepath_info->mpaths)
+**		if (realloc_array(&basepath_info.paths, &basepath_info.mpaths) == ERROR)
+**			return (ERROR);
+**	ADD_PID(basepath_info.paths, path_info.pid_index, path_info.pid_bit);
+**	basepath.paths[path_info.pid_index] = basepath.paths[path_info.pid_index] | path_info.pid_bit;
+*/
 	return (0);
 }
 
 static int		combine_ends(t_solve *solve, t_bfs *new_node, t_farm *farm)
 {
+	t_bfs	*cur;
 	
+	cur = solve->cur_bfs;
+	while (cur && )
+	{
+		
+	}
 }
 
-static void		check_status(t_solve *solve, t_bfs *new_node, t_farm *farm, uint8_t *path_status)
+/*
+**	static int		create_new_bfs_node(t_solve *solve, t_farm *farm, t_bfs *new_node, bool make_new_path)
+**	{
+**		t_bfs			*new_node;
+**		size_t			i;
+**		
+**		i = 0;
+**		if (init_bfs_node(new_node) == ERROR)
+**			return (ERROR);
+**		if (!make_new_path)
+**			new_node->pathinfo = solve->bfs_cur->pathinfo;
+**		else
+**		{
+**			new_node->pathinfo = (t_path *)ft_memalloc(sizeof(t_path));
+**			if (!new_node->pathinfo)
+**				return (print_error(E_ALLOC_ERROR));
+**			if (solve->bfs_cur->pathinfo->pid_bit & 100000000000000000)
+**			{
+**				new_node->pathinfo->pid_index = solve->bfs_cur->pathinfo->pid_index + 1;
+**				new_node->pathinfo->pid_bit = 1;
+**			}
+**			else
+**				new_pathinfo->pid_bit = solve->bfs_cur->path_info->pid_bit << 1;
+**			new_node->pathinfo->base_pid = solve->bfs_cur->path_info->base_pid;
+**			new_node->pathinfo->depth_level = solve->bfs_cur->path_info->depth_lvl;
+**			new_node->pathinfo->npaths_dni = solve->bfs_cur->path_info->npaths_dni;
+**			new_node->pathinfo->mpaths_dni = solve->bfs_cur->path_info->mpaths_dni;
+**		}
+**	}
+**			while (i < farm->graph[bfs_cur->rid]->npaths_encountered)
+**				solve->cur_bfs->path_info->mpaths_dni[i] = solve->cur_bfs->path_info->mpaths_dni[i] & farm->rooms[bfs_cur->rid]->paths_encountered[i];
+**		}
+**		new_pathinfo->*paths_dni;
+**		return (0);
+**	
+**			add_pid(room->path_encounters, room->mpath_encounters, path_info->pid_index, path_info->pid_bit);
+**			add_pid(solve->paths_in_base, solve->npaths_in_base, pathinfo.pid_index, pathinfo.pid_bit);
+**			if (solve->basepaths[path_info->base_pid]->origin == START)
+**				add_pid(solve->startpaths, solve->nstartpaths, new_node->path_info->pid_index, new_node->path_info->pid_bit)
+**	
+**				update_pathinfo(new_node);
+**				update_basepath_info(solve);
+**		new_node->prev = cur;
+**		solve->tail->next = new_node;
+**		solve->tail = tail->next;
+**		return (0);
+**	}
+*/
+
+static int		inspect_link(t_solve *solve, t_farm *farm, uint8_t *path_status)
 {
-	t_room		room;
+	t_room		*link;
+	t_basepath	*basepath;
 	size_t		i;
-
-	room = (farm->graph)[new_node->rid];
+	
 	i = 0;
-	if ((solve->basepaths)[solve->new_node->path_info->basepid] == START)
+	basepath = (solve->basepaths)[solve->bfs_cur->pathinfo->base_pid];
+	link = (farm->graph)[(farm->graph)[solve->bfs_cur->rid]->links[i]];
+	while (path_status == IN_PROGRESS && i < link->npaths_encountered && i < basepath->paths_in_base && i < solve->nstart_paths)
 	{
-		while (*path_status != COMPLETED && i < solve->nstart_paths)
-		{
-			if (solve->start_paths[i] & room->paths_encountered[i])
-				*path_status = COMPLETED;
-			++i;
-		}
-	}
-	else
-	{
-		while (*path_status != COMPLETED && i < solve->nstart_paths)
-		{
-			if (~solve->start_paths[i] & room->paths_encountered[i])
-				*path_status = COMPLETED;
-			++i;
-		}
-	}
-}
-
-static int		update_bfs(t_solve *solve, t_farm *farm, size_t i, bool *path_status)
-{
-	t_bfs	*new_node;
-
-	if (init_bfs(new_node) == ERROR)
-		return (ERROR);
-	new_node->rid = (farm->graph)[bfs_cur->rid].links[i];
-	i = 0;
-	while (path_status != IN_PROGRESS && i < (farm->graph)[new_node->rid]->npaths_encountered && i < (solve->basepaths)[solve->bfs_cur->path_info->base_pid]->paths_in_base)
-	{
-		if ((farm->graph)[new_node->rid]->paths_encountered[i] & (solve->basepaths)[solve->bfs_cur->path_info->base_pid]->paths_in_base[i])
+		if (link->paths_encountered[i] & basepath->paths_in_base[i])
 			*path_status = DROPPED;
-		if ((farm->graph)[new_node->rid]->paths_encountered[i] & (solve->basepaths)[solve->bfs_cur->path_info->base_pid]->paths_in_base[i])
-			*path_status = COMPLETE;
+		if ((basepath->origin == START) && (link->paths_encountered[i] & solve->start_paths[i]))
+			*path_status = COMPLETED;
+		else if ((basepath->origin == END) && (link->paths_encountered[i] & ~solve->start_paths[i]))
+			*path_status = COMPLETED;
 		++i;
 	}
-	update_basepath_info(solve);
-	update_path_info(solve);
-	new_node->prev = cur;
-	solve->tail->next = new_node;
-	solve->tail = tail->next;
-	check_if_completed(solve, new_node, farm, path_status);
-	if (*path_status == COMPLETE)
-		combine_ends(solve, new_node, farm);
+}
+
+static int		process_bfs_node(t_solve *solve, t_farm *farm, uint8_t *path_status)
+{
+	static size_t	i;
+	t_room			*room;
+	t_bfs			*new_node;
+
+	while (path_status == IN_PROGRESS && i < room->nlinks)
+	{
+		room = (farm->graph)[solve->bfs_cur->rid];
+		if (room->links[i] != cur->rid)
+		{
+			inspect_link(solve, farm, &path_status);
+			if (*path_status == COMPLETE || *path_status == DROPPED)
+				return (0);
+			if (create_new_bfs_node(solve, farm, &new_node, i) == ERROR)
+				return (ERROR);
+			add_node_to_bfs(solve->bfs, new_node);
+		}
+		++i;
+	}
+	i = 0;
 	return (0);
 }
 
-int				find_path(t_solve *solve, t_farm *farm)
+int				run_bfs(t_solve *solve, t_farm *farm)
 {
-	size_t		i;
-	uint8_t		path_status;
-	t_room		*room;
-	t_pathinfo	*path_info;
+	static uint8_t		path_status;
 
+	if (path_status == COMPLETE)
+		return (combine_ends(solve, farm));
+	if (path_status == DROPPED)
+		return (delete_path(solve, farm));
 	path_status = IN_PROGRESS;
-	path_info = solve->cur_bfs->path_info;
-	room = (farm->graph)[solve->bfs_cur->rid];
-	while (cur && solve->depth_delimiter)
+	while (solve->bfs_cur && solve->depth_delimiter)
 	{
-		i = 0;
-		while (i < room->nlinks)
-		{
-			++(solve->bfs_cur->path_info->depth_level);
-			if (room->links[i] != cur->rid)
-				if (update_bfs(solve, farm, i, &path_status) == ERROR)
-					return (ERROR);
-			if (room->mpaths_encountered >= path_info->path_index)
-				if (realloc() == ERROR)
-					return (ERROR);
-			room->path_encounters[path_info->index] = room->path_encounters[path_info->index] & path_info->bit;
-			++i;
-		}
+		++(solve->bfs_cur->path_info->depth_level);
+		if (process_bfs_node(solve, farm) == ERROR)
+			return (ERROR);
+		if (*path_status == COMPLETE || *path_status == DROPPED)
+			return (run_bfs(solve, farm));
 		--(solve->depth_delimiter);
-		if (path_status == COMPLETE)
-			return (0);
-		bfs_cur = bfs_cur->next;
+		solve->bfs_cur = solve->bfs_cur->next;
 	}
 	return (0);
 }

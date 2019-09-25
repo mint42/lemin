@@ -6,17 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 17:01:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/25 00:10:11 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bfs.h"
 #include "pathsets.h"
 #include "ft_list.h"
-
-/*
-** 	should delimiter be at the shortest or longest check? - longest
-*/
 
 static void		update_solution(t_bfs *bfs, t_list *sets, t_pathset *solution)
 {
