@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/26 21:46:05 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/26 23:27:57 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,16 +128,15 @@ static int		setup_solve(t_solve *solve, t_farm *farm)
 }
 
 
-static int		combine_ends(t_bfs *end_1, t_bfs *end_2, uint8_t *path_status)
+static int		combine_ends(t_bfs *end1, t_bfs *end_2, uint8_t *path_status)
 {
-	t_bfs	*end_1;
-	t_bfs	*end_2;
+	t_bfs	*end1;
+	t_bfs	*end2;
 	
 	cur = solve->cur_bfs;
-	while (cur && )
+	while (cur->depth_level >= end1->depth_level)
 	{
-		check only while the depth level is the same;
-		go backwards;
+		while (solve->start_paths )
 		do a check on all paths from start to see when a collision happens
 			thats how you'll know which node to connect to
 		do i need to copy over something dni lists, probs

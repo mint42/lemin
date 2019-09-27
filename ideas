@@ -9,6 +9,12 @@ done - make solution printable
 done - test
 Done - norm
 
+verify solution
+make solution printable
+realloc
+combine ends
+delete path
+delete_bfs
 
 TO SAVE SPACE
 - delete larger binary tree wrapper
