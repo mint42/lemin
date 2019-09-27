@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/24 23:55:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/26 21:46:05 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@
 **	}
 */
 
-static int		setup_bfs(t_solve **solve, t_farm *farm)
+static int		setup_bfs(t_solve *solve, t_farm *farm)
 {
-	(solve->bfs) = init_bfs();
+	if (init_bfs(solve->bfs) == ERROR)
+		return (ERROR);
 	(solve->bfs)->start_or_end_path = 1;
 	(solve->bfs)->path_id_index = 0;
 	(solve->bfs)->path_id_bit = 1;
@@ -66,6 +67,7 @@ static int		setup_bfs(t_solve **solve, t_farm *farm)
 	(solve->bfs)->next->start_or_end_path = 1;
 	(solve->bfs)->next->path_id_bit = 2;
 	(solve->bfs)->next->room_id = farm->end_room_id;
+	return (0);
 }
 
 static int		setup_basepaths(t_solve *solve, t_farm *farm)
@@ -97,7 +99,7 @@ static int		setup_basepaths(t_solve *solve, t_farm *farm)
 	}
 }
 
-static int		setup_solve(t_solve **solve, t_farm *farm)
+static int		setup_solve(t_solve *solve, t_farm *farm)
 {
 	solve->bfs_head = 0;
 	solve->bfs_cur = 0;
@@ -110,6 +112,8 @@ static int		setup_solve(t_solve **solve, t_farm *farm)
 	solve->max_bit_id = 1;
 	solve->nbasepaths = (farm->graph)[farm->start_rid]->nlinks + (farm->graph)[farm->end_rid]->nlinks;
 	solve->start_pids = (size_t *)ft_memalloc(sizeof(size_t));
+	if (!solve->start_pids)
+		return (print_error(E_ALLOC_ERROR));
 	solve->nstart_pids = 1;
 	solve->start_pids = START;
 	if ((farm->graph)[farm->start_rid]->nlinks < (farm->rooms)[farm->end_rid]->nlinks)
@@ -117,28 +121,54 @@ static int		setup_solve(t_solve **solve, t_farm *farm)
 	else
 		solve->npaths_delimiter = (farm->graph)[farm->end_rid]->nlinks;
 	setup_basepaths(*solve);
-	setup_bfs(*solve);
+	setup_bfs(solve);
+	solve->bfs_cur = solve->bfs;
+	solve->bfs_tail = (solve-bfs)->next;
 	return (bfs);
 }
+
+
+static int		combine_ends(t_bfs *end_1, t_bfs *end_2, uint8_t *path_status)
+{
+	t_bfs	*end_1;
+	t_bfs	*end_2;
+	
+	cur = solve->cur_bfs;
+	while (cur && )
+	{
+		check only while the depth level is the same;
+		go backwards;
+		do a check on all paths from start to see when a collision happens
+			thats how you'll know which node to connect to
+		do i need to copy over something dni lists, probs
+		update depth_level to be double the fun
+
+	
+		cur = cur->prev;
+	}
+}
+
 
 int				solve(t_farm *farm, char **solution)
 {
 	t_solve		solve;
-	t_bfs		*bfs_cur;
-	t_bfs		*bfs_tail;
+	uint8_t		path_status;
 
 	solve = 0;
-	solve_setup(&solve, farm);
-	bfs_cur = solve.bfs;
-	bfs_tail = (solve.bfs)->next;
-	while (bfs_cur && solve->depth_delimiter >= 0)
+	path_status = IN_PROGRESS;
+	if (solve_setup(&solve, farm) == ERROR)
+		return (ERROR);
+	while (solve.bfs_cur && solve.depth_delimiter >= 0)
 	{
-		if (find_path(solve, farm) == ERROR)
-			return (ERROR);
+		if (path_status == IN_PROGRESS)
+			if (run_bfs(solve, farm) == ERROR)
+				return (ERROR);
+		if (path_status == COMPLETE)
+			return (combine_ends(solve, farm, &path_status));
 		if (update_pathsets(solve, farm) == ERROR)
 			return (ERROR);
 	}
-	if (solve->pathsets)
+	if (solve.pathsets)
 		verify_solution();
 	make_solution_printable(solve.solution, solution);
 	delete_bfs(&solve.bfs);

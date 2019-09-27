@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 21:13:09 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/17 23:19:32 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/26 21:40:51 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 
 typedef struct	s_path
 {
-	size_t		path_id_index;
-	size_t		path_id_bit;
+	size_t		pid_index;
+	size_t		pid_bit;
 	size_t		basepath_id;
 	size_t		depth_level;
 	size_t		*paths_dni;
