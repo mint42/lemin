@@ -81,18 +81,37 @@ int		setup_bfs_node(t_bfs **new_node, t_solve *solve, t_farm *farm, size_t i)
 	return (0);
 }
 
-void	delete_bfs(t_bfs **bfs)
+void	delete_bfs_node(t_bfs **bfs_node)
+{
+	if (bfs_node && *bfs_node)
+	{
+		ft_memdel((void **)&((*bfs_node)->prev));
+		ft_memdel((void **)&((*bfs_node)->next));
+		ft_memdel((void **)&((*bfs_node)->path_prev));
+		ft_memdel((void **)&((*bfs_node)->path_next));
+		delete_path_info(bfs_node->path_info);
+		ft_memdel((void **)bfs_node);
+	}
+}
+
+void	delete_bfs_path(t_bfs **bfs)
 {
 	t_bfs	**cur;
+	t_bfs	**to_delete;
 
-	while (bfs)
+	cur = bfs;
+	while ((*cur)->path_prev)
 	{
-		cur = bfs;
-		bfs = &(*bfs)->next;
-		ft_memdel((void **)&((*cur)->prev));
-		ft_memdel((void **)&((*cur)->next));
-		ft_memdel((void **)&((*cur)->paths_to_avoid));
-		ft_memdel((void **)&((*cur)->paths_to_avoid));
-		ft_memdel((void **)cur);
+		to_delete = cur;
+		cur = (*cur)->path_prev;
+		delete_bfs_node(to_delete);
 	}
+	cur = bfs;
+	while ((*cur)->path_next)
+	{
+		to_delete = cur;
+		cur = (*cur)->path_next;
+		delete_bfs_node(to_delete);
+	}
+	delete_bfs_node(bfs);
 }

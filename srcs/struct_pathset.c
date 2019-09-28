@@ -32,15 +32,17 @@ t_pathset	*init_pathset(t_bfs *bfs)
 	return (pathset);
 }
 
-void		delete_pathset(void *content, size_t content_size)
+void		delete_pathset(t_list *pathsets_cur)
 {
-	(void)content_size;
-	if (content)
+	t_list	*cur;
+	t_list	*to_delete;
+
+	if (pathsets_cur)
 	{
-		ft_printf("delete_pathset\n");
-		/*
-		**	ft_lstdel(&(content->paths), 0);
-		**	ft_memdel((void **)&content);
-		*/
+		to_delete = PATHSET(pathsets_cur);
+		cur = PATHSET(pathsets_cur)->prev;
+		cur->next = PATHSET(pathsets_cur)->next;
+		ft_lstdelone(&(to_delete), delete_bfs_path());
+		ft_memdel((void **)&content);
 	}
 }

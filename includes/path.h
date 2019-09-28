@@ -26,9 +26,8 @@ typedef struct	s_path
 	size_t		pid_bit;
 	size_t		basepath_id;
 	size_t		depth_level;
-	size_t		*paths_dni;
-	size_t		npaths_dni;
-	size_t		mpaths_dni;
+	size_t		*pids_dni;
+	size_t		s_pids_dni;
 }				t_path;
 
 #endif
