@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:53:48 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/26 18:20:23 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/28 01:19:23 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ typedef struct		s_solve
 	t_list			*pathsets;
 	t_pathset		*solution;
 	t_basepath		*basepaths;
-	size_t			nbasepaths;
+	size_t			s_basepaths;
 	size_t			*start_pids;
 	size_t			nstart_pids;
-	size_t			nbpaths_delimiter;
+	size_t			npaths_delimiter;
 	size_t			depth_delimiter;
 	size_t			max_index_id;
 	size_t			max_bit_id;

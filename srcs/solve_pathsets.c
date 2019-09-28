@@ -6,30 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/26 22:57:56 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/28 02:05:10 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bfs.h"
 #include "pathsets.h"
+#include "manage_solution.h"
 #include "ft_list.h"
-
-static void		update_solution(t_bfs *bfs, t_list *sets, t_pathset *solution)
-{
-	t_pathset	*cur;
-
-	if (PATHSET(sets)->nmoves < solution->nmoves)
-	{
-		solution = PATHSET(sets);
-		cur->next = sets->next;
-		delete_pathset(&solution);
-	}
-	else
-	{
-		cur->next = sets->next;
-		delete_pathset(&PATHSET(sets));
-	}
-}
 
 static void		update_nmoves(t_pathset *pathset)
 {

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/26 22:58:58 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/28 02:09:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ static int	update_basepath_info(t_solve *solve, t_bfs *new_node)
 **	done - how order files
 */
 
-static int		create_new_path(t_path *pathinfo, t_solve *solve, t_farm *farm)
+static int		setup_path(t_path *pathinfo, t_solve *solve, t_farm *farm)
 {
 	*pathinfo = (t_path *)ft_memalloc(sizeof(t_path));
 	if (!*pathinfo)
@@ -131,40 +131,6 @@ static int		create_new_path(t_path *pathinfo, t_solve *solve, t_farm *farm)
 	if (!*pathinfo->paths_dni)
 		return (print_error(E_ALLOC_ERROR));
 	ft_memcpy(*pathinfo->paths_dni, solve->bfs_cur->pathinfo->paths_dni, pathinfo->spaths_dni);
-	return (0);
-}
-
-static int		inherit_encounters(t_bfs *new_node, t_room *room)
-{
-	size_t	i;
-
-	if (new_node->path_info->s_pids_dni < room->max_pid_encountered)
-		if (realloc_pids(new_node->path_info->pids_dni, new_node->path_info->s_pids_dni, room->max_pid_encountered) == ERROR)
-			return (ERROR);
-	i = 0;
-	while (i < room->max_pid_encountered)
-	{
-		new_node->path_info->pids_dni[i] = new_node->path_info->pids_dni[i] | room->pids_encountered[i];
-		++i;
-	}
-}
-
-static int		create_new_bfs_node(t_bfs **new_node, t_solve *solve, t_farm *farm, size_t i)
-{
-	if (init_bfs_node(new_node) == ERROR)
-		return (ERROR);
-	(*new_node)->rid = ((farm->graph)[solve->bfs_cur->rid])->links[i];
-	inherit_encounters((*new_node), (farm->graph)[(*new_node)->rid]);
-	if (i > 0)
-	{
-		create_new_path(&((*new_node)->pathinfo), solve, farm);
-		add_pid(solve->basepaths[(*new_node)->path_info->basepid]->pids_in_base, solve->basepaths[(*new_node)->path_info->base_pid]->spids_in_base, (*new_node)->path_info->pid_index, (*new_node)->pathinfo->pid_bit);
-		if (solve->basepaths[solve->bfs_cur->path_info->base_pid]->origin == START)
-			add_pid(solve->startpaths, solve->sstartpaths, (*new_node)->path_info->pid_index, (*new_node)->pathinfo->pid_bit)
-	}
-	else
-		(*new_node)->path_info = solve->bfs_cur->path_info;
-	add_pid((farm->graph)[(*new_node)->rid]->pids_encountered, (farm->graph)[(*new_node)->rid]->s_pids_encountered, (*new_node)->path_info->pid_index, (*new_node)->path_info->pid_bit);
 	return (0);
 }
 

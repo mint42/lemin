@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/26 23:27:57 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/28 02:05:24 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,109 +53,53 @@
 **	}
 */
 
-static int		setup_bfs(t_solve *solve, t_farm *farm)
+static void		overlap_pids_dni(t_bfs *end1, t_bfs *end2)
 {
-	if (init_bfs(solve->bfs) == ERROR)
-		return (ERROR);
-	(solve->bfs)->start_or_end_path = 1;
-	(solve->bfs)->path_id_index = 0;
-	(solve->bfs)->path_id_bit = 1;
-	(solve->bfs)->room_id = farm->start_room_id;
-	(solve->bfs)->next = init_bfs();
-	(solve->bfs)->next->prev = bfs;
-	(solve->bfs)->next->next = 0;
-	(solve->bfs)->next->start_or_end_path = 1;
-	(solve->bfs)->next->path_id_bit = 2;
-	(solve->bfs)->next->room_id = farm->end_room_id;
-	return (0);
-}
+	size_t			*tmp;
+	size_t			i;
 
-static int		setup_basepaths(t_solve *solve, t_farm *farm)
-{
-	size_t	i;
-
-	solve->basepaths = (size_t *)ft_memalloc(sizeof(size_t) * solve->nbasepaths);
-	if (!solve->basepaths)
-		return (print_error(E_ALLOC_ERROR));
+	if (end1->s_pids_dni < cur->s_pids_dni)
+	{
+		tmp = end1->pids_dni;
+		end1->pids_dni = end2->pids_dni;
+		end2->pids_dni = tmp;
+	}
 	i = 0;
-	while (i < (farm->graph)[farm->start_rid]->nlinks)
+	while (i < cur->pids_dni)
 	{
-		init_basepath(solve->basepaths[i]);
-		(solve->basepaths)->mpaths_in_base = SQUARE(solve->npaths_delimiter) / NBITS_SIZE_T;
-		(solve->basepaths)[i]->origin = START;
-		(solve->basepaths)[i]->npaths = (farm->rooms)[farm->start_rid]->nlinks;
+		end1->pids_dni[i] = end1->pids_dni[i] | end2->pids_dni[i];
 		++i;
-		(solve_basepaths)[i]->basepath_id = i;
-		(solve_startpaths)[i / 64] = (solve_startpaths)[i / 64] & (1 << i % 64);
-	}
-	while (i < solve->nbasepaths)
-	{
-		init_basepath(solve->basepaths[i]);
-		(solve->basepaths)->mpaths_in_base = SQUARE(solve->npaths_delimiter) / NBITS_SIZE_T;
-		(solve->basepaths)[i]->origin = END;
-		(solve->basepaths)[i]->npaths = (farm->graph)[farm->end_rid]->nlinks;
-		++i;
-		(solve_basepaths)[i]->basepath_id = i;
 	}
 }
 
-static int		setup_solve(t_solve *solve, t_farm *farm)
+static int		combine_ends(t_solve *solve, t_bfs *end1, uint8_t *path_status)
 {
-	solve->bfs_head = 0;
-	solve->bfs_cur = 0;
-	solve->bfs_tail = 0;
-	solve->pathsets = 0;
-	solve->solution = 0;
-	solve->basepaths = 0;
-	solve->depth_delimiter = 0;
-	solve->max_index_id = 1;
-	solve->max_bit_id = 1;
-	solve->nbasepaths = (farm->graph)[farm->start_rid]->nlinks + (farm->graph)[farm->end_rid]->nlinks;
-	solve->start_pids = (size_t *)ft_memalloc(sizeof(size_t));
-	if (!solve->start_pids)
-		return (print_error(E_ALLOC_ERROR));
-	solve->nstart_pids = 1;
-	solve->start_pids = START;
-	if ((farm->graph)[farm->start_rid]->nlinks < (farm->rooms)[farm->end_rid]->nlinks)
-		solve->npaths_delimiter = (farm->graph)[farm->start_rid]->nlinks;
-	else
-		solve->npaths_delimiter = (farm->graph)[farm->end_rid]->nlinks;
-	setup_basepaths(*solve);
-	setup_bfs(solve);
-	solve->bfs_cur = solve->bfs;
-	solve->bfs_tail = (solve-bfs)->next;
-	return (bfs);
-}
-
-
-static int		combine_ends(t_bfs *end1, t_bfs *end_2, uint8_t *path_status)
-{
-	t_bfs	*end1;
-	t_bfs	*end2;
+	static t_bfs	*cur;
 	
 	cur = solve->cur_bfs;
+	if (!end2)
+		cur = solve->bfs_cur;
 	while (cur->depth_level >= end1->depth_level)
 	{
-		while (solve->start_paths )
-		do a check on all paths from start to see when a collision happens
-			thats how you'll know which node to connect to
-		do i need to copy over something dni lists, probs
-		update depth_level to be double the fun
-
-	
+		if (cur->depth_level != end1->depth_level &&
+			solve->s_start_paths >= cur->pid_index &&
+			solve->s_start_paths[cur->pid_index] & cur->pid_bit)
+		{
+			end1->depth_level = end1->depth_level + cur->depth_level;
+			overlap_pids_dni(end1, cur);
+			break ;
+		}
 		cur = cur->prev;
 	}
 }
-
 
 int				solve(t_farm *farm, char **solution)
 {
 	t_solve		solve;
 	uint8_t		path_status;
 
-	solve = 0;
 	path_status = IN_PROGRESS;
-	if (solve_setup(&solve, farm) == ERROR)
+	if (setup_solve(&solve, farm) == ERROR)
 		return (ERROR);
 	while (solve.bfs_cur && solve.depth_delimiter >= 0)
 	{
@@ -168,9 +112,9 @@ int				solve(t_farm *farm, char **solution)
 			return (ERROR);
 	}
 	if (solve.pathsets)
-		verify_solution();
+		verify_solution(solve);
 	make_solution_printable(solve.solution, solution);
 	delete_bfs(&solve.bfs);
 	delete_pathset(&solve.solution);
-	return (error);
+	return (0);
 }

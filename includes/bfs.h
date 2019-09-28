@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 19:12:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 21:20:41 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/28 01:01:51 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct	s_bfs
 {
 	t_bfs		*prev;
 	t_bfs		*next;
+	t_bfs		*path_prev;
+	t_bfs		*path_next;
 	size_t		rid;
 	t_path		*path_info;
 }				t_bfs;
