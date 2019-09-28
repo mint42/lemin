@@ -52,7 +52,7 @@ static int		inherit_encounters(t_bfs *new_node, t_room *room)
 	size_t	i;
 
 	if (new_node->path_info->s_pids_dni < room->max_pid_encountered)
-		if (realloc_pids(new_node->path_info->pids_dni, new_node->path_info->s_pids_dni, room->max_pid_encountered) == ERROR)
+		if (realloc_pids_array(&(new_node->path_info->pids_dni), &(new_node->path_info->s_pids_dni), room->max_pid_encountered) == ERROR)
 			return (ERROR);
 	i = 0;
 	while (i < room->max_pid_encountered)

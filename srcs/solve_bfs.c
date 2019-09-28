@@ -86,15 +86,13 @@ static int	update_basepath_info(t_solve *solve, t_bfs *new_node)
 	path_info = new_node->path_info;
 	basepath_info = solve->basepaths[path_info->base_pid];
 	add_pid(basepath_info.paths, path_info.pid_index, path_info.pid_bit);
+*/
 /*
 **	while (path_info.pid_index > basepath_info->mpaths)
 **		if (realloc_array(&basepath_info.paths, &basepath_info.mpaths) == ERROR)
 **			return (ERROR);
 **	ADD_PID(basepath_info.paths, path_info.pid_index, path_info.pid_bit);
 **	basepath.paths[path_info.pid_index] = basepath.paths[path_info.pid_index] | path_info.pid_bit;
-*/
-	return (0);
-}
 */
 /*
 **	DONE - return when new path is found

@@ -2,19 +2,17 @@ THINGS LEFT TO DO
 DONE - update delimiter to reflect npaths_delimiter
 DONE - set up the base paths
 DONE - set up the bfs
-done - combine the two sides of path and update variables
+DONE - combine the two sides of path and update variables
 DONE - update the farm to reflect paths that have touched that node
-Done - check all pathsets for solution when no new paths acn be found
+DONE - verify solution
+DONE - realloc
 done - make solution printable
+done - delete path
+done - delete pathsets
+		delete_bfs - same as delete paths i think
 done - test
 Done - norm
-
-verify solution
-make solution printable
-realloc
-combine ends
-delete path
-delete_bfs
+done - test
 
 TO SAVE SPACE
 - delete larger binary tree wrapper

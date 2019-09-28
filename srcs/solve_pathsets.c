@@ -79,9 +79,9 @@ int				update_pathsets(t_solve *solve, t_farm *farm)
 	{
 		update_pathset(paths, PATHSET(cur), farm);
 		if (PATHSET(cur)->nmoves < solve->solution->nmoves || PATHSET(cur)->npaths == solve->npaths_delimiter)
-			update_solution(solution, solve->sets);
-		if (PATHSET(cur)->nmoves - PATHSET(cur)->maxpathlen > solve->depth_delimiter)
-			solve->depth_delimiter = PATHSET(cur_pathsets)->delimiter;
+			update_solution(solve);
+		else if (PATHSET(cur)->nmoves - PATHSET(cur)->maxpathlen > solve->depth_delimiter)
+			solve->depth_delimiter = PATHSET(cur)->depth_delimiter;
 		prev_cur = cur;
 		cur = cur->next;
 	}
