@@ -10,8 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int		make_solution_printable(char  **s, t_pathset *solution)
+int		make_solution_printable(char  **s, t_pathset *solution, t_solve *solve)
 {
+	size_t	i;
+	size_t	j;
+	size_t	ant;
+
+	*s = ((ft_numlen(solve->ants + 3) * solution->npaths) + 1) * solution->nmoves;
+	if (!*s)
+		return (print_error(E_ALLOC_ERROR));
+	i = 0;
+	j = 0;
+	while (j < solve->nmoves)
+	{
+		*s[i] = 'L-';
+		i = i + 2;
+		
+		++j;
+	}
 	
 }
 
