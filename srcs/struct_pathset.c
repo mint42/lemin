@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 14:09:56 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/01 02:06:44 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 04:18:17 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,11 @@ t_pathset	*init_pathset(t_bfs *bfs)
 	pathset = (t_pathset *)ft_memalloc(sizeof(t_pathset));
 	if (!pathset)
 		return (0);
-	pathset->completed = 0;
-	pathset->delimiter = 0;
 	pathset->nmoves = 0;
-	pathset->mpathlen = 0;
+	pathset->minpathlen = 0;
+	pathset->maxpathlen = 0;
 	pathset->npaths = 1;
-	pathset->paths = ft_lstinit(bfs, 0);
+	pathset->paths = 0;
 	return (pathset);
 }
 
@@ -36,13 +35,14 @@ void		delete_pathset(t_list *pathsets_cur)
 {
 	t_list	*cur;
 	t_list	*to_delete;
+	size_t	i;
 
 	if (pathsets_cur)
 	{
-		to_delete = PATHSET(pathsets_cur);
 		cur = PATHSET(pathsets_cur)->prev;
 		cur->next = PATHSET(pathsets_cur)->next;
-		ft_lstdelone(&(to_delete), delete_bfs_path());
-		ft_memdel((void **)&content);
+		to_delete = PATHSET(pathsets_cur);
+		ft_listdel(PATHSET(pathsets_cur)->paths, delete_bfs_path());
+		ft_memdel((void **)&to_delete);
 	}
 }

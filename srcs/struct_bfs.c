@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 13:18:01 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/28 02:09:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 04:29:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,25 +89,32 @@ void	delete_bfs_node(t_bfs **bfs_node)
 		ft_memdel((void **)&((*bfs_node)->next));
 		ft_memdel((void **)&((*bfs_node)->path_prev));
 		ft_memdel((void **)&((*bfs_node)->path_next));
-		delete_path_info(bfs_node->path_info);
+		delete_path_info(&((*bfs_node)->path_info));
 		ft_memdel((void **)bfs_node);
 	}
 }
 
-void	delete_bfs_path(t_bfs **bfs)
+void	delete_bfs_path(void *content, size_t content_size)
 {
-	t_bfs	**cur;
-	t_bfs	**to_delete;
+	t_bfs	*bfs;
+	t_bfs	*cur;
+	t_bfs	*to_delete;
 
+	(void)content_size;
+	bfs = (t_bfs *)content;
 	cur = bfs;
-	while ((*cur)->path_prev)
+	while (cur->path_prev &&
+		cur->path_info->pid_index == bfs->path_info->pid_index &&
+		cur->path_info->pid_bit == bfs->path_info->pid_bit)
 	{
 		to_delete = cur;
 		cur = (*cur)->path_prev;
 		delete_bfs_node(to_delete);
 	}
 	cur = bfs;
-	while ((*cur)->path_next)
+	while ((cur->path_next) &&
+		cur->path_info->pid_index == bfs->path_info->pid_index &&
+		cur->path_info->pid_bit == bfs->path_info->pid_bit)
 	{
 		to_delete = cur;
 		cur = (*cur)->path_next;

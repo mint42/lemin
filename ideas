@@ -6,10 +6,10 @@ DONE - combine the two sides of path and update variables
 DONE - update the farm to reflect paths that have touched that node
 DONE - verify solution
 DONE - realloc
-done - make solution printable
-done - delete path
-done - delete pathsets
+DONE - delete path_info
+DONE - delete pathsets
 		delete_bfs - same as delete paths i think
+done - make solution printable
 done - test
 Done - norm
 done - test

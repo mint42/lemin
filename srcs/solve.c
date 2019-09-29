@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/28 02:05:24 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 04:26:45 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ static void		overlap_pids_dni(t_bfs *end1, t_bfs *end2)
 	}
 }
 
-static int		combine_ends(t_solve *solve, t_bfs *end1, uint8_t *path_status)
+static void		combine_ends(t_solve *solve, t_bfs *end1, uint8_t *path_status)
 {
 	static t_bfs	*cur;
 	
 	cur = solve->cur_bfs;
-	if (!end2)
+	if (!cur)
 		cur = solve->bfs_cur;
 	while (cur->depth_level >= end1->depth_level)
 	{
@@ -87,10 +87,12 @@ static int		combine_ends(t_solve *solve, t_bfs *end1, uint8_t *path_status)
 		{
 			end1->depth_level = end1->depth_level + cur->depth_level;
 			overlap_pids_dni(end1, cur);
-			break ;
+			cur->path_info = end1->path_info;
+			return ;
 		}
 		cur = cur->prev;
 	}
+	cur = 0;
 }
 
 int				solve(t_farm *farm, char **solution)
