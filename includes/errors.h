@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:15:51 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 17:43:17 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 06:10:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ enum	e_errors
 	E_NO_SOLUTION,
 	TOTAL_ERROR_COUNT,
 };
-
 
 int		print_error();
 

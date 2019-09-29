@@ -6,13 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/29 04:26:45 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 06:10:54 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "farm.h"
 #include "room.h"
-#include "pathsets.h"
+#include "pathset.h"
 #include "bfs.h"
 #include "solve.h"
 #include "errors.h"
@@ -82,8 +82,8 @@ static void		combine_ends(t_solve *solve, t_bfs *end1, uint8_t *path_status)
 	while (cur->depth_level >= end1->depth_level)
 	{
 		if (cur->depth_level != end1->depth_level &&
-			solve->s_start_paths >= cur->pid_index &&
-			solve->s_start_paths[cur->pid_index] & cur->pid_bit)
+			solve->s_start_pids >= cur->path_info->pid_index &&
+			solve->start_pids[cur->path_info->pid_index] & cur->path_info->pid_bit)
 		{
 			end1->depth_level = end1->depth_level + cur->depth_level;
 			overlap_pids_dni(end1, cur);
@@ -116,7 +116,7 @@ int				solve(t_farm *farm, char **solution)
 	if (solve.pathsets)
 		verify_solution(solve);
 	make_solution_printable(solve.solution, solution);
-	delete_bfs(&solve.bfs);
 	delete_pathset(&solve.solution);
+//	delete_bfs(&solve.bfs);
 	return (0);
 }

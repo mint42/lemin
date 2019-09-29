@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/18 23:34:46 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 05:54:10 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct	s_farm
 	size_t		ants;
 }				t_farm;
 
-t_farm			init_farm();
+int				init_farm(t_farm **farm);
 t_room			*init_graph(size_t nrooms);
 int				make_graph(t_binarytree *rooms, t_farm *farm);
 void			delete_graph(t_room **graph);

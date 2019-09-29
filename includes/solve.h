@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:53:48 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/28 01:19:23 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 05:53:59 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,7 @@ typedef struct		s_solve
 	size_t			max_index_id;
 	size_t			max_bit_id;
 }					t_solve;
+
+int					setup_solve(t_solve *solve, t_farm *farm)
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:55:22 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/18 23:26:58 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 06:10:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 
 # include <stddef.h>
 
-typedef struct s_binarytree		t_binarytree;
-typedef struct s_input			t_input;
-typedef struct s_farm			t_farm;
-typedef struct s_room			t_room;
-typedef struct s_bfs			t_bfs;
-typedef struct s_solve			t_solve;
+/*
+**	struct s_binarytree;
+**	struct s_input;
+**	struct s_farm;
+**	struct s_room;
+**	struct s_bfs;
+**	struct s_solve;
+*/
 
-int		get_ants(t_input *input, size_t *ants);
-int		get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm);
-int		get_links(t_input *input, t_farm *farm);
-int		solve(t_farm *farm, char **solution);
-int		find_path(t_bfs *cur, t_bfs *tail, t_farm *farm, size_t *delimiter);
-int		update_pathsets(t_solve *solve);
+int		get_ants(struct s_input *input, size_t *ants);
+int		get_rooms(struct s_input *input, struct s_binarytree **rooms, struct s_farm *farm);
+int		get_links(struct s_input *input, struct s_farm *farm);
+int		solve(struct s_farm *farm, char **solution);
+int		run_bfs(struct s_solve *solve, struct s_farm *farm);
+int		update_pathsets(struct s_solve *solve, struct s_farm *farm);
 
 #endif

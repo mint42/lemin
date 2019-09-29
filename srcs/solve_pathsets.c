@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/28 02:05:10 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/09/29 06:23:41 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ int				update_pathsets(t_solve *solve, t_farm *farm)
 	{
 		update_pathset(paths, PATHSET(cur), farm);
 		if (PATHSET(cur)->nmoves < solve->solution->nmoves || PATHSET(cur)->npaths == solve->npaths_delimiter)
-			update_solution(solve);
+			update_solution(solve, &PATHSET(cur));
 		else if (PATHSET(cur)->nmoves - PATHSET(cur)->maxpathlen > solve->depth_delimiter)
 			solve->depth_delimiter = PATHSET(cur)->depth_delimiter;
 		prev_cur = cur;
 		cur = cur->next;
 	}
-	prev_pathset->next = ft_lstinit(init_pathset(paths), 0);
+	prev_cur->next = ft_lstinit(init_pathset(paths), 0);
 	return (0);
 }
