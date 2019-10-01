@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/29 06:23:41 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/01 02:59:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ static void		update_nmoves(t_pathset *pathset)
 	{
 		ants_on_min_path = pathset->nmoves - 1;
 		ants_on_max_path = 1;
-		while (ants_on_min_path > ants_on_max_path &&
-				pathset->minpathlen + ants_on_min_path >= pathset->maxpathlen + ants_on_max_path)
+		while (ants_on_min_path > ants_on_max_path && pathset->minpathlen + ants_on_min_path >= pathset->maxpathlen + ants_on_max_path)
 		{
 			--ants_on_min_path;
 			++ants_on_max_path;
 		}
 		pathset->nmoves = ants_on_min_path + 1;
 	}
+	pathset->min_ants_for_path[npaths] = pathset->nmoves;
 }
 
 static void		update_pathset(t_solve *solve, t_pathset *pathset)

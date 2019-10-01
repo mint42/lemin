@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 02:57:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/29 06:10:26 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/01 01:46:46 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ struct s_pathset
 	size_t			nmoves;
 	size_t			minpathlen;
 	size_t			maxpathlen;
+	size_t			*min_ant_for_path;
 	size_t			npaths;
 	struct s_list	*paths;
 };
