@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/19 23:16:50 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/01 01:35:37 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "ft_mem.h"
 #include "ft_str.h"
 
-t_input			init_input(void)
+struct s_input			init_input(void)
 {
-	t_input		input;
+	struct s_input		input;
 
 	input.buff_size = 0;
 	input.input_size = 0;
@@ -26,7 +26,7 @@ t_input			init_input(void)
 	return (input);
 }
 
-static void		update_input_buff(t_input *input)
+static void		update_input_buff(struct s_input *input)
 {
 	char	*new_input;
 
@@ -40,7 +40,7 @@ static void		update_input_buff(t_input *input)
 	input->input = new_input;
 }
 
-void			update_input(t_input *input)
+void			update_input(struct s_input *input)
 {
 	if (!input->line)
 		return ;

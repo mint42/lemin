@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 19:12:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/29 06:10:28 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:31:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,17 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef struct s_bfs		t_bfs;
-typedef struct s_path_info	t_path_info;
-
-typedef struct		s_bfs
+struct s_bfs
 {
-	t_bfs			*prev;
-	t_bfs			*next;
-	t_bfs			*path_prev;
-	t_bfs			*path_next;
-	size_t			rid;
-	t_path_info		*path_info;
-}					t_bfs;
+	struct s_bfs		*prev;
+	struct s_bfs		*next;
+	struct s_bfs		*path_prev;
+	struct s_bfs		*path_next;
+	struct s_path_info	*path_info;
+	size_t				rid;
+};
 
-int					init_bfs(t_bfs **bfs);
-void				delete_bfs(t_bfs **bfs);
+int		init_bfs(struct s_bfs **bfs);
+void	delete_bfs(struct s_bfs **bfs);
 
 #endif

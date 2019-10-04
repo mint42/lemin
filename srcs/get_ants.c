@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:12:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/03 16:21:33 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "get_next_line.h"
 #include <stddef.h>
 
-int		get_ants(t_input *input, size_t *ants)
+int		get_ants(struct s_input *input, size_t *ants)
 {
 	char	*cur;
 	size_t	prev_ants;

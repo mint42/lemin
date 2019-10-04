@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 06:58:54 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "farm.h"
 #include "bfs.h"
 #include "solve.h"
+#include "ft_fd.h"
 #include "ft_str.h"
 #include "ft_put.h"
 #include "ft_binarytree.h"
@@ -41,7 +42,7 @@
 **	}
 **	
 */
-static void		print_list(t_list *list)
+static void		print_list(struct s_list *list)
 {
 	struct s_list	*cur;
 
@@ -53,9 +54,9 @@ static void		print_list(t_list *list)
 	}
 }
 
-static int		lemin(t_input *input, t_farm *farm, t_binarytree **rooms)
+static int		lemin(struct s_input *input, struct s_farm *farm, struct s_binarytree **rooms)
 {
-	t_list	*solution;
+	struct s_list	*solution;
 
 	solution = 0;
 	if (get_ants(input, &farm->ants) == ERROR)
@@ -77,10 +78,10 @@ static int		lemin(t_input *input, t_farm *farm, t_binarytree **rooms)
 
 int				main(void)
 {
-	t_binarytree	*rooms;
-	t_farm			farm;
-	t_input			input;
-	unsigned int	error;
+	struct s_binarytree		*rooms;
+	struct s_farm			farm;
+	struct s_input			input;
+	unsigned int			error;
 
 	rooms = 0;
 	error = 0;

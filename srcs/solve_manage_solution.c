@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 02:20:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 06:59:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void		add_line(char *s, size_t *s_len, struct s_ant *ants_on_line, size_t
 	}
 }
 
-int				make_solution_printable(char  **s, t_pathset *solution, t_solve *solve, size_t longest_room_name)
+int				make_solution_printable(char  **s, struct s_pathset *solution, struct s_solve *solve, size_t longest_room_name)
 {
 	struct s_ant	*ants_on_line;
 	size_t			n_ants_on_line;
@@ -62,9 +62,9 @@ int				make_solution_printable(char  **s, t_pathset *solution, t_solve *solve, s
 	return (0);
 }
 
-void			update_solution(t_solve *solve, t_pathset **cur)
+void			update_solution(struct s_solve *solve, struct s_pathset **cur)
 {
-	t_pathset	**to_delete;
+	struct s_pathset	**to_delete;
 
 	if (PATHSET(*cur)->nmoves < solution->nmoves)
 	{
@@ -79,9 +79,9 @@ void			update_solution(t_solve *solve, t_pathset **cur)
 	delete_pathset(&to_delete);
 }
 
-int				verify_solution(t_solve *solve)
+int				verify_solution(struct s_solve *solve)
 {
-	t_list	*cur;
+	struct s_list	*cur;
 
 	cur = solve->pathsets;
 	while (cur)

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 19:19:38 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 19:11:41 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 #include "room.h"
 #include "ft_binarytree.h"
 
-static int 		rearrange(t_binarytree **rooms_by_coordinate,
-					t_binarytree **rooms_by_name)
+static int 		rearrange(struct s_binarytree **rooms_by_coordinate, struct s_binarytree **rooms_by_name)
 {
 	if (!rooms_by_coordinate)
 		return (0);
@@ -30,9 +29,9 @@ static int 		rearrange(t_binarytree **rooms_by_coordinate,
 	return (0);
 }
 
-int 			rearrange_rooms_by_name(t_binarytree **rooms_by_coordinate)
+int 			rearrange_rooms_by_name(struct s_binarytree **rooms_by_coordinate)
 {
-	t_binarytree	*rooms_by_name;
+	struct s_binarytree	*rooms_by_name;
 
 	rooms_by_name = 0;
 	if (rearrange(rooms_by_coordinate, &rooms_by_name) == ERROR)

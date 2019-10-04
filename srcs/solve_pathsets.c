@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 03:29:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "manage_solution.h"
 #include "ft_list.h"
 
-static void		update_nlines(t_pathset *pathset)
+static void		update_nlines(struct s_pathset *pathset)
 {
 	size_t	ants_on_min_path;
 	size_t	ants_on_max_path;
@@ -58,10 +58,10 @@ static void		update_pathset(struct s_bfs *bfs_cur, struct s_pathset *set, struct
 	return ;
 }
 
-int				update_pathsets(t_solve *solve, t_farm *farm)
+int				update_pathsets(struct s_solve *solve, struct s_farm *farm)
 {
-	t_list	*cur;
-	t_list	*prev_cur;
+	struct s_list	*cur;
+	struct s_list	*prev_cur;
 
 	if (!solve->sets)
 	{

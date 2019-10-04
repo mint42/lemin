@@ -6,18 +6,18 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 13:18:01 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/29 04:29:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bfs.h"
 #include "ft_mem.h"
 
-t_bfs	*init_bfs(void)
+struct s_bfs	*init_bfs(void)
 {
-	t_bfs	*bfs;
+	struct s_bfs	*bfs;
 
-	bfs = (t_bfs *)ft_memalloc(sizeof(t_bfs));
+	bfs = (struct s_bfs *)fstruct s_memalloc(sizeof(t_bfs));
 	if (!bfs)
 		return (print_error(E_ALLOC_ERROR));
 	bfs->prev = 0;
@@ -30,7 +30,7 @@ t_bfs	*init_bfs(void)
 	return (bfs);
 }
 
-int		setup_bfs(t_solve *solve, t_farm *farm)
+int		setup_bfs(struct s_solve *solve, struct s_farm *farm)
 {
 	if (init_bfs(solve->bfs) == ERROR)
 		return (ERROR);
@@ -47,7 +47,7 @@ int		setup_bfs(t_solve *solve, t_farm *farm)
 	return (0);
 }
 
-static int		inherit_encounters(t_bfs *new_node, t_room *room)
+static int		inherit_encounters(struct s_bfs *new_node, struct s_room *room)
 {
 	size_t	i;
 
@@ -62,7 +62,7 @@ static int		inherit_encounters(t_bfs *new_node, t_room *room)
 	}
 }
 
-int		setup_bfs_node(t_bfs **new_node, t_solve *solve, t_farm *farm, size_t i)
+int		setup_bfs_node(struct s_bfs **new_node, struct s_solve *solve, struct s_farm *farm, size_t i)
 {
 	if (init_bfs(new_node) == ERROR)
 		return (ERROR);
@@ -81,7 +81,7 @@ int		setup_bfs_node(t_bfs **new_node, t_solve *solve, t_farm *farm, size_t i)
 	return (0);
 }
 
-void	delete_bfs_node(t_bfs **bfs_node)
+void	delete_bfs_node(struct s_bfs **bfs_node)
 {
 	if (bfs_node && *bfs_node)
 	{
@@ -94,14 +94,14 @@ void	delete_bfs_node(t_bfs **bfs_node)
 	}
 }
 
-void	delete_bfs_path(void *content, size_t content_size)
+void	delete_bfs_path(void *content, size_t contenstruct s_size)
 {
-	t_bfs	*bfs;
-	t_bfs	*cur;
-	t_bfs	*to_delete;
+	struct s_bfs	*bfs;
+	struct s_bfs	*cur;
+	struct s_bfs	*to_delete;
 
 	(void)content_size;
-	bfs = (t_bfs *)content;
+	bfs = (struct s_bfs *)content;
 	cur = bfs;
 	while (cur->path_prev &&
 		cur->path_info->pid_index == bfs->path_info->pid_index &&

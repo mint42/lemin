@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 05:12:56 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,15 @@
 **		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
 */
 
-/*
-**	#include "ft_printf.h"
-**	static void		make_solution_printable(t_pathset *best, char **solution)
-**	{
-**		t_list	*paths;
-**		
-**		(void)solution;
-**		paths = best->paths;
-**		while (paths)
-**		{
-**			ft_printf("%5d %5b\n", PATH_ID_INDEX(paths), PATH_ID_BIT(paths));
-**			paths = paths->next;
-**		}
-**	}
-*/
-
 static void		mirror_path(struct s_bfs *path)
 {
-	struct s_bfs	*start;
-	struct s_bfs	*end;
-	struct s_bfs	*tmp;
+	struct s_bfs			*start;
+	struct s_bfs			*end;
+	struct s_bfs			*tmp;
+	struct s_bfs			*path_prev;
+	struct s_bfs			*path_next;
+	size_t					rid;
+	struct s_path_info		*path_info;
 
 	start = path;
 	end = path;
@@ -76,10 +64,6 @@ static void		mirror_path(struct s_bfs *path)
 		start = start->path_prev;
 		end = end->path_next;
 	}
-		t_bfs			*path_prev;
-		t_bfs			*path_next;
-		size_t			rid;
-		t_path_info		*path_info;
 }
 
 static void		reset_path_pointers_to_head(struct s_pathset *solution, struct s_solve *solve)
@@ -94,7 +78,7 @@ static void		reset_path_pointers_to_head(struct s_pathset *solution, struct s_so
 	solution->paths = cur;
 }
 
-static void		overlap_pids_dni(t_bfs *end1, t_bfs *end2)
+static void		overlap_pids_dni(struct s_bfs *end1, struct s_bfs *end2)
 {
 	size_t			*tmp;
 	size_t			i;
@@ -113,9 +97,9 @@ static void		overlap_pids_dni(t_bfs *end1, t_bfs *end2)
 	}
 }
 
-static void		combine_ends(t_solve *solve, t_bfs *end1, uint8_t *path_status)
+static void		combine_ends(struct s_solve *solve, struct s_bfs *end1, uint8_t *path_status)
 {
-	static t_bfs	*cur;
+	static struct s_bfs	*cur;
 	
 	cur = solve->cur_bfs;
 	if (!cur)

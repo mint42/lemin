@@ -6,13 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 02:49:43 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/29 05:54:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "solve.h"
 
-static int		init_solve(t_solve *solve)
+static int		init_solve(struct s_ *solve)
 {
 	solve->bfs_head = 0;
 	solve->bfs_cur = 0;
@@ -29,7 +29,7 @@ static int		init_solve(t_solve *solve)
 	solve->max_bit_id = 0;
 }
 
-int				setup_solve(t_solve *solve, t_farm *farm)
+int				setup_solve(struct s_solve *solve, struct s_farm *farm)
 {
 	init_solve(&solve);
 	solve->max_index_id = 1;

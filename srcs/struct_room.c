@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/16 02:48:19 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "ft_str.h"
 #include "ft_binarytree.h"
 
-void	init_room(t_room *room)
+void	init_room(struct s_room *room)
 {
 	room->name = 0;
 	room->len = 0;
@@ -30,7 +30,7 @@ void	init_room(t_room *room)
 	room->paths_encountered = 0;
 }
 
-int			insert_room_by_name(t_binarytree **rooms, t_binarytree *room)
+int			insert_room_by_name(struct s_binarytree **rooms, struct s_binarytree *room)
 {
 	int		cmp;
 
@@ -46,14 +46,14 @@ int			insert_room_by_name(t_binarytree **rooms, t_binarytree *room)
 		if (cmp == 0)
 			return (print_error(E_ROOM_DUPLICATE));
 		else if (cmp > 0)
-			insert_room_by_name(&(*rooms)->left, room);
+			insert_by_name(&(*rooms)->left, room);
 		else
 			insert_room_by_name(&(*rooms)->right, room);
 	}
 	return (0);
 }
 
-int			insert_room_by_coordinates(t_binarytree **rooms, t_room *room)
+int			insert_room_by_coordinates(struct s_binarytree **rooms, struct s_room *room)
 {
 	if (!room)
 		return (0);
@@ -77,9 +77,9 @@ void		delete_room(void *content, size_t content_size)
 	(void)content_size;
 	if (content)
 	{
-		if (((t_room *)(content))->name)
-			ft_strdel(&((t_room *)(content))->name);
-		if (((t_room *)(content))->links)
-			ft_memdel((void **)&((t_room *)(content))->links);
+		if (((struct s_room *)(content))->name)
+			ft_strdel(&((struct s_room *)(content))->name);
+		if (((struct s_room *)(content))->links)
+			ft_memdel((void **)&((struct s_room *)(content))->links);
 	}
 }

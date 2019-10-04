@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 22:06:46 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int		parse_comment_line(char *line, uint8_t *start_end)
 	return (0);
 }
 
-static int		parse_room_line(char *line, t_room *room)
+static int		parse_room_line(char *line, struct s_room *room)
 {
 	room->len = ft_strlend(line, ' ');
 	if (!room->len)
@@ -66,8 +66,7 @@ static int		parse_room_line(char *line, t_room *room)
 	return (0);
 }
 
-static int		parse_line(char *line, t_room **room, uint8_t *start_end,
-					size_t *nrooms)
+static int		parse_line(char *line, struct s_room **room, uint8_t *start_end, size_t *nrooms)
 {
 	if (*line == '#')
 	{
@@ -89,9 +88,9 @@ static int		parse_line(char *line, t_room **room, uint8_t *start_end,
 	return (0);
 }
 
-int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
+int				get_rooms(struct s_input *input, struct s_binarytree **rooms, struct s_farm *farm)
 {
-	t_room			*room;
+	struct s_room	*room;
 	uint8_t			start_end;
 
 	start_end = 0;

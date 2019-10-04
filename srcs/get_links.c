@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/11 22:27:28 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int		copy_links(size_t **links, size_t max_links)
 	return (0);
 }
 
-static int		add_link(size_t room_id, size_t link_id, t_room *graph)
+static int		add_link(size_t room_id, size_t link_id, struct s_room *graph)
 {
 	if (graph[room_id].mlinks == 0)
 	{
@@ -57,7 +57,7 @@ static int		add_link(size_t room_id, size_t link_id, t_room *graph)
 	return (0);
 }
 
-static int		find_room(char *name, t_farm *farm, size_t *room_id, size_t max)
+static int		find_room(char *name, struct s_farm *farm, size_t *room_id, size_t max)
 {
 	int		cmp;
 	size_t	mid;
@@ -77,7 +77,7 @@ static int		find_room(char *name, t_farm *farm, size_t *room_id, size_t max)
 	return (0);
 }
 
-static int		parse_line(char *line, t_farm *farm)
+static int		parse_line(char *line, struct s_farm *farm)
 {
 	size_t		room1_id;
 	size_t		room2_id;
@@ -105,7 +105,7 @@ static int		parse_line(char *line, t_farm *farm)
 	return (0);
 }
 
-int				get_links(t_input *input, t_farm *farm)
+int				get_links(struct s_input *input, struct s_farm *farm)
 {
 	if (!input || !farm || !farm->graph)
 		return (ERROR);
