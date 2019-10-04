@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathset.h                                          :+:      :+:    :+:   */
+/*   manage_path_ids.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/16 02:57:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:43:57 by rreedy           ###   ########.fr       */
+/*   Created: 2019/10/04 01:23:04 by rreedy            #+#    #+#             */
+/*   Updated: 2019/10/04 01:25:30 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATHSET_H
-# define PATHSET_H
+#ifndef MANAGE_PATH_IDS
+# define MANAGE_PATH_IDS
 
 # include <stddef.h>
 
-# define PATHSET(pathsets) ((struct s_pathset *)((pathsets)->content))
-
-struct				s_bfs;
-struct				s_list;
-
-struct				s_pathset
-{
-	size_t			nlines;
-	size_t			minpathlen;
-	size_t			maxpathlen;
-	size_t			*min_ant_for_path;
-	size_t			min_ant_for_path_size;
-	size_t			npaths;
-	struct s_bfs	*paths;
-};
-
-void				init_pathset(struct s_pathset *pathset);
-void				delete_pathset(struct s_list *pathsets_cur);
+int		add_pid(size_t **array, size_t *size, size_t index, size_t bit);
+int		realloc_pids_array(size_t **array, size_t *size, size_t new_min_size);
 
 #endif

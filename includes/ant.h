@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pathset.h                                          :+:      :+:    :+:   */
+/*   ant.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/16 02:57:14 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:43:57 by rreedy           ###   ########.fr       */
+/*   Created: 2019/10/04 05:33:22 by rreedy            #+#    #+#             */
+/*   Updated: 2019/10/04 05:39:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATHSET_H
-# define PATHSET_H
+#ifndef ANT_H
+# define ANT_H
 
 # include <stddef.h>
 
-# define PATHSET(pathsets) ((struct s_pathset *)((pathsets)->content))
+struct 				s_bfs;
+struct 				s_pathset;
 
-struct				s_bfs;
-struct				s_list;
-
-struct				s_pathset
+struct				s_ant
 {
-	size_t			nlines;
-	size_t			minpathlen;
-	size_t			maxpathlen;
-	size_t			*min_ant_for_path;
-	size_t			min_ant_for_path_size;
-	size_t			npaths;
-	struct s_bfs	*paths;
+	size_t			ant_num;
+	size_t			ant_numlen;
+	struct s_bfs	*location;
 };
 
-void				init_pathset(struct s_pathset *pathset);
-void				delete_pathset(struct s_list *pathsets_cur);
+int					setup_ants(struct s_ant **ants_on_line,
+						size_t n_ants_on_line, struct s_pathset *solution);
+void				update_ants(size_t *ant_number, struct s_ant *ants_on_line,
+						size_t n_ants_on_line, struct s_pathset *solution);
 
 #endif

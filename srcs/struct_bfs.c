@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 13:18:01 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/04 05:18:56 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ struct s_bfs	*init_bfs(void)
 		return (print_error(E_ALLOC_ERROR));
 	bfs->prev = 0;
 	bfs->next = 0;
-	bfs->base_path_info = 0;
-	bfs->path_id_index = 0;
-	bfs->path_id_bit = 0;
-	bfs->room_id = 0;
-	bfs->depth_level = 0;
+	bfs->path_prev = 0;
+	bfs->path_next = 0;
+	bfs->path_info = 0;
+	bfs->rid = 0;
 	return (bfs);
 }
 
@@ -62,18 +61,21 @@ static int		inherit_encounters(struct s_bfs *new_node, struct s_room *room)
 	}
 }
 
-int		setup_bfs_node(struct s_bfs **new_node, struct s_solve *solve, struct s_farm *farm, size_t i)
+int		setup_bfs_node(struct s_bfs **new_node, struct s_solve *solve, struct s_farm *farm, size_t link_id)
 {
 	if (init_bfs(new_node) == ERROR)
 		return (ERROR);
-	(*new_node)->rid = ((farm->graph)[solve->bfs_cur->rid])->links[i];
+	(*new_node)->rid = ((farm->graph)[solve->bfs_cur->rid])->links[link_id];
 	inherit_encounters((*new_node), (farm->graph)[(*new_node)->rid]);
 	if (i > 0)
 	{
-		create_new_path(&((*new_node)->pathinfo), solve, farm);
-		add_pid(solve->basepaths[(*new_node)->path_info->basepid]->pids_in_base, solve->basepaths[(*new_node)->path_info->base_pid]->spids_in_base, (*new_node)->path_info->pid_index, (*new_node)->pathinfo->pid_bit);
-		if (solve->basepaths[solve->bfs_cur->path_info->base_pid]->origin == START)
-			add_pid(solve->startpaths, solve->sstartpaths, (*new_node)->path_info->pid_index, (*new_node)->pathinfo->pid_bit)
+		setup_pathinfo(&((*new_node)->pathinfo), solve, farm);
+		add_pid(solve->basepaths[(*new_node)->path_info->basepid]->pids_in_base,
+			solve->basepaths[(*new_node)->path_info->base_pid]->spids_in_base,
+			(*new_node)->path_info->pid_index, (*new_node)->pathinfo->pid_bit);
+		if (solve->basepaths[solve->bfs_cur->path_info->base_pid]->source == START_ROOM)
+			add_pid(solve->startpaths, solve->start_pids_size,
+				(*new_node)->path_info->pid_index, (*new_node)->pathinfo->pid_bit)
 	}
 	else
 		(*new_node)->path_info = solve->bfs_cur->path_info;
@@ -94,22 +96,19 @@ void	delete_bfs_node(struct s_bfs **bfs_node)
 	}
 }
 
-void	delete_bfs_path(void *content, size_t contenstruct s_size)
+void	delete_bfs_path(struct s_solve *solve)
 {
-	struct s_bfs	*bfs;
 	struct s_bfs	*cur;
 	struct s_bfs	*to_delete;
 
-	(void)content_size;
-	bfs = (struct s_bfs *)content;
-	cur = bfs;
+	cur = solve->bfs_cur;
 	while (cur->path_prev &&
 		cur->path_info->pid_index == bfs->path_info->pid_index &&
 		cur->path_info->pid_bit == bfs->path_info->pid_bit)
 	{
 		to_delete = cur;
 		cur = (*cur)->path_prev;
-		delete_bfs_node(to_delete);
+		delete_bfs_node(&to_delete);
 	}
 	cur = bfs;
 	while ((cur->path_next) &&
@@ -118,7 +117,7 @@ void	delete_bfs_path(void *content, size_t contenstruct s_size)
 	{
 		to_delete = cur;
 		cur = (*cur)->path_next;
-		delete_bfs_node(to_delete);
+		delete_bfs_node(&to_delete);
 	}
 	delete_bfs_node(bfs);
 }

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 02:56:36 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:31:04 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/04 05:11:00 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 # define BASEPATH_H
 
 #include <stddef.h>
+#include <stdint.h>
 
-struct s_basepath
+struct			s_basepath
 {
 	uint8_t		origin;
-	size_t		*paths_in_base;
-	size_t		s_paths;
+	size_t		*child_pids;
+	size_t		child_pids_len;
+	size_t		child_pids_size;
 };
 
 #endif

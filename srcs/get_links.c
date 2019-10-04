@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/04 01:48:08 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 #include "farm.h"
 #include "input.h"
 #include "ft_fd.h"
+#include "room.h"
 #include "ft_str.h"
 #include "ft_mem.h"
 #include "get_next_line.h"
-#include <sys/types.h>
+//#include <sys/types.h>
+#include <stddef.h>
 
 static int		copy_links(size_t **links, size_t max_links)
 {
@@ -41,16 +43,16 @@ static int		copy_links(size_t **links, size_t max_links)
 
 static int		add_link(size_t room_id, size_t link_id, struct s_room *graph)
 {
-	if (graph[room_id].mlinks == 0)
+	if (graph[room_id].links_size == 0)
 	{
-		graph[room_id].mlinks = 4;
-		graph[room_id].links = (size_t *)ft_memalloc(sizeof(size_t) * graph[room_id].mlinks);
+		graph[room_id].links_size = 4;
+		graph[room_id].links = (size_t *)ft_memalloc(sizeof(size_t) * graph[room_id].links_size);
 	}
 	++(graph[room_id].nlinks);
-	if (graph[room_id].nlinks == graph[room_id].mlinks)
+	if (graph[room_id].nlinks == graph[room_id].links_size)
 	{
-		graph[room_id].mlinks = graph[room_id].mlinks * 2;
-		if (copy_links(&(graph[room_id].links), graph[room_id].mlinks) == ERROR)
+		graph[room_id].links_size = graph[room_id].links_size * 2;
+		if (copy_links(&(graph[room_id].links), graph[room_id].links_size) == ERROR)
 			return (ERROR);
 	}
 	graph[room_id].links[graph[room_id].nlinks - 1] = link_id;

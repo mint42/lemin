@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 19:12:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:31:07 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/04 05:20:27 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 # define BFS_H
 
 #include <stddef.h>
-#include <stdint.h>
 
-struct s_bfs
+struct					s_farm;
+struct					s_pathinfo;
+struct					s_solve;
+
+struct					s_bfs
 {
 	struct s_bfs		*prev;
 	struct s_bfs		*next;
@@ -26,7 +29,12 @@ struct s_bfs
 	size_t				rid;
 };
 
-int		init_bfs(struct s_bfs **bfs);
-void	delete_bfs(struct s_bfs **bfs);
+int						init_bfs(struct s_bfs **bfs);
+int						setup_bfs(struct s_solve *solve, struct s_farm *farm);
+int						setup_bfs_node(struct s_bfs **new_node,
+							struct s_solve *solve, struct s_farm *farm,
+							size_t link_id);
+void					delete_bfs_node(struct s_bfs **bfs);
+void					delete_bfs_path(struct s_solve *solve);
 
 #endif

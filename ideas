@@ -9,15 +9,56 @@ DONE - realloc
 DONE - delete path_info
 DONE - delete pathsets
 		delete_bfs - same as delete paths i think
-done - make solution printable
+DONe - make solution printable
+Done - compile
 done - test
 Done - norm
 done - test
 done - notes
 done - guide for how to solve
 done - readme
+done - check file order
+done - check names, includes, variables
+
+
+done - make ants struct
+done - store longest room name
+done - mirror the paths
+done - combine ends a different way
 
 done  - make a doubly linked list or work around a single one for the pathsets?
+
+
+
+
+style
+
+variables keep types together
+includes go project, libft, then system. alphebetized in that order
+functions are sorted upwards
+parameters 
+
+
+
+
+/*
+**	rules for solving:
+**		- paths are stored in the queue, and to get to a path you go backwards using a previous pointer 
+**		- when a path intersects with the same base path, do not continue the current path
+**		- when a path intersects with a different base path, note that they cannot coexist by adding that specific path to the DNI list
+**		- use a pointer to the double array so that the path info can be updated at any point
+**	
+**		- paths that split get a new number on path to avoid
+**		- a new path set is made when starting paths intersect (paths with different identifiers)
+**		- remember that a path has to avoid itself
+**		- if a path crosses a path it can't interesect it the longer one can be destroyed, unless it has branched from start?
+**		- the longer one will always be the one you're currently extending
+**		- paths are stored as arrays, but there is a linked list of path sets?
+**		- if a path has made it to the end first, all other paths that have branched from it can be destroyed. NO
+**				because what if the shorter path is needed by another identifier
+**		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
+*/
+
 
 TO SAVE SPACE
 - delete larger binary tree wrapper

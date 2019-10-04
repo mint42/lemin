@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   path_info.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/16 01:42:10 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 01:08:01 by rreedy           ###   ########.fr       */
+/*   Created: 2019/10/04 05:21:34 by rreedy            #+#    #+#             */
+/*   Updated: 2019/10/04 05:21:42 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#ifndef PATH_INFO_H
+# define PATH_INFO_H
 
-# include <stddef.h>
+#include <stddef.h>
 
-struct			s_input
+struct		s_path_info
 {
-	size_t		input_size;
-	size_t		input_len;
-	size_t		line_len;
-	char		*input;
-	char		*line;
+	size_t	pid_index;
+	size_t	pid_bit;
+	size_t	base_pid;
+	size_t	depth_lvl;
+	size_t	*pids_dni;
+	size_t	pids_dni_len;
+	size_t	pids_dni_size;
 };
 
-int				init_input(struct s_input *input);
-void			update_input(struct s_input *input);
-void			delete_input(struct s_input *input);
-
 #endif
+
