@@ -29,7 +29,9 @@ done - combine ends a different way
 done  - make a doubly linked list or work around a single one for the pathsets?
 
 
-
+keep variable ot abandoned paths for checking if complete
+save a delimiter in the solve struct for moving backwards
+check difference between moving twice as fast or once on the bfs backwards
 
 style
 
