@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:21:10 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/05 04:48:49 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ static void		inspect_link(struct s_room *link, struct s_solve *solve, uint8_t *p
 	}
 }
 
-static int		process_bfs_node(struct s_solve *solve, struct s_farm *farm, uint8_t *path_status)
+int		update_bfs_queue(struct s_solve *solve, struct s_farm *farm, uint8_t *path_status)
 {
 	static size_t	i;
 	struct s_room	room;
@@ -151,26 +151,5 @@ static int		process_bfs_node(struct s_solve *solve, struct s_farm *farm, uint8_t
 		++i;
 	}
 	i = 0;
-	return (0);
-}
-
-int				run_bfs(struct s_solve *solve, struct s_farm *farm, uint8_t *path_status)
-{
-	while (solve->bfs_cur && solve->depth_delimiter)
-	{
-		if (process_bfs_node(solve, farm, path_status) == ERROR)
-			return (ERROR);
-		if (*path_status == COMPLETED)
-			return (0);
-		if (*path_status == DROPPED)
-		{
-			delete_bfs_path(solve);
-			*path_status = IN_PROGRESS;
-			continue ;
-		}
-		++(solve->bfs_cur->path_info->depth_lvl);
-		--(solve->depth_delimiter);
-		solve->bfs_cur = solve->bfs_cur->next;
-	}
 	return (0);
 }

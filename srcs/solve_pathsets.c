@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/05 01:41:52 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int				update_pathsets(struct s_solve *solve, struct s_farm *farm)
 	struct s_list	*cur;
 	struct s_list	*prev_cur;
 
-	if (!solve->sets)
+	if (!solve->pathsets)
 	{
 		solve->pathsets = ft_lstinit(init_pathset(), 0);
 		solve->solution = PATHSET(solve->pathsets);
@@ -75,7 +75,7 @@ int				update_pathsets(struct s_solve *solve, struct s_farm *farm)
 	{
 		update_pathset(solve, PATHSET(cur));
 		if (PATHSET(cur)->nlines < solve->solution->nlines || PATHSET(cur)->npaths == solve->npaths_delimiter)
-			update_solution(solve, &PATHSET(cur));
+			update_solution(solve, &PATHSET(prev_cur));
 		else if (PATHSET(cur)->nlines - PATHSET(cur)->maxpathlen > solve->depth_delimiter)
 			solve->depth_delimiter = PATHSET(cur)->depth_delimiter;
 		prev_cur = cur;

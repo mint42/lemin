@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 02:20:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 06:21:28 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/05 01:21:13 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ void			update_solution(struct s_solve *solve, struct s_pathset **cur)
 {
 	struct s_pathset	**to_delete;
 
-	if (PATHSET(*cur)->nlines < solution->nlines)
+	if (PATHSET(*cur->next)->nlines < solution->nlines)
 	{
 		to_delete = solve->solution;
-		solution = PATHSET(*cur);
+		solve->solution = PATHSET(*cur->next);
 	}
 	else
 	{
-		to_delete = *cur;
-		*cur = (*cur)->prev;
+		to_delete = cur->next;
+		(*cur)->next = (*cur)->next->next;
 	}
 	delete_pathset(to_delete);
 }

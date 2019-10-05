@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_path_ids.h                                  :+:      :+:    :+:   */
+/*   manage_pids.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/04 01:23:04 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 01:25:30 by rreedy           ###   ########.fr       */
+/*   Created: 2019/10/05 01:04:45 by rreedy            #+#    #+#             */
+/*   Updated: 2019/10/05 01:04:54 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MANAGE_PATH_IDS
-# define MANAGE_PATH_IDS
+#ifndef MANAGE_PIDS
+# define MANAGE_PIDS
 
 # include <stddef.h>
 

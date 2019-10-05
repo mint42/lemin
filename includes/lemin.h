@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:55:22 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:06:20 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/05 01:06:40 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define DROPPED 2
 
 # include <stddef.h>
+# include <stdint.h>
 
 struct	s_bfs;
 struct	s_farm;
