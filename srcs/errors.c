@@ -6,12 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 16:28:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:09:48 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
 #include "ft_printf.h"
+#include <unistd.h>
 
 int		print_error(enum e_errors error_code)
 {

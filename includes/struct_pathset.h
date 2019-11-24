@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:17:06 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 06:27:37 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:51:04 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 # define PATHSET(pathsets) ((struct s_pathset *)((pathsets)->content))
 
-struct				s_bfs;
-struct				s_list;
+struct s_bfs;
+struct s_list;
 
 /*
 **	s_pathset stores information about a set of paths that don't collide,
@@ -41,7 +41,7 @@ struct				s_list;
 **		- why is paths an array? how is the size of that array stored?
 */
 
-struct				s_path_set
+struct				s_pathset
 {
 	size_t			nlines;
 	size_t			minpathlen;

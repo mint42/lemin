@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:18:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 06:27:37 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:56:08 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 # define STRUCT_ROOM_H
 
 # include <stddef.h>
+# include <stdint.h>
 
 # define ROOM(binarytree) ((struct s_room *)((binarytree)->content))
 
 # define START_ROOM 1
 # define END_ROOM 2
 
-struct			s_binarytree;
+struct s_pathids;
+struct s_binarytree;
 
 /*
 **	s_room is a struct storing information about a room in the ant farm.
@@ -48,7 +50,7 @@ struct					s_room
 	size_t				*links;
 	size_t				nlinks;
 	size_t				links_size;
-	struct s_path_ids	pids_met;
+	struct s_pathids	pids_met;
 };
 
 struct s_room			*init_room(void);

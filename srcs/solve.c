@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 09:58:41 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "lemin.h"
 #include "manage_solution.h"
 #include "struct_bfs.h"
-#include "struct_basepath.h"
+#include "struct_basenode.h"
 #include "struct_farm.h"
-#include "struct_path_info.h"
+#include "struct_pathinfo.h"
 #include "struct_pathset.h"
+#include "struct_pathids.h"
 #include "struct_room.h"
 #include "struct_solve.h"
 #include <stddef.h>
@@ -31,8 +32,15 @@ static void		mirror_path(struct s_bfs *path)
 	struct s_bfs			*path_prev;
 	struct s_bfs			*path_next;
 	size_t					rid;
-	struct s_path_info		*path_info;
+	struct s_pathinfo		*pathinfo;
 
+	(void)start;
+	(void)end;
+	(void)tmp;
+	(void)path_prev;
+	(void)path_next;
+	(void)rid;
+	(void)pathinfo;
 	start = path;
 	end = path;
 	while (start->path_prev)
@@ -54,7 +62,7 @@ static void		mirror_path(struct s_bfs *path)
 
 static void		reset_path_pointers_to_head(struct s_pathset *solution, struct s_solve *solve)
 {
-	if ((solve->basepaths)[solution->paths->path_info->basepath_id].origin == END_ROOM)
+	if ((solve->basenodes)[solution->paths->pathinfo->basenode_id].origin == END_ROOM)
 		;
 		mirror_path(solution->paths);
 	while (solution->paths)
@@ -66,21 +74,21 @@ static void		overlap_pids_dni(struct s_bfs *end1, struct s_bfs *end2)
 	size_t			*tmp;
 	size_t			i;
 
-	if (end1->path_info->pids_dni_size < end2->path_info->pids_dni_size)
+	if (end1->pathinfo->pids_dni->size < end2->pathinfo->pids_dni->size)
 	{
-		tmp = end1->path_info->pids_dni;
-		end1->path_info->pids_dni = end2->path_info->pids_dni;
-		end2->path_info->pids_dni = tmp;
+		tmp = end1->pathinfo->pids_dni->pids;
+		end1->pathinfo->pids_dni->pids = end2->pathinfo->pids_dni->pids;
+		end2->pathinfo->pids_dni->pids = tmp;
 	}
 	i = 0;
-	while (i < end2->path_info->pids_dni_size)
+	while (i < end2->pathinfo->pids_dni->size)
 	{
-		end1->path_info->pids_dni[i] = end1->path_info->pids_dni[i] | end2->path_info->pids_dni[i];
+		end1->pathinfo->pids_dni->pids[i] = end1->pathinfo->pids_dni->pids[i] | end2->pathinfo->pids_dni->pids[i];
 		++i;
 	}
 }
 
-static void		combine_ends(struct s_bfs *end1, uint8_t *path_status)
+static void		combine_path_ends(struct s_solve *solve, uint8_t *path_status)
 {
 	static struct s_bfs		*end2;
 	static size_t	 		depth_level;
@@ -88,23 +96,22 @@ static void		combine_ends(struct s_bfs *end1, uint8_t *path_status)
 	if (!end2)
 	{
 		end2 = solve->bfs_cur;
-		depth_level = end2->path_info->depth_level;
+		depth_level = end2->pathinfo->depth_lvl;
 	}
-	while (end2->path_info->depth_level >= depth_level)
+	while (end2->pathinfo->depth_lvl >= depth_level)
 	{
-		if (end2->path_info->depth_level == depth_level &&
-			solve->start_pids_size >= end1->path_info->pid_index &&
-			solve->start_pids[end1->path_info->pid_index] & end2->path_info->pid_bit)
+		if (end2->pathinfo->depth_lvl == depth_level &&
+			solve->start_pids->size >= solve->bfs_cur->pathinfo->pid_index &&
+			solve->start_pids->pids[solve->bfs_cur->pathinfo->pid_index] & end2->pathinfo->pid_bit)
 		{
-			end1->path_info->depth_lvl = end1->path_info->depth_lvl * end2->path_info->depth_lvl;
-			overlap_pids_dni(end1, end2);
-			end2->path_info = end1->path_info;
+			solve->bfs_cur->pathinfo->depth_lvl = solve->bfs_cur->pathinfo->depth_lvl * end2->pathinfo->depth_lvl;
+			overlap_pids_dni(solve->bfs_cur, end2);
+			end2->pathinfo = solve->bfs_cur->pathinfo;
 			return ;
 		}
 		end2 = end2->prev;
 	}
 	*path_status = IN_PROGRESS;
-	cur = 0;
 }
 
 int				solve(struct s_farm *farm, char **solution, size_t *solution_len)
@@ -114,30 +121,31 @@ int				solve(struct s_farm *farm, char **solution, size_t *solution_len)
 
 	if (setup_solve(&solve, farm) == ERROR)
 		return (ERROR);
-	path_status = INPROGRESS;
+	path_status = IN_PROGRESS;
+	// gotta link new source and sink variables in setup
 	while (solve.bfs_source && solve.bfs_sink && solve.bfs_cur && (solve.depth_delimiter > 0 || !solve.solution))
 	{
 		if (path_status == IN_PROGRESS)
 		{
-			if (process_bfs_node(solve, farm, &path_status) == ERROR)
+			if (update_bfs(&solve, farm, &path_status) == ERROR)
 				return (ERROR);
 		}
 		if (path_status == COMPLETE)
 		{
-			combine_path_ends(solve->bfs_cur, &path_status);
-			if (process_new_path(&solve, farm) == ERROR)
+			combine_path_ends(&solve, &path_status);
+			if (update_pathsets(&solve, farm) == ERROR)
 				return (ERROR);
 		}
 		else if (path_status == DROPPED)
 		{
-			delete_bfs_path(solve);
+			delete_bfs_path(&solve);
 			path_status = IN_PROGRESS;
 		}
 		else
 		{
-			++(solve->bfs_cur->path_info->depth_lvl);
-			--(solve->depth_delimiter);
-			solve->bfs_cur = solve->bfs_cur->next;
+			++(solve.bfs_cur->pathinfo->depth_lvl);
+			--(solve.depth_delimiter);
+			solve.bfs_cur = solve.bfs_cur->next;
 		}
 	}
 	if (!solve.bfs_source || !solve.bfs_sink)

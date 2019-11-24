@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:20:37 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 06:27:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:56:08 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 #include <stddef.h>
 
-struct					s_farm;
-struct					s_pathinfo;
-struct					s_solve;
+struct s_farm;
+struct s_pathinfo;
+struct s_solve;
 
 /*
 **	s_bfs is a Breadth First Search implemented as a queue. Pointers to the
@@ -40,7 +40,7 @@ struct					s_bfs
 	struct s_bfs		*next;
 	struct s_bfs		*path_prev;
 	struct s_bfs		*path_next;
-	struct s_path_info	*path_info;
+	struct s_pathinfo	*pathinfo;
 	size_t				rid;
 };
 

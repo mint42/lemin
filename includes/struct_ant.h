@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:21:20 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 06:27:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:56:08 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <stddef.h>
 
-struct 				s_bfs;
-struct 				s_pathset;
+struct s_bfs;
+struct s_pathset;
 
 /*
 **	s_ant is a struct storing information about an ant while printing the

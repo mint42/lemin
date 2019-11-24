@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:40:10 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "ft_mem.h"
 #include "get_next_line.h"
 #include <stddef.h>
+#include <unistd.h>
 
 static int		copy_links(size_t **links, size_t max_links)
 {

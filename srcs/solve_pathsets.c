@@ -6,13 +6,15 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 16:53:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:02:15 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "manage_solution.h"
 #include "struct_bfs.h"
-#include "struct_pathsets.h"
+#include "struct_farm.h"
+#include "struct_pathset.h"
+#include "struct_solve.h"
 #include "ft_list.h"
 
 static void		update_nlines(struct s_pathset *pathset)
@@ -73,7 +75,7 @@ int				update_pathsets(struct s_solve *solve, struct s_farm *farm)
 	prev_cur = cur;
 	while (cur)
 	{
-		update_pathset(solve, PATHSET(cur));
+		update_pathset(solve, PATHSET(cur), farm);
 		if (PATHSET(cur)->nlines < solve->solution->nlines || PATHSET(cur)->npaths == solve->npaths_delimiter)
 			update_solution(solve, &PATHSET(prev_cur));
 		else if (PATHSET(cur)->nlines - PATHSET(cur)->maxpathlen > solve->depth_delimiter)

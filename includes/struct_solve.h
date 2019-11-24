@@ -6,22 +6,22 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:19:25 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 06:27:37 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 09:42:07 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_SOLVE_H
 # define STRUCT_SOLVE_H
 
-#include <stddef.h>
+# include <stddef.h>
 
-struct					s_bfs;
-struct					s_farm;
-struct					s_list;
-struct					s_base_node;
-struct					s_path_set;
-struct					s_path_ids;
-struct					s_solve;
+struct s_bfs;
+struct s_farm;
+struct s_list;
+struct s_basenode;
+struct s_pathset;
+struct s_pathids;
+struct s_solve;
 
 /*
 **	s_solve is a struct storing information about the lemin algorithm
@@ -50,9 +50,9 @@ struct					s_solve
 	struct s_bfs		*bfs_cur;
 	struct s_bfs		*bfs_tail;
 	struct s_list		*pathsets;
-	struct s_base_node	*basenodes;
-	struct s_path_ids	start_pids;
-	struct s_path_set	*solution;
+	struct s_basenode	*basenodes;
+	struct s_pathids	*start_pids;
+	struct s_pathset	*solution;
 	size_t				nbasenodes;
 	size_t				npaths_delimiter;
 	size_t				depth_delimiter;

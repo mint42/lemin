@@ -6,16 +6,16 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:16:34 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 06:27:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 09:37:42 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_PATH_INFO_H
-# define STRUCT_PATH_INFO_H
+#ifndef STRUCT_PATHINFO_H
+# define STRUCT_PATHINFO_H
 
-#include <stddef.h>
+# include <stddef.h>
 
-struct s_path_ids;
+struct s_pathids;
 
 /*
 **	s_path_info is a struct storing information about a path
@@ -30,13 +30,13 @@ struct s_path_ids;
 **					this path (dni -> Do Not Interract)
 */
 
-struct					s_path_info
+struct					s_pathinfo
 {
 	size_t				pid_index;
 	size_t				pid_bit;
-	size_t				basepath_id;
+	size_t				basenode_id;
 	size_t				depth_lvl;
-	struct s_path_ids	*pids_dni
+	struct s_pathids	*pids_dni;
 };
 
 #endif

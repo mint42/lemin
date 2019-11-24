@@ -6,14 +6,15 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:20:17 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 06:27:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 09:40:31 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_BASEPATH_H
-# define STRUCT_BASEPATH_H
+#ifndef STRUCT_BASENODE_H
+# define STRUCT_BASENODE_H
 
-#include <stddef.h>
+# include "struct_pathids.h"
+# include <stddef.h>
 
 /*
 **	s_basenode is a struct storing information about a node that comes from
@@ -28,7 +29,7 @@
 struct					s_basenode
 {
 	uint8_t				origin;
-	struct s_path_ids	child_pids;
+	struct s_pathids	*child_pids;
 };
 
 #endif

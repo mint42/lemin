@@ -6,17 +6,17 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 01:24:04 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 00:34:21 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:56:08 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MANAGE_SOLUTION_H
 # define MANAGE_SOLUTION_H
 
-//# include <stdint.h>
+# include <stddef.h>
 
-struct	s_pathset;
-struct	s_solve;
+struct s_pathset;
+struct s_solve;
 
 void	update_solution(struct s_solve *solve, struct s_pathset **cur);
 int		verify_solution(struct s_solve *solve);
