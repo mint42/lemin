@@ -6,14 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:20:37 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 01:13:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 06:27:36 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_BFS_H
 # define STRUCT_BFS_H
 
-//#include <stdint.h>
+#include <stddef.h>
 
 struct					s_farm;
 struct					s_pathinfo;

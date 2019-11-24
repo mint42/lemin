@@ -6,14 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:17:06 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 01:24:35 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 06:27:37 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_PATHSET_H
-# define STRUCT_PATHSET_H
+#ifndef STRUCT_PATH_SET_H
+# define STRUCT_PATH_SET_H
 
-# include <stdint.h>
+# include <stddef.h>
 
 # define PATHSET(pathsets) ((struct s_pathset *)((pathsets)->content))
 
@@ -41,7 +41,7 @@ struct				s_list;
 **		- why is paths an array? how is the size of that array stored?
 */
 
-struct				s_pathset
+struct				s_path_set
 {
 	size_t			nlines;
 	size_t			minpathlen;

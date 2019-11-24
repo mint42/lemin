@@ -31,6 +31,11 @@ done - combine ends a different way
 
 done  - make a doubly linked list or work around a single one for the pathsets?
 
+things to explain
+	room id, path id, breadth first search
+
+line -> buff in s_input
+longest_room_name -> longest_room_name_len or something. make generally less uncomforable
 graph -> rooms dont think i can thought because of the btree being rooms already
 struct_solve -> struct_info
 basepaths -> source_nodes or base_nodes maybe

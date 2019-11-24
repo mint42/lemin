@@ -6,17 +6,24 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:21:20 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 01:36:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 06:27:36 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_ANT_H
 # define STRUCT_ANT_H
 
-//# include <stdint.h>
+# include <stddef.h>
 
 struct 				s_bfs;
 struct 				s_pathset;
+
+/*
+**	s_ant is a struct storing information about an ant while printing the
+**	solution
+**
+**	more information to come of this as i review
+*/
 
 struct				s_ant
 {

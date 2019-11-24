@@ -6,17 +6,28 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 00:20:03 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 06:27:36 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_FARM_H
 # define STRUCT_FARM_H
 
-# include <stdint.h>
+# include <stddef.h>
 
 struct				s_room;
 struct				s_binarytree;
+
+/*
+**	s_farm is a struct storing information about that ant farm
+**
+**	graph				An array of all rooms inside the farm, arranged in alphabetical
+**						order by name
+**	nrooms				Number of rooms in the farm
+**	longest_room_name	Length of the name of the longest room name
+**	start_rid			Room ID of the start (source) room
+**	end_rid				Room ID of the end (sink) room
+*/
 
 struct				s_farm
 {
