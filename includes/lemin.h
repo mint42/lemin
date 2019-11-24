@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:55:22 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/05 01:06:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 00:22:32 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # define COMPLETED 1
 # define DROPPED 2
 
-# include <stddef.h>
-# include <stdint.h>
+//# include <stdint.h>
 
 struct	s_bfs;
 struct	s_farm;
@@ -29,12 +28,12 @@ struct	s_binarytree;
 
 int		get_ants(struct s_input *input, size_t *ants);
 int		get_rooms(struct s_input *input, struct s_binarytree **rooms,
-			struct s_farm *farm);
+				struct s_farm *farm);
 int		get_links(struct s_input *input, struct s_farm *farm);
 
 int		solve(struct s_farm *farm, char **solution, size_t *solution_len);
 int		run_bfs(struct s_solve *solve, struct s_farm *farm,
-			uint8_t *path_status);
+				uint8_t *path_status);
 int		update_pathsets(struct s_solve *solve, struct s_farm *farm);
 
 #endif

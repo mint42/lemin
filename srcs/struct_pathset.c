@@ -6,12 +6,12 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 14:09:56 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bfs.h"
-#include "pathsets.h"
+#include "struct_bfs.h"
+#include "struct_pathsets.h"
 #include "ft_mem.h"
 #include "ft_list.h"
 #include "ft_printf.h"

@@ -6,13 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/07 20:42:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "farm.h"
-#include "room.h"
+#include "struct_farm.h"
+#include "struct_room.h"
 #include "ft_mem.h"
 #include "ft_str.h"
 #include "ft_binarytree.h"

@@ -6,11 +6,11 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 02:49:43 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "solve.h"
+#include "struct_solve.h"
 
 static int		init_solve(struct s_ *solve)
 {

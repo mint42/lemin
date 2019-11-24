@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basepath.h                                         :+:      :+:    :+:   */
+/*   struct_path_info.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/16 02:56:36 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:11:00 by rreedy           ###   ########.fr       */
+/*   Created: 2019/11/24 00:16:34 by rreedy            #+#    #+#             */
+/*   Updated: 2019/11/24 00:40:52 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BASEPATH_H
-# define BASEPATH_H
+#ifndef STRUCT_PATH_INFO_H
+# define STRUCT_PATH_INFO_H
 
-#include <stddef.h>
-#include <stdint.h>
+//#include <stdint.h>
 
-struct			s_basepath
+struct		s_path_info
 {
-	uint8_t		origin;
-	size_t		*child_pids;
-	size_t		child_pids_len;
-	size_t		child_pids_size;
+	size_t	pid_index;
+	size_t	pid_bit;
+	size_t	base_pid;
+	size_t	depth_lvl;
+	size_t	*pids_dni;
+	size_t	pids_dni_len;
+	size_t	pids_dni_size;
 };
 
 #endif

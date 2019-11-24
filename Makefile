@@ -6,42 +6,40 @@
 #    By: rreedy <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/03 06:37:10 by rreedy            #+#    #+#              #
-#    Updated: 2019/09/08 13:40:57 by rreedy           ###   ########.fr        #
+#    Updated: 2019/10/16 12:00:01 by rreedy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LEMIN := lem-in
+NAME := lem-in
 LIB := libft/libft.a
 
-LEMIN_OBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/*.c))
+OBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/*.c))
 
 CC := gcc
 INCLUDES := -I./includes -I./libft/includes -I./libft/includes/ft_printf
 CFLAGS += -g -Wall -Wextra -Werror $(INCLUDES)
 LFLAGS += -L./libft -lft
 
-.PHONY: all clean fclean re name
+.PHONY: all clean fclean re
 
-all: name
+all: $(NAME)
 
-name: $(LEMIN)
-
-$(LEMIN): $(LIB) $(LEMIN_OBJS)
-	$(CC) $(CFLAGS) $(LEMIN_OBJS) -o $(LEMIN) $(LFLAGS)
+$(NAME): $(LIB) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
 
 $(LIB):
 	@- make -C libft/ all
 
 debug: fclean
-	$(CC) $(CFLAGS) -g $(LEMIN_OBJS) -o $(LEMIN) $(LFLAGS)
+	$(CC) $(CFLAGS) -g $(OBJS) -o $(NAME) $(LFLAGS)
 	@- make -C libft/ debug
 
 clean:
-	@- $(RM) $(LEMIN_OBJS)
+	@- $(RM) $(OBJS)
 	@- make -C libft/ clean
 
 fclean: clean
-	@- $(RM) $(LEMIN)
+	@- $(RM) $(NAME)
 	@- make -C libft/ fclean
 
 re: fclean all

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solve.h                                            :+:      :+:    :+:   */
+/*   struct_solve.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/03 06:53:48 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:40:25 by rreedy           ###   ########.fr       */
+/*   Created: 2019/11/24 00:19:25 by rreedy            #+#    #+#             */
+/*   Updated: 2019/11/24 00:19:38 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SOLVE_H
-# define SOLVE_H
+#ifndef STRUCT_SOLVE_H
+# define STRUCT_SOLVE_H
 
-# include <stddef.h>
+//# include <stdint.h>
 
 struct					s_basepath;
 struct					s_bfs;

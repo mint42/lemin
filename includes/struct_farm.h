@@ -6,14 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:31:29 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 01:50:38 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 00:20:03 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FARM_H
-# define FARM_H
+#ifndef STRUCT_FARM_H
+# define STRUCT_FARM_H
 
-# include <stddef.h>
+# include <stdint.h>
 
 struct				s_room;
 struct				s_binarytree;

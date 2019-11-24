@@ -6,18 +6,18 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/07 17:05:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/05 04:48:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "basepath.h"
-#include "bfs.h"
-#include "farm.h"
 #include "errors.h"
 #include "lemin.h"
-#include "path_info.h"
-#include "room.h"
-#include "solve.h"
+#include "struct_basepath.h"
+#include "struct_bfs.h"
+#include "struct_farm.h"
+#include "struct_path_info.h"
+#include "struct_room.h"
+#include "struct_solve.h"
 #include "ft_mem.h"
 #include <stddef.h>
 #include <stdint.h>

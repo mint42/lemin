@@ -6,11 +6,11 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 13:18:01 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:18:56 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bfs.h"
+#include "struct_bfs.h"
 #include "ft_mem.h"
 
 struct s_bfs	*init_bfs(void)

@@ -6,19 +6,17 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 01:48:08 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "farm.h"
-#include "input.h"
-#include "ft_fd.h"
-#include "room.h"
+#include "struct_farm.h"
+#include "struct_input.h"
+#include "struct_room.h"
 #include "ft_str.h"
 #include "ft_mem.h"
 #include "get_next_line.h"
-//#include <sys/types.h>
 #include <stddef.h>
 
 static int		copy_links(size_t **links, size_t max_links)
@@ -114,7 +112,7 @@ int				get_links(struct s_input *input, struct s_farm *farm)
 	if (parse_line(input->line, farm) == ERROR)
 		return (ERROR);
 	update_input(input);
-	while (get_next_line(STDIN_FD, &(input->line)))
+	while (get_next_line(STDIN_FILENO, &(input->line)))
 	{
 		if (parse_line(input->line, farm) == ERROR)
 			return (ERROR);

@@ -6,15 +6,14 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 22:53:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "farm.h"
-#include "room.h"
-#include "input.h"
-#include "ft_fd.h"
+#include "struct_farm.h"
+#include "struct_room.h"
+#include "struct_input.h"
 #include "ft_str.h"
 #include "ft_utils.h"
 #include "ft_conv.h"
@@ -94,7 +93,7 @@ int				get_rooms(struct s_input *input, struct s_binarytree **rooms, struct s_fa
 	uint8_t			start_end;
 
 	start_end = 0;
-	while (get_next_line(STDIN_FD, &(input->line)))
+	while (get_next_line(STDIN_FILENO, &(input->line)))
 	{
 		room = 0;
 		if (ft_strchr(input->line, '-'))

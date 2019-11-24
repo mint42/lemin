@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   room.h                                             :+:      :+:    :+:   */
+/*   struct_room.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/21 15:38:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:14:17 by rreedy           ###   ########.fr       */
+/*   Created: 2019/11/24 00:18:07 by rreedy            #+#    #+#             */
+/*   Updated: 2019/11/24 00:18:30 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ROOM_H
-# define ROOM_H
+#ifndef STRUCT_ROOM_H
+# define STRUCT_ROOM_H
 
-# include <stddef.h>
-# include <stdint.h>
+//# include <stdint.h>
 
 # define ROOM(binarytree) ((struct s_room *)((binarytree)->content))
 
@@ -41,9 +40,9 @@ struct			s_room
 struct s_room	*init_room(void);
 int				rearrange_rooms_by_name(struct s_binarytree **rooms_by_coord);
 int				insert_room_by_coordinates(struct s_binarytree **rooms,
-					struct s_room *room);
+						struct s_room *room);
 int				insert_room_by_name(struct s_binarytree **rooms,
-					struct s_binarytree *room);
+						struct s_binarytree *room);
 void			delete_room(void *content, size_t content_size);
 
 #endif

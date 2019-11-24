@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 22:40:12 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:24:58 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 00:14:18 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,3 @@ int		add_pid(size_t **array, size_t *size, size_t index, size_t bit)
 	(*array)[index] = (*array)[index] & bit;
 	return (0);
 }
-

@@ -6,17 +6,16 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 01:08:49 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "farm.h"
-#include "input.h"
 #include "lemin.h"
-#include "room.h"
+#include "struct_farm.h"
+#include "struct_input.h"
+#include "struct_room.h"
 #include "ft_binarytree.h"
-#include "ft_fd.h"
 #include "ft_str.h"
 #include <stddef.h>
 #include <stdint.h>
@@ -37,12 +36,12 @@ static int		lemin(struct s_input *input, struct s_farm *farm, struct s_binarytre
 		return (ERROR);
 	if (get_links(input, farm) == ERROR)
 		return (ERROR);
-	write(STDOUT_FD, input->input, input->input_len);
+	write(STDOUT_FILENO, input->input, input->input_len);
 	ft_strdel(&input->input);
-	write(STDOUT_FD, "\n\n", input->input_len);
+	write(STDOUT_FILENO, "\n\n", input->input_len);
 	if (solve(farm, &solution, &solution_len) == ERROR)
 		return (ERROR);
-	write(STDOUT_FD, solution, solution_len);
+	write(STDOUT_FILENO, solution, solution_len);
 	ft_strdel(&solution);
 	return (0);
 }
