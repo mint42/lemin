@@ -10,38 +10,30 @@
 #                                                                              #
 # **************************************************************************** #
 
-LEMIN := lem-in
-LIB := libft/libft.a
+include config.mk
 
-LEMIN_OBJS := $(patsubst %.c,%.o,$(wildcard ./srcs/*.c))
+SRCS := $(foreach src_dir, $(SRC_DIRS), $(wildcard $(src_dir)/*.c))
+OBJS := $(patsubst %.c,%.o,$(SRCS))
 
-CC := gcc
-INCLUDES := -I./includes -I./libft/includes -I./libft/includes/ft_printf
-CFLAGS += -g -Wall -Wextra -Werror $(INCLUDES)
-LFLAGS += -L./libft -lft
+LIB := $(LIB_DIR)/$(LIB_NAME)
+MAKE_LIB := make -C $(LIB_DIR) -f $(LIB_MAKEFILE) --no-print-directory
 
 .PHONY: all clean fclean re name
 
-all: name
+all: $(NAME)
 
-name: $(LEMIN)
-
-$(LEMIN): $(LIB) $(LEMIN_OBJS)
-	$(CC) $(CFLAGS) $(LEMIN_OBJS) -o $(LEMIN) $(LFLAGS)
+$(NAME): $(LIB) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 $(LIB):
-	@- make -C libft/ all
-
-debug: fclean
-	$(CC) $(CFLAGS) -g $(LEMIN_OBJS) -o $(LEMIN) $(LFLAGS)
-	@- make -C libft/ debug
+	@- $(MAKE_LIB) all
 
 clean:
-	@- $(RM) $(LEMIN_OBJS)
-	@- make -C libft/ clean
+	@- $(RM) $(OBJS)
+	@- $(MAKE_LIB) clean
 
 fclean: clean
-	@- $(RM) $(LEMIN)
-	@- make -C libft/ fclean
+	@- $(RM) $(NAME)
+	@- $(MAKE_LIB) fclean
 
 re: fclean all
