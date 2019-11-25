@@ -6,21 +6,21 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 14:09:56 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 03:13:06 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 07:57:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "bfs.h"
-#include "pathsets.h"
+#include "struct_bfs.h"
+#include "struct_pathsets.h"
 #include "ft_mem.h"
 #include "ft_list.h"
 #include "ft_printf.h"
 
-t_pathset	*init_pathset(t_bfs *bfs)
+struct s_pathset	*init_pathset(struct s_bfs *bfs)
 {
-	t_pathset	*pathset;
+	struct s_pathset	*pathset;
 
-	pathset = (t_pathset *)ft_memalloc(sizeof(t_pathset));
+	pathset = (struct s_pathset *)ft_memalloc(sizeof(struct s_pathset));
 	if (!pathset)
 		return (0);
 	pathset->nmoves = 0;
@@ -31,10 +31,10 @@ t_pathset	*init_pathset(t_bfs *bfs)
 	return (pathset);
 }
 
-void		delete_pathset(t_list *pathsets_cur)
+void		delete_pathset(struct s_list *pathsets_cur)
 {
-	t_list	*cur;
-	t_list	*to_delete;
+	struct s_list	*cur;
+	struct s_list	*to_delete;
 	size_t	i;
 
 	if (pathsets_cur)

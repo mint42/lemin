@@ -6,9 +6,16 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 02:20:58 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 06:59:29 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 09:51:10 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "errors.h"
+#include "struct_ant.h"
+#include "struct_pathset.h"
+#include "struct_solve.h"
+#include "ft_list.h"
+#include <stddef.h>
 
 /*
 **	static void		print_line()
@@ -24,64 +31,69 @@
 **	}
 */
 
-static void		add_line(char *s, size_t *s_len, struct s_ant *ants_on_line, size_t n_ants_on_line)
+static void		add_line(char *s, size_t *slen, struct s_ant *ants_on_line, size_t n_ants_on_line)
 {
-	static size_t	s_len;
-	size_t			i;
-
-	*line_len = 0;
-	i = 0;
-	while (i < n_ants_on_line && ants_on_line[i]->location != 0)
-	{
-		line[i] = L;
-		while ()
-		line[i] = ;
-	}
+	(void)s;
+	(void)slen;
+	(void)ants_on_line;
+	(void)n_ants_on_line;
+//	static size_t	s_len;
+//	size_t			i;
+//
+//	*line_len = 0;
+//	i = 0;
+//	while (i < n_ants_on_line && ants_on_line[i]->location != 0)
+//	{
+//		line[i] = L;
+//		while ()
+//		line[i] = ;
+//	}
 }
 
-int				make_solution_printable(char  **s, t_pathset *solution, t_solve *solve, size_t longest_room_name)
+int				make_solution_printable(char **s, size_t *slen, struct s_solve *solve, size_t longest_room_name)
 {
 	struct s_ant	*ants_on_line;
 	size_t			n_ants_on_line;
 	size_t			ant_number;
 	size_t			s_len;
  
-	n_ants_on_line = solve->npaths * solve->depth_level;
-	solve->s_len = n_ants_on_line * (3 + ft_numlen(solve->n_ants) + longest_room_name) * solve->nlines;
-	solve->s = ft_strnew(solve->s_len);
-	if (!line || !s)
+	n_ants_on_line = solve->solution->npaths * solve->solution->paths->path_info->depth_lvl;
+	slen = n_ants_on_line *
+		(3 + ft_numlen(solve->n_ants) + longest_room_name) * solve->nlines;
+	s = ft_strnew(solve->s_len);
+	if (!s)
 		return (print_error(E_ALLOC_ERROR));
 	ant_number = 0;
 	setup_ants(&ants_on_line, solve->npaths * solve->depth_level, solution);
 	update_ants(&ant_number, &ants_on_line, n_ants_on_line, solution);
 	while (ant_number <= solve->n_ants)
 	{
-		add_line(s, &s_len, ants_on_line, n_ants_on_line);
+		add_line(s, &slen, ants_on_line, n_ants_on_line);
 		update_ants(&ant_number, &ants_on_line);
 	}
 	return (0);
 }
 
-void			update_solution(t_solve *solve, t_pathset **cur)
+void			update_solution(struct s_solve *solve, struct s_pathset **cur)
 {
-	t_pathset	**to_delete;
+	struct s_pathset	**to_delete;
 
-	if (PATHSET(*cur)->nmoves < solution->nmoves)
+	if (PATHSET(*cur->next)->nlines < solution->nlines)
 	{
 		to_delete = solve->solution;
-		solution = PATHSET(*cur);
+		solve->solution = PATHSET(*cur->next);
 	}
 	else
 	{
-		to_delete = *cur;
-		*cur = (*cur)->prev;
+		to_delete = cur->next;
+		(*cur)->next = (*cur)->next->next;
 	}
-	delete_pathset(&to_delete);
+	delete_pathset(to_delete);
 }
 
-int				verify_solution(t_solve *solve)
+int				verify_solution(struct s_solve *solve)
 {
-	t_list	*cur;
+	struct s_list	*cur;
 
 	cur = solve->pathsets;
 	while (cur)

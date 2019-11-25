@@ -6,11 +6,12 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 02:02:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/03 04:40:40 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/04 05:32:42 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static void		defragment(size_t *i, struct s_ant *ants_on_line, size_t n_ants_on_line)
+static void		defragment(size_t *i, struct s_ant *ants_on_line,
+					size_t n_ants_on_line)
 {
 	size_t	j;
 
@@ -31,7 +32,8 @@ static void		defragment(size_t *i, struct s_ant *ants_on_line, size_t n_ants_on_
 		++(*i);
 	}
 }
-void		update_ants(size_t *ant_number, struct s_ant *ants_on_line, size_t n_ants_on_line, struct pathset *solution)
+void		update_ants(size_t *ant_number, struct s_ant *ants_on_line,
+				size_t n_ants_on_line, struct s_pathset *solution)
 {
 	static size_t	path_num;
 	static size_t	current_max;
@@ -59,7 +61,8 @@ void		update_ants(size_t *ant_number, struct s_ant *ants_on_line, size_t n_ants_
 	}
 }
 
-int			setup_ants(struct s_ants **ants_on_line, size_t n_ants_on_line, t_pathset *solution)
+int			setup_ants(struct s_ant **ants_on_line, size_t n_ants_on_line,
+				struct s_pathset *solution)
 {
 	size_t	i;
 

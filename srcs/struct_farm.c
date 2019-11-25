@@ -6,21 +6,21 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/24 14:44:26 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/08 18:02:27 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "room.h"
-#include "farm.h"
 #include "errors.h"
+#include "struct_room.h"
+#include "struct_farm.h"
 #include "ft_mem.h"
 #include "ft_binarytree.h"
 #include "ft_printf.h"
 #include <stddef.h>
 
-t_farm			init_farm(void)
+struct s_farm			init_farm(void)
 {
-	t_farm	farm;
+	struct s_farm	farm;
 
 	farm.ants = 0;
 	farm.start_room_id = 0;
@@ -30,17 +30,17 @@ t_farm			init_farm(void)
 	return (farm);
 }
 
-t_room			*init_graph(size_t nrooms)
+struct s_room			*init_graph(size_t nrooms)
 {
-	t_room	*graph;
+	struct s_room	*graph;
 
-	graph = (t_room *)ft_memalloc(sizeof(t_room) * nrooms);
+	graph = (struct s_room *)ft_memalloc(sizeof(struct s_room) * nrooms);
 	if (!graph)
 		return (0);
 	return (graph);
 }
 
-static void		fill_graph(t_farm *farm, t_binarytree *rooms, size_t *room_id)
+static void		fill_graph(struct s_farm *farm, struct s_binarytree *rooms, size_t *room_id)
 {
 	if (rooms)
 	{
@@ -57,19 +57,19 @@ static void		fill_graph(t_farm *farm, t_binarytree *rooms, size_t *room_id)
 	}
 }
 
-int				make_graph(t_binarytree *rooms, t_farm *farm)
+int				make_graph(struct s_binarytree *rooms, struct s_farm *farm)
 {
 	size_t	room_id;
 	
 	room_id = 0;
-	farm->graph = (t_room *)ft_memalloc(sizeof(t_room) * farm->nrooms);
+	farm->graph = (struct s_room *)ft_memalloc(sizeof(struct s_room) * farm->nrooms);
 	if (!(farm->graph))
 		return (print_error(E_ALLOC_ERROR));
 	fill_graph(farm, rooms, &room_id);
 	return (0);
 }
 
-void			delete_graph(t_room **graph)
+void			delete_graph(struct s_room **graph)
 {
 	(void)graph;
 	ft_printf("delete graph\n");

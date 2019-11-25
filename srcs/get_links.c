@@ -6,18 +6,19 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/11 22:27:28 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:40:10 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "farm.h"
-#include "input.h"
-#include "ft_fd.h"
+#include "struct_farm.h"
+#include "struct_input.h"
+#include "struct_room.h"
 #include "ft_str.h"
 #include "ft_mem.h"
 #include "get_next_line.h"
-#include <sys/types.h>
+#include <stddef.h>
+#include <unistd.h>
 
 static int		copy_links(size_t **links, size_t max_links)
 {
@@ -39,25 +40,25 @@ static int		copy_links(size_t **links, size_t max_links)
 	return (0);
 }
 
-static int		add_link(size_t room_id, size_t link_id, t_room *graph)
+static int		add_link(size_t room_id, size_t link_id, struct s_room *graph)
 {
-	if (graph[room_id].mlinks == 0)
+	if (graph[room_id].links_size == 0)
 	{
-		graph[room_id].mlinks = 4;
-		graph[room_id].links = (size_t *)ft_memalloc(sizeof(size_t) * graph[room_id].mlinks);
+		graph[room_id].links_size = 4;
+		graph[room_id].links = (size_t *)ft_memalloc(sizeof(size_t) * graph[room_id].links_size);
 	}
 	++(graph[room_id].nlinks);
-	if (graph[room_id].nlinks == graph[room_id].mlinks)
+	if (graph[room_id].nlinks == graph[room_id].links_size)
 	{
-		graph[room_id].mlinks = graph[room_id].mlinks * 2;
-		if (copy_links(&(graph[room_id].links), graph[room_id].mlinks) == ERROR)
+		graph[room_id].links_size = graph[room_id].links_size * 2;
+		if (copy_links(&(graph[room_id].links), graph[room_id].links_size) == ERROR)
 			return (ERROR);
 	}
 	graph[room_id].links[graph[room_id].nlinks - 1] = link_id;
 	return (0);
 }
 
-static int		find_room(char *name, t_farm *farm, size_t *room_id, size_t max)
+static int		find_room(char *name, struct s_farm *farm, size_t *room_id, size_t max)
 {
 	int		cmp;
 	size_t	mid;
@@ -77,7 +78,7 @@ static int		find_room(char *name, t_farm *farm, size_t *room_id, size_t max)
 	return (0);
 }
 
-static int		parse_line(char *line, t_farm *farm)
+static int		parse_line(char *line, struct s_farm *farm)
 {
 	size_t		room1_id;
 	size_t		room2_id;
@@ -105,14 +106,14 @@ static int		parse_line(char *line, t_farm *farm)
 	return (0);
 }
 
-int				get_links(t_input *input, t_farm *farm)
+int				get_links(struct s_input *input, struct s_farm *farm)
 {
 	if (!input || !farm || !farm->graph)
 		return (ERROR);
 	if (parse_line(input->line, farm) == ERROR)
 		return (ERROR);
 	update_input(input);
-	while (get_next_line(STDIN_FD, &(input->line)))
+	while (get_next_line(STDIN_FILENO, &(input->line)))
 	{
 		if (parse_line(input->line, farm) == ERROR)
 			return (ERROR);

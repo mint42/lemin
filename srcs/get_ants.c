@@ -6,23 +6,23 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:12:30 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/03 16:21:33 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:09:58 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "input.h"
 #include "errors.h"
-#include "ft_fd.h"
+#include "struct_input.h"
 #include "ft_utils.h"
 #include "get_next_line.h"
 #include <stddef.h>
+#include <unistd.h>
 
-int		get_ants(t_input *input, size_t *ants)
+int		get_ants(struct s_input *input, size_t *ants)
 {
 	char	*cur;
 	size_t	prev_ants;
 
-	if (!get_next_line(STDIN_FD, &(input->line)))
+	if (!get_next_line(STDIN_FILENO, &(input->line)))
 		return (print_error(E_ANTS_ERROR));
 	cur = input->line;
 	while (cur && ft_isdigit(*cur))

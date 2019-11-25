@@ -1,3 +1,7 @@
+THINGS TO REMEMBER
+
+what does min_ant_for_path in s_pathset need to be an array
+
 THINGS LEFT TO DO
 DONE - update delimiter to reflect npaths_delimiter
 DONE - set up the base paths
@@ -9,15 +13,75 @@ DONE - realloc
 DONE - delete path_info
 DONE - delete pathsets
 		delete_bfs - same as delete paths i think
-done - make solution printable
+DONe - make solution printable
+Done - compile
 done - test
 Done - norm
-done - test
-done - notes
+done - test done - notes
 done - guide for how to solve
 done - readme
+done - check file order
+done - check names, includes, variables
+
+
+done - make ants struct
+done - store longest room name
+done - mirror the paths
+done - combine ends a different way
 
 done  - make a doubly linked list or work around a single one for the pathsets?
+
+things to explain
+	room id, path id, breadth first search
+
+line -> buff in s_input
+longest_room_name -> longest_room_name_len or something. make generally less uncomforable
+graph -> rooms dont think i can thought because of the btree being rooms already
+struct_solve -> struct_info
+basepaths -> source_nodes or base_nodes maybe
+move paths and npaths to the top of the s_pathset struct
+
+save a delimiter in the solve struct for moving backwards
+check difference between moving twice as fast or once on the bfs backwards
+
+style
+
+in structs, the same types should be in the same location
+struct function naming, should go in struct_*.c
+init - set to zero, possibly allocate
+setup - set up struct given initial arguemtents
+update - update struct or parts of struct with new conditions
+delete - delete information inside struct, then struct itself
+
+if statement has more than one line, indent continuation lines wit 2 tabs
+variables keep types together
+includes go project, libft, then system. alphebetized in that order
+functions are sorted upwards
+parameters 
+size = total available size
+len = current length being used
+
+
+
+
+/*
+**	rules for solving:
+**		- paths are stored in the queue, and to get to a path you go backwards using a previous pointer 
+**		- when a path intersects with the same base path, do not continue the current path
+**		- when a path intersects with a different base path, note that they cannot coexist by adding that specific path to the DNI list
+**		- use a pointer to the double array so that the path info can be updated at any point
+**	
+**		- paths that split get a new number on path to avoid
+**		- a new path set is made when starting paths intersect (paths with different identifiers)
+**		- remember that a path has to avoid itself
+**		- if a path crosses a path it can't interesect it the longer one can be destroyed, unless it has branched from start?
+**		- the longer one will always be the one you're currently extending
+**		- paths are stored as arrays, but there is a linked list of path sets?
+**		- if a path has made it to the end first, all other paths that have branched from it can be destroyed. NO
+**				because what if the shorter path is needed by another identifier
+**		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
+*/
+
 
 TO SAVE SPACE
 - delete larger binary tree wrapper

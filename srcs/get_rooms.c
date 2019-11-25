@@ -6,21 +6,21 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 14:45:35 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 22:06:46 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:40:27 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "farm.h"
-#include "room.h"
-#include "input.h"
-#include "ft_fd.h"
+#include "struct_farm.h"
+#include "struct_room.h"
+#include "struct_input.h"
 #include "ft_str.h"
 #include "ft_utils.h"
 #include "ft_conv.h"
 #include "ft_binarytree.h"
 #include "get_next_line.h"
 #include <stdint.h>
+#include <unistd.h>
 
 static int		parse_comment_line(char *line, uint8_t *start_end)
 {
@@ -39,7 +39,7 @@ static int		parse_comment_line(char *line, uint8_t *start_end)
 	return (0);
 }
 
-static int		parse_room_line(char *line, t_room *room)
+static int		parse_room_line(char *line, struct s_room *room)
 {
 	room->len = ft_strlend(line, ' ');
 	if (!room->len)
@@ -66,8 +66,7 @@ static int		parse_room_line(char *line, t_room *room)
 	return (0);
 }
 
-static int		parse_line(char *line, t_room **room, uint8_t *start_end,
-					size_t *nrooms)
+static int		parse_line(char *line, struct s_room **room, uint8_t *start_end, size_t *nrooms)
 {
 	if (*line == '#')
 	{
@@ -89,13 +88,13 @@ static int		parse_line(char *line, t_room **room, uint8_t *start_end,
 	return (0);
 }
 
-int				get_rooms(t_input *input, t_binarytree **rooms, t_farm *farm)
+int				get_rooms(struct s_input *input, struct s_binarytree **rooms, struct s_farm *farm)
 {
-	t_room			*room;
+	struct s_room	*room;
 	uint8_t			start_end;
 
 	start_end = 0;
-	while (get_next_line(STDIN_FD, &(input->line)))
+	while (get_next_line(STDIN_FILENO, &(input->line)))
 	{
 		room = 0;
 		if (ft_strchr(input->line, '-'))

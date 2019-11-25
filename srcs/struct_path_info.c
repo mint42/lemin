@@ -6,15 +6,15 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 03:55:28 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/29 03:59:23 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/10/04 05:19:58 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-t_path_info		*init_path_info(t_bfs *bfs)
+struct s_path_info		*init_path_info(struct s_bfs *bfs)
 {
-	t_path_info		*path_info;
+	struct s_path_info		*path_info;
 
-	path_info = (t_path_info *)ft_memalloc(sizeof(t_path_info));
+	path_info = (struct s_path_info *)ft_memalloc(sizeof(struct s_path_info));
 	if (!path_info)
 		return (print_error(E_ALLOC_ERROR));
 	path_info->pid_index = 0;
@@ -26,24 +26,32 @@ t_path_info		*init_path_info(t_bfs *bfs)
 	return (path_info);
 }
 
-/*
-**	void			delete_path_info(t_list *path_info_cur)
-**	{
-**		t_list	*cur;
-**		t_list	*to_delete;
-**	
-**		if (path_info_cur)
-**		{
-**			to_delete = PATHSET(path_info_cur);
-**			cur = PATHSET(path_info_cur)->prev;
-**			cur->next = PATHSET(path_info_cur)->next;
-**			ft_lstdelone(&(to_delete), delete_bfs_path());
-**			ft_memdel((void **)&content);
-**		}
-**	}
-*/
+static int		setup_path_info(struct s_path_info **path_info, struct s_solve *solve)
+{
+	*path_info = (struct s_path_info *)ft_memalloc(sizeof(struct s_path_info));
+	if (!*path_info)
+		return (print_error(E_ALLOC_ERROR));
+	if (solve->max_pid_bit & 100000000000000000)
+	{
+		++(solve->max_pid_index);
+		solve->max_pid_bit = 1;
+	}
+	else
+		solve->max_pid_bit = solve->max_pid_bit << 1;
+	(*path_info)->pid_index = solve->max_pid_index;
+	(*path_info)->pid_bit = solve->max_pid_bit;
+	(*path_info)->base_pid = solve->bfs_cur->path_info->base_pid;
+	(*path_info)->depth_lvl = solve->bfs_cur->path_info->depth_lvl + 1;
+	(*path_info)->pids_dni_size = solve->bfs_cur->path_info->pids_dni_size;
+	(*path_info)->pids_dni_len = solve->bfs_cur->path_info->pids_dni_len;
+	(*path_info)->pids_dni = ft_memalloc(sizeof(size_t) * (*path_info)->pids_dni_size);
+	if (!(*path_info)->pids_dni)
+		return (print_error(E_ALLOC_ERROR));
+	ft_memcpy((*path_info)->pids_dni, solve->bfs_cur->path_info->pids_dni, (*path_info)->pids_dni_len);
+	return (0);
+}
 
-void			delete_path_info(t_path_info *path_info)
+void			delete_path_info(struct s_path_info *path_info)
 {
 	if (path_info)
 	{

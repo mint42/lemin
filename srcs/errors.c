@@ -6,13 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 16:28:54 by rreedy            #+#    #+#             */
-/*   Updated: 2019/09/10 19:11:39 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/24 08:09:48 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
-#include "ft_fd.h"
 #include "ft_printf.h"
+#include <unistd.h>
 
 int		print_error(enum e_errors error_code)
 {
@@ -37,8 +37,8 @@ int		print_error(enum e_errors error_code)
 
 	if (error_code < TOTAL_ERROR_COUNT)
 	{
-		ft_printfd(STDERR_FD, "LEM-IN ERROR: %s\n", errors[error_code]);
-		ft_printfd(STDERR_FD, "PRINT USAGE\n");
+		ft_printfd(STDERR_FILENO, "LEM-IN ERROR: %s\n", errors[error_code]);
+		ft_printfd(STDERR_FILENO, "PRINT USAGE\n");
 	}
 	return (ERROR);
 }
