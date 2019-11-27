@@ -13,7 +13,7 @@
 #include "errors.h"
 #include "lemin.h"
 #include "manage_solution.h"
-#include "struct_bfs.h"
+#include "struct_bfs_node.h"
 #include "struct_basenode.h"
 #include "struct_farm.h"
 #include "struct_pathinfo.h"

@@ -10,60 +10,71 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errors.h"
 #include "manage_solution.h"
-#include "struct_bfs.h"
+#include "struct_bfs_node.h"
+#include "struct_pathinfo.h"
 #include "struct_farm.h"
 #include "struct_pathset.h"
 #include "struct_solve.h"
 #include "ft_list.h"
 
-static void		update_nlines(struct s_pathset *pathset)
+static void		update_nlines(struct s_pathset *pathset, size_t	nants)
 {
 	size_t	ants_on_min_path;
 	size_t	ants_on_max_path;
 
 	if (!pathset->nlines)
-		pathset->nlines = pathset->minpathlen + farm->ants - 1;
+		pathset->nlines = pathset->minpathlen + nants - 1;
 	else
 	{
 		ants_on_min_path = pathset->nlines - 1;
 		ants_on_max_path = 1;
-		while (ants_on_min_path > ants_on_max_path && pathset->minpathlen + ants_on_min_path >= pathset->maxpathlen + ants_on_max_path)
+		while (ants_on_min_path > ants_on_max_path &&
+				pathset->minpathlen + ants_on_min_path >=
+				pathset->maxpathlen + ants_on_max_path)
 		{
 			--ants_on_min_path;
 			++ants_on_max_path;
 		}
 		pathset->nlines = ants_on_min_path + 1;
 	}
-	pathset->min_ants_for_path[npaths] = pathset->nlines;
+	pathset->min_ant_for_path[pathset->npaths - 1] = pathset->nlines;
 }
 
-static void		update_pathset(struct s_bfs *bfs_cur, struct s_pathset *set, struct s_farm *farm)
+static void		update_pathset(struct s_bfs_node *bfs_cur,
+						struct s_pathset *set, struct s_farm *farm)
 {
 	size_t		i;
 
 	while (i < set->npaths)
 	{
-		if ((bfs_cur->path_info->basepath == set->paths[i]->basepath)
-			||
-		((bfs_cur->path_info->s_pids_dni > (set->paths)[i]->pid_index) &&
-		(bfs_cur->path_info->pids_dni[(set->paths)[i]->pid_index] & (set->paths)[i]->pid_bit)))
+		if ((bfs_cur->pathinfo->basenode_id == set->paths[i].pathinfo->basenode_id)
+				||
+				((bfs_cur->pathinfo->pids_dni->size > (set->paths)[i].pathinfo->pid_index) &&
+				(bfs_cur->pathinfo->pids_dni->pids[(set->paths)[i].pathinfo->pid_index] &
+				(set->paths)[i].pathinfo->pid_bit)))
 			return ;
 		++i;
 	}
 	(pathset->paths)[i] = *bfs_cur;
-	pathset->maxpathlen = bfs_cur->depth_level;
+	pathset->maxpathlen = bfs_cur->depth_lvl;
 	if (!set->minpathlen)
 		set->minpathlen = set->maxpathlen;
 	++(set->npaths);
-	update_nlines(set, farm);
+	update_nlines(set, farm->nants);
 	return ;
 }
 
+/*
+**	check how giving new pathset of its own at the end
+*/
+
 int				update_pathsets(struct s_solve *solve, struct s_farm *farm)
 {
-	struct s_list	*cur;
-	struct s_list	*prev_cur;
+	struct s_pathset	*new_pathset;
+	struct s_list		*cur;
+	struct s_list		*prev_cur;
 
 	if (!solve->pathsets)
 	{
@@ -83,6 +94,8 @@ int				update_pathsets(struct s_solve *solve, struct s_farm *farm)
 		prev_cur = cur;
 		cur = cur->next;
 	}
-	prev_cur->next = ft_lstinit(init_pathset(paths), 0);
+	if (init_pathset(&new_pathset) == ERROR)
+		return (ERROR);
+	prev_cur->next = ft_lstinit(new_pathset, 0);
 	return (0);
 }

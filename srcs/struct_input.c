@@ -14,16 +14,13 @@
 #include "ft_mem.h"
 #include "ft_str.h"
 
-struct s_input			init_input(void)
+void		init_input(struct s_input *input)
 {
-	struct s_input		input;
-
-	input.buff_size = 0;
-	input.input_size = 0;
-	input.line_size = 0;
-	input.input = 0;
-	input.line = 0;
-	return (input);
+	input->buff_size = 0;
+	input->input_size = 0;
+	input->line_size = 0;
+	input->input = 0;
+	input->line = 0;
 }
 
 static void		update_input_buff(struct s_input *input)

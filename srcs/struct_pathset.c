@@ -10,19 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "struct_bfs.h"
 #include "struct_pathsets.h"
 #include "ft_mem.h"
 #include "ft_list.h"
 #include "ft_printf.h"
 
-struct s_pathset	*init_pathset(struct s_bfs *bfs)
+int			init_pathset(struct s_pathset *pathset)
 {
 	struct s_pathset	*pathset;
 
 	pathset = (struct s_pathset *)ft_memalloc(sizeof(struct s_pathset));
 	if (!pathset)
-		return (0);
+		return (print_error(E_ALLOC));
 	pathset->nmoves = 0;
 	pathset->minpathlen = 0;
 	pathset->maxpathlen = 0;

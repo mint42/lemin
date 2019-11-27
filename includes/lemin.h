@@ -20,7 +20,7 @@
 # include <stddef.h>
 # include <stdint.h>
 
-struct s_bfs;
+struct s_bfs_node;
 struct s_farm;
 struct s_input;
 struct s_room;

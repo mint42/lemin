@@ -15,7 +15,7 @@
 
 # include <stddef.h>
 
-struct s_bfs;
+struct s_bfs_node;
 struct s_farm;
 struct s_list;
 struct s_basenode;
@@ -46,9 +46,9 @@ struct s_solve;
 
 struct					s_solve
 {
-	struct s_bfs		*bfs_head;
-	struct s_bfs		*bfs_cur;
-	struct s_bfs		*bfs_tail;
+	struct s_bfs_node	*bfs_head;
+	struct s_bfs_node	*bfs_cur;
+	struct s_bfs_node	*bfs_tail;
 	struct s_list		*pathsets;
 	struct s_basenode	*basenodes;
 	struct s_pathids	*start_pids;

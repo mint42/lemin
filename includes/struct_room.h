@@ -21,8 +21,7 @@
 # define START_ROOM 1
 # define END_ROOM 2
 
-struct s_pathids;
-struct s_binarytree;
+# include "struct_pathids.h"
 
 /*
 **	s_room is a struct storing information about a room in the ant farm.
@@ -50,16 +49,10 @@ struct					s_room
 	size_t				*links;
 	size_t				nlinks;
 	size_t				links_size;
-	struct s_pathids	pids_met;
+	struct s_pathids	*pids_met;
 };
 
 struct s_room			*init_room(void);
-int						rearrange_rooms_by_name(
-								struct s_binarytree **rooms_by_coord);
-int						insert_room_by_coordinates(struct s_binarytree **rooms,
-								struct s_room *room);
-int						insert_room_by_name(struct s_binarytree **rooms,
-								struct s_binarytree *room);
 void					delete_room(void *content, size_t content_size);
 
 #endif

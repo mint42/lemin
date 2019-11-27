@@ -32,7 +32,9 @@ struct			s_pathids
 	size_t		size;
 };
 
-int		realloc_pids_array(struct s_pathids *pids, size_t new_min_size);
-int		add_pid(struct s_pathids *pids, size_t index, size_t bit);
+void	init_pathids(struct s_pathids *pids);
+int		add_pathid(size_t **array, size_t *size, size_t index, size_t bit);
+int		forward_pathids(size_t **dest, size_t *dest_size, size_t *src,
+				size_t src_size);
 
 #endif

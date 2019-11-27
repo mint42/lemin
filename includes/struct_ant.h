@@ -15,7 +15,7 @@
 
 # include <stddef.h>
 
-struct s_bfs;
+struct s_bfs_node;
 struct s_pathset;
 
 /*
@@ -27,9 +27,9 @@ struct s_pathset;
 
 struct				s_ant
 {
-	size_t			ant_num;
-	size_t			ant_numlen;
-	struct s_bfs	*location;
+	size_t				ant_num;
+	size_t				ant_numlen;
+	struct s_bfs_node	*location;
 };
 
 int					setup_ants(struct s_ant **ants_on_line,

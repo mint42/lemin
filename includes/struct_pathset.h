@@ -17,7 +17,6 @@
 
 # define PATHSET(pathsets) ((struct s_pathset *)((pathsets)->content))
 
-struct s_bfs;
 struct s_list;
 
 /*
@@ -41,18 +40,18 @@ struct s_list;
 **		- why is paths an array? how is the size of that array stored?
 */
 
-struct				s_pathset
+struct					s_pathset
 {
-	size_t			nlines;
-	size_t			minpathlen;
-	size_t			maxpathlen;
-	size_t			*min_ant_for_path;
-	size_t			min_ant_for_path_size;
-	size_t			npaths;
-	struct s_bfs	*paths;
+	size_t				nlines;
+	size_t				minpathlen;
+	size_t				maxpathlen;
+	size_t				*min_ant_for_path;
+	size_t				min_ant_for_path_size;
+	size_t				npaths;
+	struct s_bfs_node	*paths;
 };
 
-void				init_pathset(struct s_pathset *pathset);
-void				delete_pathset(struct s_list *pathsets_cur);
+int						init_pathset(struct s_pathset *pathset);
+void					delete_pathset(struct s_list *pathsets_cur);
 
 #endif

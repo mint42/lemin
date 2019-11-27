@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_path_info.h                                 :+:      :+:    :+:   */
+/*   struct_pathinfo.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,12 +11,11 @@
 /* ************************************************************************** */
 
 #ifndef STRUCT_PATHINFO_H
-# define STRUCT_PATHINFO_H
-
+# define STRUCT_PATHINFO_H 
+# include "struct_pathids.h"
 # include <stddef.h>
 
-struct s_pathids;
-
+struct s_solve;
 /*
 **	s_path_info is a struct storing information about a path
 **
@@ -38,5 +37,9 @@ struct					s_pathinfo
 	size_t				depth_lvl;
 	struct s_pathids	*pids_dni;
 };
+
+int		init_pathinfo(struct s_pathinfo **pathinfo);
+int		setup_pathinfo(struct s_pathinfo **pathinfo, struct s_solve *solve);
+void	delete_pathinfo(struct s_pathinfo **pathinfo);
 
 #endif

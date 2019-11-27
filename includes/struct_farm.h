@@ -16,7 +16,6 @@
 # include <stddef.h>
 
 struct s_room;
-struct s_binarytree;
 
 /*
 **	s_farm is a struct storing information about that ant farm
@@ -31,17 +30,14 @@ struct s_binarytree;
 
 struct				s_farm
 {
-	struct s_room	*graph;
+	struct s_room	**rooms;
 	size_t			nrooms;
 	size_t			longest_room_name;
 	size_t			start_rid;
 	size_t			end_rid;
-	size_t			ants;
+	size_t			nants;
 };
 
-int					init_farm(struct s_farm *farm);
-struct s_room		*init_graph(size_t nrooms);
-int					make_graph(struct s_binarytree *rooms, struct s_farm *farm);
-void				delete_graph(struct s_room **graph);
+void				init_farm(struct s_farm *farm);
 
 #endif

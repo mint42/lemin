@@ -38,6 +38,5 @@ struct			s_input
 
 int				init_input(struct s_input *input);
 void			update_input(struct s_input *input);
-void			delete_input(struct s_input *input);
 
 #endif

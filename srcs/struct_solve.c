@@ -34,7 +34,8 @@ int				setup_solve(struct s_solve *solve, struct s_farm *farm)
 	init_solve(&solve);
 	solve->max_index_id = 1;
 	solve->max_bit_id = 1;
-	solve->nbasepaths = (farm->graph)[farm->start_rid]->nlinks + (farm->graph)[farm->end_rid]->nlinks;
+	solve->nbasenodes = (farm->graph)[farm->start_rid]->nlinks +
+			(farm->graph)[farm->end_rid]->nlinks;
 	solve->start_pids = (size_t *)ft_memalloc(sizeof(size_t));
 	if (!solve->start_pids)
 		return (print_error(E_ALLOC_ERROR));
