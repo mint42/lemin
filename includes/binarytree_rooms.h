@@ -1,6 +1,8 @@
 #ifndef BINARYTREE_ROOMS_H
 # define  BINARYTREE_ROOMS_H
 
+# define BINROOM(binarytree) ((struct s_room *)((binarytree)->content))
+
 struct s_binarytree;
 struct s_room;
 

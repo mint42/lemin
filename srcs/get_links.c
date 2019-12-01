@@ -6,11 +6,12 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/16 00:09:59 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 08:40:10 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/27 13:06:43 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
+#include "config.h"
 #include "struct_farm.h"
 #include "struct_input.h"
 #include "struct_room.h"
@@ -20,42 +21,25 @@
 #include <stddef.h>
 #include <unistd.h>
 
-static int		copy_links(size_t **links, size_t max_links)
+static int		add_link(struct s_room *room, size_t link)
 {
-	size_t	*new_links;
-	size_t	i;
-
-	new_links = (size_t *)ft_memalloc(sizeof(size_t) * max_links);
-	if (!new_links)
-		return (print_error(E_ALLOC_ERROR));
-	max_links = max_links / 2;
-	i = 0;
-	while (i < max_links)
+	if (room->links_arr_size == 0)
 	{
-		new_links[i] = (*links)[i];
-		++i;
+		room->links_arr_size = 4;
+		room->links = (size_t *)ft_memalloc(sizeof(size_t) * room->links_arr_size);
 	}
-	ft_memdel((void **)links);
-	*links = new_links;
-	return (0);
-}
-
-static int		add_link(size_t room_id, size_t link_id, struct s_room *graph)
-{
-	if (graph[room_id].links_size == 0)
+	++(room->nlinks);
+	if (room->nlinks > room->links_arr_size)
 	{
-		graph[room_id].links_size = 4;
-		graph[room_id].links = (size_t *)ft_memalloc(sizeof(size_t) * graph[room_id].links_size);
+		if (ft_realloc((void **)&(room->links), room->links_arr_size,
+				room->links_arr_size * MULTIPLIER) == ERROR)
+		{
+			return (E_ALLOC);
+		}
+		room->links_arr_size = room->links_arr_size * MULTIPLIER;
 	}
-	++(graph[room_id].nlinks);
-	if (graph[room_id].nlinks == graph[room_id].links_size)
-	{
-		graph[room_id].links_size = graph[room_id].links_size * 2;
-		if (copy_links(&(graph[room_id].links), graph[room_id].links_size) == ERROR)
-			return (ERROR);
-	}
-	graph[room_id].links[graph[room_id].nlinks - 1] = link_id;
-	return (0);
+	room->links[room->nlinks - 1] = link;
+	return (SUCCESS);
 }
 
 static int		find_room(char *name, struct s_farm *farm, size_t *room_id, size_t max)
@@ -66,7 +50,7 @@ static int		find_room(char *name, struct s_farm *farm, size_t *room_id, size_t m
 	if (max < 1)
 		return (print_error(E_LINK_GIVEN_DNE));
 	mid = *room_id + (max - *room_id) / 2;
-	cmp = ft_strncmp(name, (farm->graph)[mid].name, (farm->graph)[mid].len + 1);
+	cmp = ft_strncmp(name, (farm->rooms)[mid]->name, (farm->rooms)[mid]->len + 1);
 	if (cmp > 0)
 	{
 		*room_id = mid + 1;
@@ -75,7 +59,7 @@ static int		find_room(char *name, struct s_farm *farm, size_t *room_id, size_t m
 	if (cmp < 0)
 		find_room(name, farm, room_id, mid - 1);
 	*room_id = mid;
-	return (0);
+	return (SUCCESS);
 }
 
 static int		parse_line(char *line, struct s_farm *farm)
@@ -85,12 +69,12 @@ static int		parse_line(char *line, struct s_farm *farm)
 	size_t		len;
 
 	if (*line == '#')
-		return (0);
+		return (SUCCESS);
 	if (ft_strchr(line, ' '))
 		return (print_error(E_INVALID_LINK_FORMAT));
 	len = ft_strlend(line, '-');
 	if (len == ft_strlen(line))
-		return (print_error(E_INVALID_LINK_FORMAT));
+		return (print_error(E_LINK_MISSING));
 	line[len] = '\0';
 	room1_id = 0;
 	if (find_room(line, farm, &room1_id, farm->nrooms - 1) == ERROR)
@@ -99,16 +83,16 @@ static int		parse_line(char *line, struct s_farm *farm)
 	room2_id = 0;
 	if (find_room(line + len + 1, farm, &room2_id, farm->nrooms - 1) == ERROR)
 		return (ERROR);
-	if (add_link(room1_id, room2_id, farm->graph) == ERROR)
+	if (add_link((farm->rooms)[room1_id], room2_id) == ERROR)
 		return (ERROR);
-	if (add_link(room2_id, room1_id, farm->graph) == ERROR)
+	if (add_link((farm->rooms)[room2_id], room1_id) == ERROR)
 		return (ERROR);
-	return (0);
+	return (SUCCESS);
 }
 
 int				get_links(struct s_input *input, struct s_farm *farm)
 {
-	if (!input || !farm || !farm->graph)
+	if (!input || !farm || !farm->rooms)
 		return (ERROR);
 	if (parse_line(input->line, farm) == ERROR)
 		return (ERROR);
@@ -119,5 +103,5 @@ int				get_links(struct s_input *input, struct s_farm *farm)
 			return (ERROR);
 		update_input(input);
 	}
-	return (0);
+	return (SUCCESS);
 }

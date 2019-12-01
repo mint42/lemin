@@ -6,13 +6,15 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 06:43:24 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 09:58:41 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/30 20:14:54 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
 #include "lemin.h"
 #include "manage_solution.h"
+#include "queue_bfs.h"
+#include "linked_list_pathsets.h"
 #include "struct_bfs_node.h"
 #include "struct_basenode.h"
 #include "struct_farm.h"
@@ -24,13 +26,13 @@
 #include <stddef.h>
 #include <stdint.h>
 
-static void		mirror_path(struct s_bfs *path)
+static void		mirror_path(struct s_bfs_node *path)
 {
-	struct s_bfs			*start;
-	struct s_bfs			*end;
-	struct s_bfs			*tmp;
-	struct s_bfs			*path_prev;
-	struct s_bfs			*path_next;
+	struct s_bfs_node		*start;
+	struct s_bfs_node		*end;
+	struct s_bfs_node		*tmp;
+	struct s_bfs_node		*path_prev;
+	struct s_bfs_node		*path_next;
 	size_t					rid;
 	struct s_pathinfo		*pathinfo;
 
@@ -60,16 +62,17 @@ static void		mirror_path(struct s_bfs *path)
 	}
 }
 
-static void		reset_path_pointers_to_head(struct s_pathset *solution, struct s_solve *solve)
+static void		reset_path_pointers_to_head(struct s_solve *solve)
 {
-	if ((solve->basenodes)[solution->paths->pathinfo->basenode_id].origin == END_ROOM)
+	if ((solve->basenodes)[solve->solution->paths->pathinfo->basenode_id].origin == END_ROOM)
 		;
-		mirror_path(solution->paths);
-	while (solution->paths)
-		solution->paths = solution->paths->prev;
+		mirror_path(solve->solution->paths);
+	while (solve->solution->paths)
+		solve->solution->paths = solve->solution->paths->prev;
 }
 
-static void		overlap_pids_dni(struct s_bfs *end1, struct s_bfs *end2)
+static void		overlap_pids_dni(struct s_bfs_node *end1,
+						struct s_bfs_node *end2)
 {
 	size_t			*tmp;
 	size_t			i;
@@ -90,8 +93,8 @@ static void		overlap_pids_dni(struct s_bfs *end1, struct s_bfs *end2)
 
 static void		combine_path_ends(struct s_solve *solve, uint8_t *path_status)
 {
-	static struct s_bfs		*end2;
-	static size_t	 		depth_level;
+	static struct s_bfs_node	*end2;
+	static size_t	 			depth_level;
 
 	if (!end2)
 	{
@@ -114,7 +117,7 @@ static void		combine_path_ends(struct s_solve *solve, uint8_t *path_status)
 	*path_status = IN_PROGRESS;
 }
 
-int				solve(struct s_farm *farm, char **solution, size_t *solution_len)
+int				get_solution(struct s_farm *farm, char **solution, size_t *solution_len)
 {
 	struct s_solve	solve;
 	uint8_t			path_status;
@@ -127,7 +130,7 @@ int				solve(struct s_farm *farm, char **solution, size_t *solution_len)
 	{
 		if (path_status == IN_PROGRESS)
 		{
-			if (update_bfs(&solve, farm, &path_status) == ERROR)
+			if (update_bfs_queue(&solve, farm, &path_status) == ERROR)
 				return (ERROR);
 		}
 		if (path_status == COMPLETE)
@@ -152,7 +155,7 @@ int				solve(struct s_farm *farm, char **solution, size_t *solution_len)
 		return (print_error(E_NO_SOLUTION));
 	else if (solve.pathsets)
 		verify_solution(&solve);
-	reset_path_pointers_to_head(solve.solution);
-	make_solution_printable(solution, solution_len, &solve, farm->longest_room_name);
+	reset_path_pointers_to_head(&solve);
+	make_solution_printable(solution, solution_len, &solve, farm);
 	return (0);
 }

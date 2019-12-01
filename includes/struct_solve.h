@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:19:25 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 09:42:07 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/30 14:44:28 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ struct					s_solve
 	struct s_bfs_node	*bfs_head;
 	struct s_bfs_node	*bfs_cur;
 	struct s_bfs_node	*bfs_tail;
+	struct s_bfs_node	*bfs_source;
+	struct s_bfs_node	*bfs_sink;
 	struct s_list		*pathsets;
 	struct s_basenode	*basenodes;
 	struct s_pathids	*start_pids;

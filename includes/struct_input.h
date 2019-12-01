@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:15:19 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 06:27:36 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/27 13:13:46 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ struct			s_input
 };
 
 int				init_input(struct s_input *input);
-void			update_input(struct s_input *input);
+int				update_input(struct s_input *input);
 
 #endif

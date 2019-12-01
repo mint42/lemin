@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 02:02:39 by rreedy            #+#    #+#             */
-/*   Updated: 2019/10/04 05:32:42 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/30 20:23:33 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,19 @@ void		update_ants(size_t *ant_number, struct s_ant *ants_on_line,
 	}
 }
 
-int			setup_ants(struct s_ant **ants_on_line, size_t n_ants_on_line,
+int			setup_ants(struct s_ant *ants_on_line, size_t n_ants_on_line,
 				struct s_pathset *solution)
 {
 	size_t	i;
 
-	*ants_on_line = (ant *)ft_memalloc(sizeof(ant) * n_ants_on_line);
-	if (!ants_on_line)
-		return (print_error(E_ALLOC_ERROR));
+//	*ants_on_line = (ant *)ft_memalloc(sizeof(ant) * n_ants_on_line);
+//	if (!ants_on_line)
+//		return (print_error(E_ALLOC_ERROR));
 	i = 0;
 	while (i < n_ants_on_line)
 	{
-		(*ants_on_line)[i]->ant_number = 0;
-		(*ants_on_line)[i]->location = 0;
+		ants_on_line[i]->ant_number = 0;
+		ants_on_line[i]->location = 0;
 		++i;
 	}
 	return (0);

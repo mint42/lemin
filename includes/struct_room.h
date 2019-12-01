@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:18:07 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 08:56:08 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/30 12:08:08 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include <stddef.h>
 # include <stdint.h>
-
-# define ROOM(binarytree) ((struct s_room *)((binarytree)->content))
 
 # define START_ROOM 1
 # define END_ROOM 2
@@ -48,11 +46,11 @@ struct					s_room
 	size_t				len;
 	size_t				*links;
 	size_t				nlinks;
-	size_t				links_size;
+	size_t				links_arr_size;
 	struct s_pathids	*pids_met;
 };
 
-struct s_room			*init_room(void);
-void					delete_room(void *content, size_t content_size);
+int		init_room(struct s_room **room);
+void	delete_room(void *content, size_t content_size);
 
 #endif

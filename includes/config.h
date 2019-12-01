@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   manage_solution.h                                  :+:      :+:    :+:   */
+/*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/04 01:24:04 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/30 20:16:12 by rreedy           ###   ########.fr       */
+/*   Created: 2019/11/27 11:48:06 by rreedy            #+#    #+#             */
+/*   Updated: 2019/11/27 11:51:41 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MANAGE_SOLUTION_H
-# define MANAGE_SOLUTION_H
+#ifndef CONFIG_H
+# define CONFIG_H
 
-# include <stddef.h>
+/*
+**	MULTIPLIER is the rate at which all of the dynamically allocated arrays
+**	will grow.
+**
+**	ie. When an array is filled, it will be reallocated to 
+**	current_size * MULTIPLIER larger
+*/
 
-typedef struct s_list	t_list;
-
-struct s_pathset;
-struct s_solve;
-struct s_farm;
-
-void	update_solution(struct s_solve *solve, struct s_list *pathset);
-int		verify_solution(struct s_solve *solve);
-int		make_solution_printable(char **solution, size_t *solution_len,
-				struct s_solve *solve, struct s_farm *farm);
+# define MULTIPLIER 2
 
 #endif

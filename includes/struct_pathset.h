@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:17:06 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 08:51:04 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/30 16:24:53 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ struct					s_pathset
 	struct s_bfs_node	*paths;
 };
 
-int						init_pathset(struct s_pathset *pathset);
-void					delete_pathset(struct s_list *pathsets_cur);
+int			init_pathset(struct s_pathset **pathset);
+void		delete_pathset(struct s_list *pathsets_cur);
 
 #endif

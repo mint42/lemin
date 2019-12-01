@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:21:20 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 08:56:08 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/30 20:24:00 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ struct				s_ant
 	struct s_bfs_node	*location;
 };
 
-int					setup_ants(struct s_ant **ants_on_line,
+int					setup_ants(struct s_ant *ants_on_line,
 							size_t n_ants_on_line, struct s_pathset *solution);
 void				update_ants(size_t *ant_number, struct s_ant *ants_on_line,
 							size_t n_ants_on_line, struct s_pathset *solution);

@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/26 14:09:56 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 07:57:28 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/27 13:11:52 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 #include "ft_list.h"
 #include "ft_printf.h"
 
-int			init_pathset(struct s_pathset *pathset)
+int			init_pathset(struct s_pathset **pathset)
 {
-	struct s_pathset	*pathset;
-
-	pathset = (struct s_pathset *)ft_memalloc(sizeof(struct s_pathset));
-	if (!pathset)
+	*pathset = (struct s_pathset *)ft_memalloc(sizeof(struct s_pathset));
+	if (!(*pathset))
 		return (print_error(E_ALLOC));
-	pathset->nmoves = 0;
-	pathset->minpathlen = 0;
-	pathset->maxpathlen = 0;
-	pathset->npaths = 1;
-	pathset->paths = 0;
-	return (pathset);
+	(*pathset)->nmoves = 0;
+	(*pathset)->minpathlen = 0;
+	(*pathset)->maxpathlen = 0;
+	(*pathset)->npaths = 1;
+	(*pathset)->paths = 0;
+	return (SUCCESS);
 }
 
 void		delete_pathset(struct s_list *pathsets_cur)

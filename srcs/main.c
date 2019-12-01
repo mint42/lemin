@@ -6,12 +6,13 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/23 20:26:21 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/30 12:17:02 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errors.h"
 #include "lemin.h"
+#include "graph_rooms.h"
 #include "struct_farm.h"
 #include "struct_input.h"
 #include "struct_room.h"
@@ -33,18 +34,19 @@ static int		solve(struct s_input *input, struct s_farm *farm)
 	write(STDOUT_FILENO, "\n\n", input->input_len);
 	write(STDOUT_FILENO, solution, solution_len);
 	ft_strdel(&solution);
-	return (0);
+	return (SUCCESS);
 }
 
 static int		parse_input(struct s_input *input, struct s_farm *farm)
 {
-	if (get_ants(input, &farm->ants) == ERROR)
+	if (get_ants(input, &farm->nants) == ERROR)
 		return (ERROR);
-	if (get_rooms(input,rooms, farm) == ERROR)
+	if (get_rooms(input, farm) == ERROR)
 		return (ERROR);
 	if (get_links(input, farm) == ERROR)
 		return (ERROR);
 	write(STDOUT_FILENO, input->input, input->input_len);
+	return (SUCCESS);
 }
 
 int				main(void)
@@ -53,19 +55,20 @@ int				main(void)
 	struct s_farm		farm;
 	uint8_t				error_code;
 
-	error = 0;
+	error_code = 0;
 	init_input(&input);
 	init_farm(&farm);
 	error_code = parse_input(&input, &farm);
-	ft_strdel(&input->input);
+	ft_strdel(&input.input);
 	if (error_code == ERROR)
 	{
-		delete_graph(&(farm.graph));
+		ft_strdel(&input.line);
+		delete_rooms(&(farm.rooms), farm.nrooms);
 		print_error();
 		return (ERROR);
 	}
 	error_code = solve(&input, &farm);
-	delete_graph(&(farm.graph));
+	delete_rooms(&(farm.rooms), farm.nrooms);
 	if (error_code == ERROR)
 	{
 		print_error();

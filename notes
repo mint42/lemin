@@ -2,6 +2,20 @@ THINGS TO REMEMBER
 
 what does min_ant_for_path in s_pathset need to be an array
 
+/*
+**	DONE - return when new path is found
+**	DONE - finish the loop though  ye
+**	DONE - confirm new path when start meets end, or vice versa
+**	DONE - will delimiter always work or will you run out of nodes first, added a check just in case
+**	DONE - allocate for a new node
+**	done - combine sides
+**	DONE - give room new bit so that you have been there
+**	DONE - check that the path you're on doesn't run into other base paths, or the same path twice. do i have to check the dni lis
+**			for both when updating pathset and also when running the search  no, i dont think so
+**	DONE - add the paths that you crossed from the room to the dni list
+**	done - how order files
+*/
+
 THINGS LEFT TO DO
 DONE - update delimiter to reflect npaths_delimiter
 DONE - set up the base paths
@@ -81,6 +95,39 @@ len = current length being used
 **		- if a path has made it to the end first, all other paths that have branched from it can be destroyed. NO
 **				because what if the shorter path is needed by another identifier
 **		- actually every path gets an identifier?? and every path also gets a base path which it cant interract with
+*/
+
+/*
+**	bits
+**	
+**	paths in base paths
+**	path id's that have been to rooms
+**	paths to avoid - every node
+**	paths to avoid - pathset version
+**	
+**	
+**	should have 2 base path id's when combined, should the base bath's be bits then
+**	I did not want them to be, what about making it an array the size of two
+**	no, i am just going to go to next, it is wasted space
+**	
+**	- stop when paths combined
+**	- combine paths
+**	- add room bits to path when it crosses
+**	- add bit to room when path crosses it
+**	- add new pathid to its base path list of ids
+**	
+**	- a path cant touch paths from the same base path, TRUE, because length
+**	
+**	- when a new path is split, it inherits the old criteria, but can add to it on its own, so realloc
+*/
+/*
+**	if base path id is 0 then that means that no base path was set yet
+**	
+**	if a base path is set, then you want to make a new node
+**	
+**	when do you give it a new path id. only the first one to enter gets a new id
+**	
+**	the base path info struct will be shared across all paths from the same base
 */
 
 

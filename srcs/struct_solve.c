@@ -6,7 +6,7 @@
 /*   By: rreedy <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 02:49:43 by rreedy            #+#    #+#             */
-/*   Updated: 2019/11/24 02:51:25 by rreedy           ###   ########.fr       */
+/*   Updated: 2019/11/27 13:08:26 by rreedy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int				setup_solve(struct s_solve *solve, struct s_farm *farm)
 			(farm->graph)[farm->end_rid]->nlinks;
 	solve->start_pids = (size_t *)ft_memalloc(sizeof(size_t));
 	if (!solve->start_pids)
-		return (print_error(E_ALLOC_ERROR));
+		return (print_error(E_ALLOC));
 	solve->s_start_pids = 1;
 	solve->start_pids = START;
 	if ((farm->graph)[farm->start_rid]->nlinks < (farm->rooms)[farm->end_rid]->nlinks)
@@ -49,5 +49,5 @@ int				setup_solve(struct s_solve *solve, struct s_farm *farm)
 	setup_bfs(solve);
 	solve->bfs_cur = solve->bfs;
 	solve->bfs_tail = (solve-bfs)->next;
-	return (0);
+	return (SUCCESS);
 }
